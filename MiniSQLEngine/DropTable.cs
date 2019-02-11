@@ -2,7 +2,7 @@
 
 public class DropTable : Query
 {
-    //Overraid
+    //Overraid.
 	public overraid DropTable(String name_table)
 	{
 
