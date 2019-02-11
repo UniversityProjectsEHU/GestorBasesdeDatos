@@ -8,5 +8,6 @@ namespace MiniSQLEngine
 {
     class Constants
     {
+        string regExp = @"UPDATE\s+(\w+)\s+SET\s+([^ WHERE]+)\s+WHERE\s+(\w+>[0-9]+|\w+<[0-9]+|\w+=[0-9]+);";
     }
 }
