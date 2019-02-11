@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MiniSQLEngine
+{
+    class CreateDatabase : Query
+    { 
+
+        public override void Run(String database_name)
+        {
+
+            throw new NotImplementedException();
+        }
+
+    }
+}
