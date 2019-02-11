@@ -10,6 +10,7 @@ namespace Parsing
     {
         String regEXSelect = @"SELECT\s+(\*|\w+)\s+FROM\s+(\w+)\s+WHERE\s+(\w+<[0-9]+|\w+>[0-9]+|\w+=[0-9]+)";
         String regExDelete = @"DELETE\s+FROM\s+(\w+)\s+WHERE\s+(\w+<[0-9]+|\w+>[0-9]+|\w+=[0-9]+)";
+        string regExp = @"UPDATE\s+(\w+)\s+SET\s+([^ WHERE]+)\s+WHERE\s+(\w+>[0-9]+|\w+<[0-9]+|\w+=[0-9]+);";
         String regExTypeSelect = @"(SELECT)";
         String regExTypeInsert = @"(INSERT)";
         String regExTypeUpdate = @"(UPDATE)";
