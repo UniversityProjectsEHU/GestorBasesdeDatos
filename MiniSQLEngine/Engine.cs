@@ -16,8 +16,8 @@ namespace MiniSQLEngine
         }
        
     }
-    public class Query
+    public abstract class Query
     {
-
+        public abstract void Run();
     }
 }
