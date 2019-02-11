@@ -12,7 +12,7 @@ namespace UnitTestProject1
         {
             Engine engine = new Engine();
             string result;
-            //Engine.Query("SELECT * FROM table1",out result);
+            engine.Query("SELECT * FROM table1",out result);
             Assert.AreEqual("resultado",result);
         }
     }

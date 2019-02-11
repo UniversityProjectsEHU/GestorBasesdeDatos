@@ -16,5 +16,8 @@ namespace MiniSQLEngine
         }
        
     }
+    public class Query
+    {
 
+    }
 }
