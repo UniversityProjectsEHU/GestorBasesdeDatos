@@ -8,5 +8,6 @@ namespace MiniSQLEngine
 {
     class Constants
     {
+        String a;
     }
 }
