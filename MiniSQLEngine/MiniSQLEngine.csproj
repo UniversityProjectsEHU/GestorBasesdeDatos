@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassSelect.cs" />
+    <Compile Include="CreateDatabase.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
