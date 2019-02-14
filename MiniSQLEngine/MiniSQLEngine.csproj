@@ -41,6 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassDelete.cs" />
+    <Compile Include="ClassInsert.cs" />
+    <Compile Include="ClassTable.cs" />
+    <Compile Include="ClassUpdate.cs" />
     <Compile Include="CreateDatabase.cs" />
     <Compile Include="ClassSelect.cs" />
     <Compile Include="DropDatabase.cs" />

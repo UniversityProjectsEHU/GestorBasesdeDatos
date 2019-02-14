@@ -7,17 +7,15 @@ using System.Threading.Tasks;
 
 namespace MiniSQLEngine
 {
-    public class DropTable : Query
+    public class ClassInsert : Query
     {
-        String tableName;
-
-        public DropTable(String table)
+        public ClassInsert()
         {
-            tableName = table;
+
         }
         public override void Run()
         {
-
+            throw new NotImplementedException();
         }
     }
 }
