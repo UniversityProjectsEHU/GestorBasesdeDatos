@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace MiniSQLEngine
 {
-    class ClassSelect
+    public class ClassSelect : Query
     {
+        public ClassSelect()
+        {
 
+        }
+        public override void Run()
+        {
+           
+        }
     }
 }

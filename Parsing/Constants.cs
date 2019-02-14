@@ -8,21 +8,22 @@ namespace Parsing
 {
     class Constants
     {
-        String regExSelect = @"SELECT\s+(\*|\w+)\s+FROM\s+(\w+)\s+WHERE\s+(\w+<[0-9]+|\w+>[0-9]+|\w+=[0-9]+);";
-        String regExDelete = @"DELETE\s+FROM\s+(\w+)\s+WHERE\s+(\w+<[0-9]+|\w+>[0-9]+|\w+=[0-9]+);";
-        String regExInsert = @"INSERT\s+INTO\s+(\w+)\s+VALUES\s+\(([^\)]+)\);";
-        String regExpUpdate = @"UPDATE\s+(\w+)\s+SET\s+([^ WHERE]+)\s+WHERE\s+(\w+>[0-9]+|\w+<[0-9]+|\w+=[0-9]+);";
-        String regExpCreateDatabase = @"CREATE DATABASE(\w+);";
-        String regExpDropDatabase = @"DROP DATABASE(\w+);";
-        String regExpCreateTable = @"CREATE TABLE(\w+) \(([^\)]+)\);";
-        String regExTypeSelect = @"(SELECT)";
-        String regExTypeInsert = @"(INSERT)";
-        String regExTypeUpdate = @"(UPDATE)";
-        String regExTypeDelete = @"(DELETE\s+FROM)";
-        String regExTypesDropDatabase = @"(DROP\s+DATABASE)";
-        String regExTypesDropTable = @"(DROP\s+TABLE)";
-        String regExTypesCreateDatabase = @"(CREATE\s+DATABASE)";
-        String regExTypesCreateTable = @"(CREATE\s+TABLE)";
+        public const String regExSelect = @"SELECT\s+(\*|\w+)\s+FROM\s+(\w+)\s+WHERE\s+(\w+<[0-9]+|\w+>[0-9]+|\w+=[0-9]+);";
+        public const String regExDelete = @"DELETE\s+FROM\s+(\w+)\s+WHERE\s+(\w+<[0-9]+|\w+>[0-9]+|\w+=[0-9]+);";
+        public const String regExInsert = @"INSERT\s+INTO\s+(\w+)\s+VALUES\s+\(([^\)]+)\);";
+        public const String regExpUpdate = @"UPDATE\s+(\w+)\s+SET\s+([^ WHERE]+)\s+WHERE\s+(\w+>[0-9]+|\w+<[0-9]+|\w+=[0-9]+);";
+        public const String regExpCreateDatabase = @"CREATE DATABASE(\w+);";
+        public const String regExpDropDatabase = @"DROP DATABASE(\w+);";
+        public const String regExpDropTable = @"DROP TABLE(\w+);";
+        public const String regExpCreateTable = @"CREATE TABLE(\w+) \(([^\)]+)\);";
+        public const String regExTypeSelect = @"(SELECT)";
+        public const String regExTypeInsert = @"(INSERT)";
+        public const String regExTypeUpdate = @"(UPDATE)";
+        public const String regExTypeDelete = @"(DELETE\s+FROM)";
+        public const String regExTypesDropDatabase = @"(DROP\s+DATABASE)";
+        public const String regExTypesDropTable = @"(DROP\s+TABLE)";
+        public const String regExTypesCreateDatabase = @"(CREATE\s+DATABASE)";
+        public const String regExTypesCreateTable = @"(CREATE\s+TABLE)";
         
 
 
