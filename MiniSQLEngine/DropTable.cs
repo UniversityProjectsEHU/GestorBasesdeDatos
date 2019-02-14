@@ -1,10 +1,21 @@
-﻿using System;
+﻿
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-public class DropTable : Query
+namespace MiniSQLEngine
 {
-    //Overraid.
-	public overraid DropTable(String name_table)
-	{
+    public class DropTable : Query
+    {
+        public DropTable()
+        {
 
-	}
+        }
+        public override void Run()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
