@@ -8,9 +8,14 @@ namespace MiniSQLEngine
 {
     public class ClassSelect : Query
     {
-        public ClassSelect()
+        private string []columns;
+        private string table;
+        private string condition;
+        public ClassSelect(string [] columns,string table,string condition)
         {
-
+            this.columns = columns;
+            this.table = table;
+            this.condition = condition;
         }
         public override void Run()
         {
