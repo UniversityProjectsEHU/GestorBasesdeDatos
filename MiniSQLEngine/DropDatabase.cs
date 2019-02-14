@@ -1,10 +1,11 @@
-﻿using System;
+﻿using MiniSQLEngine;
+using System;
 
 public class DropDatabase:Query
 {
-    //Overraid
-	public overraid Run(String name_database)
-	{
 
-	}
+    public override void Run()
+    {
+        throw new NotImplementedException();
+    }
 }

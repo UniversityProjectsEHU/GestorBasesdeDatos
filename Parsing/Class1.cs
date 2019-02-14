@@ -14,13 +14,25 @@ namespace Parsing
         public void parse(String pQuery)
         {
             Match matchselect = Regex.Match(pQuery,Constants.regExSelect);
+            Match matchcreatedatabase = Regex.Match(pQuery, Constants.regExTypesCreateDatabase);
+            Match matchdropdatabase = Regex.Match(pQuery, Constants.regExTypesDropDatabase);
+
             if (matchselect.Success)
             {
                 manageSelect(pQuery);
             }
 
+            if (matchcreatedatabase.Success)
+            {
+                ManageCreateDatabase(pQuery);
+            }
 
-          
+            if (matchdropdatabase.Success)
+            {
+                ManageDropDatabase(pQuery);
+            }
+
+
         }
 
        
@@ -31,5 +43,25 @@ namespace Parsing
             return query;
       
         }
+
+        public Query ManageCreateDatabase(String pQuery)
+        {
+            CreateDatabase query = new CreateDatabase();
+            Match matchcreatedatabase2 = Regex.Match(pQuery, Constants.regExpCreateDatabase);
+            if (matchcreatedatabase2.Success)
+            {
+                matchcreatedatabase2
+            }
+
+
+            return query;
+        }
+
+        public Query ManageDropDatabase(String pQuery)
+        {
+            DropDatabase query = new DropDatabase();
+            return query;
+        }
+
     }
 }
