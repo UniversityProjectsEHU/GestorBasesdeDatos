@@ -1,21 +1,21 @@
-﻿
+﻿using MiniSQLEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MiniSQLEngine
+public class DropDatabase:Query
 {
-    public class DropDatabase : Query
+    private string name;
+    
+    public DropDatabase(string pName)
     {
-        public DropDatabase()
-        {
+        name = pName;
+    }
 
-        }
-        public override void Run()
-        {
-            throw new NotImplementedException();
-        }
+    public override void Run()
+    {
+        throw new NotImplementedException();
     }
 }

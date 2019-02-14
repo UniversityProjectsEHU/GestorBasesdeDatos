@@ -9,13 +9,15 @@ namespace MiniSQLEngine
 {
     public class DropTable : Query
     {
-        public DropTable()
-        {
+        String tableName;
 
+        public DropTable(String table)
+        {
+            tableName = table;
         }
         public override void Run()
         {
-            throw new NotImplementedException();
+
         }
     }
 }
