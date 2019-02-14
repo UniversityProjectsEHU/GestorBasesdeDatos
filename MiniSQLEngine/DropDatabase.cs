@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 public class DropDatabase:Query
 {
+    private string name;
+    
+    public DropDatabase(string pName)
+    {
+        name = pName;
+    }
 
     public override void Run()
     {

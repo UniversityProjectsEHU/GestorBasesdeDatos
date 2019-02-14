@@ -11,7 +11,7 @@ namespace Parsing
 {
     public class Class1
     {
-        public void parse(String pQuery)
+        public void parse(string pQuery)
         {
             Match matchselect = Regex.Match(pQuery,Constants.regExSelect);
             Match matchcreatedatabase = Regex.Match(pQuery, Constants.regExTypesCreateDatabase);
@@ -22,12 +22,12 @@ namespace Parsing
                 manageSelect(pQuery);
             }
 
-            if (matchcreatedatabase.Success)
+            else if (matchcreatedatabase.Success)
             {
                 ManageCreateDatabase(pQuery);
             }
 
-            if (matchdropdatabase.Success)
+            else if (matchdropdatabase.Success)
             {
                 ManageDropDatabase(pQuery);
             }
@@ -37,29 +37,36 @@ namespace Parsing
 
        
 
-        public Query manageSelect(String pQuery)
+        public Query manageSelect(string pQuery)
         {
             ClassSelect query = new ClassSelect();
             return query;
       
         }
 
-        public Query ManageCreateDatabase(String pQuery)
+        public Query ManageCreateDatabase(string pQuery)
         {
-            CreateDatabase query = new CreateDatabase();
+            string name="";
             Match matchcreatedatabase2 = Regex.Match(pQuery, Constants.regExpCreateDatabase);
             if (matchcreatedatabase2.Success)
             {
-                //matchcreatedatabase2
+                name = matchcreatedatabase2.Groups[1].Value;
+
             }
-
-
+            CreateDatabase query = new CreateDatabase(name);
             return query;
         }
 
-        public Query ManageDropDatabase(String pQuery)
+        public Query ManageDropDatabase(string pQuery)
         {
-            DropDatabase query = new DropDatabase();
+            string name = "";
+            Match matchdropdatabase2 = Regex.Match(pQuery, Constants.regExpDropDatabase);
+            if (matchdropdatabase2.Success)
+            {
+                name = matchdropdatabase2.Groups[1].Value;
+
+            }
+            DropDatabase query = new DropDatabase(name);
             return query;
         }
 
