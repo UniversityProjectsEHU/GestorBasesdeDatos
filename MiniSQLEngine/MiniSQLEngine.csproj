@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="CreateDatabase.cs" />
     <Compile Include="ClassSelect.cs" />
+    <Compile Include="DropDatabase.cs" />
+    <Compile Include="DropTable.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
