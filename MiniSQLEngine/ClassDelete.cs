@@ -8,9 +8,11 @@ namespace MiniSQLEngine
 {
     public class ClassDelete : Query
     {
-        public ClassDelete()
+        private string Table, Condition;
+        public ClassDelete(string pTable,string pCondition)
         {
-
+            Table = pTable;
+            Condition = pCondition;
         }
         public override void Run()
         {

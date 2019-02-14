@@ -8,9 +8,14 @@ namespace MiniSQLEngine
 {
     public class ClassUpdate : Query
     {
-        public ClassUpdate()
+        private string Table,Condition;
+        private string[] Column;
+        
+        public ClassUpdate(string pTable,string[] pColumn,string pCondition)
         {
-
+            Table = pTable;
+            Column = pColumn;
+            Condition = pCondition;
         }
         public override void Run()
         {

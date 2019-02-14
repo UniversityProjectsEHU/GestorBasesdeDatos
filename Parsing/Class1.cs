@@ -18,6 +18,9 @@ namespace Parsing
             Match matchdropdatabase = Regex.Match(pQuery, Constants.regExTypesDropDatabase);
             Match matchDropTable = Regex.Match(pQuery, Constants.regExTypesDropTable);
             Match matchCreateTable = Regex.Match(pQuery, Constants.regExTypesCreateTable);
+            Match matchdelete = Regex.Match(pQuery, Constants.regExTypeDelete);
+            Match matchupdate = Regex.Match(pQuery, Constants.regExTypeUpdate);
+
             if (matchselect.Success)
             {
                 ManageSelect(pQuery);
@@ -40,12 +43,11 @@ namespace Parsing
             {
                 ManageDropDatabase(pQuery);
             }
-            Match matchdelete = Regex.Match(pQuery, Constants.regExTypeDelete);
+           
              else if (matchdelete.Success)
             {
                 ManageDelete(pQuery);
             }
-            Match matchupdate = Regex.Match(pQuery, Constants.regExTypeUpdate);
             else if (matchselect.Success)
             {
                 ManageUpdate(pQuery);
@@ -59,13 +61,15 @@ namespace Parsing
             Match Update = Regex.Match(pQuery, Constants.regExpUpdate);
             if(Update.Success)
             {
-                String Columna = Update.Groups[0].Value;
-                String Tabla = Update.Groups[1].Value;
-                String Condicion = Update.Groups[2].Value;
-                ClassUpdate query = new ClassUpdate();
-
+                string Table = Update.Groups[0].Value;
+                string Column = Update.Groups[1].Value;
+                string[] ColumnSplit = Column.Split(',');
+                string Condition = Update.Groups[2].Value;
+                ClassUpdate query = new ClassUpdate(Table,ColumnSplit,Condition);
+                return query;
             }
-            return query;
+            return null;
+           
         }
 
         public Query ManageDelete(string pQuery)
@@ -73,13 +77,14 @@ namespace Parsing
             Match Update = Regex.Match(pQuery, Constants.regExpUpdate);
             if (Update.Success)
             {
-                String Columna = Update.Groups[1].Value;
-                String Tabla = Update.Groups[2].Value;
-                String Condicion = Update.Groups[3].Value;
-                ClassUpdate query = new ClassUpdate();
-
+                ;
+                string Table = Update.Groups[1].Value;
+                string Condition = Update.Groups[2].Value;
+                ClassDelete query = new ClassDelete(Table,Condition);
+                return query;
             }
-            return query;
+            return null;
+           
         }
 
         public Query ManageSelect(string pQuery)
