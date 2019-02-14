@@ -16,19 +16,16 @@ namespace Parsing
             Match matchselect = Regex.Match(pQuery,Constants.regExSelect);
             Match matchcreatedatabase = Regex.Match(pQuery, Constants.regExTypesCreateDatabase);
             Match matchdropdatabase = Regex.Match(pQuery, Constants.regExTypesDropDatabase);
-
+            Match matchDropTable = Regex.Match(pQuery, Constants.regExTypesDropTable);
+            Match matchCreateTable = Regex.Match(pQuery, Constants.regExTypesCreateTable);
             if (matchselect.Success)
             {
                 ManageSelect(pQuery);
             }
-
-            Match matchDropTable = Regex.Match(pQuery, Constants.regExTypesDropTable);
             else if (matchDropTable.Success)
             {
                 ManageDropTable(pQuery);
             }
-
-            Match matchCreateTable = Regex.Match(pQuery, Constants.regExTypesCreateTable);
             else if (matchCreateTable.Success)
             {
                 ManageCreateTable(pQuery);
@@ -49,7 +46,7 @@ namespace Parsing
 
        
 
-        public Query manageSelect(string pQuery)
+        public Query ManageSelect(string pQuery)
         {
             ClassSelect query = new ClassSelect();
             return query;
@@ -61,7 +58,8 @@ namespace Parsing
             Match matchDropTable = Regex.Match(pQuery, Constants.regExpDropTable);
             if (matchDropTable.Success)
             {
-                DropTable query = new DropTable();
+                string name = matchDropTable.Groups[1].Value;
+                DropTable query = new DropTable(name);
                 return query;
             }
             else
@@ -77,7 +75,7 @@ namespace Parsing
             Match matchCreateTable = Regex.Match(pQuery, Constants.regExpCreateTable);
             if (matchCreateTable.Success)
             {
-                ClassTable query = new ClassTable();
+                CreateTable query = new CreateTable();
                 return query;
             }
             else
@@ -88,7 +86,6 @@ namespace Parsing
       
         }
 
-        public Query ManageCreateDatabase(String pQuery)
         public Query ManageCreateDatabase(string pQuery)
         {
             string name="";
