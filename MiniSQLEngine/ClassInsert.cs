@@ -9,9 +9,12 @@ namespace MiniSQLEngine
 {
     public class ClassInsert : Query
     {
-        public ClassInsert()
+        private string aTable;
+        private string[] values;
+        public ClassInsert(String table, String[] myArray)
         {
-
+            aTable = table;
+            values = myArray;
         }
         public override void Run()
         {
