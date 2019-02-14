@@ -50,7 +50,7 @@ namespace Parsing
             Match matchcreatedatabase2 = Regex.Match(pQuery, Constants.regExpCreateDatabase);
             if (matchcreatedatabase2.Success)
             {
-                matchcreatedatabase2
+                //matchcreatedatabase2
             }
 
 
