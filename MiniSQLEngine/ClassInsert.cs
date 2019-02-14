@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace MiniSQLEngine
 {
-    public class DropTable : Query
+    public class ClassInsert : Query
     {
-        public DropTable()
+        public ClassInsert()
         {
 
         }

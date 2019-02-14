@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MiniSQLEngine
 {
-    public class DropTable : Query
+    public class ClassUpdate : Query
     {
-        public DropTable()
+        public ClassUpdate()
         {
 
         }
@@ -19,3 +18,4 @@ namespace MiniSQLEngine
         }
     }
 }
+
