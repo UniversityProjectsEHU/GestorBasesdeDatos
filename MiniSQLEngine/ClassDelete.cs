@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,17 +6,16 @@ using System.Threading.Tasks;
 
 namespace MiniSQLEngine
 {
-    public class DropTable : Query
+    public class ClassDelete : Query
     {
-        String tableName;
-
-        public DropTable(String table)
+        public ClassDelete()
         {
-            tableName = table;
+
         }
         public override void Run()
         {
-
+            throw new NotImplementedException();
         }
     }
 }
+
