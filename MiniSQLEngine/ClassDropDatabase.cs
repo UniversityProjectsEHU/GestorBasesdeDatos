@@ -5,17 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class ClassDropDatabase:Query
+namespace MiniSQLEngine
 {
-    private string name;
-    
-    public ClassDropDatabase(string pName)
+    public class ClassDropDatabase : Query
     {
-        name = pName;
-    }
+        private string name;
 
-    public override void Run()
-    {
-        throw new NotImplementedException();
+        public ClassDropDatabase(string pName)
+        {
+            name = pName;
+        }
+
+        public override void Run()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
