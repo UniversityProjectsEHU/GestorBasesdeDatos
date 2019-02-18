@@ -43,12 +43,12 @@
   <ItemGroup>
     <Compile Include="ClassDelete.cs" />
     <Compile Include="ClassInsert.cs" />
-    <Compile Include="ClassTable.cs" />
+    <Compile Include="ClassCreateTable.cs" />
     <Compile Include="ClassUpdate.cs" />
-    <Compile Include="CreateDatabase.cs" />
+    <Compile Include="ClassCreateDatabase.cs" />
     <Compile Include="ClassSelect.cs" />
-    <Compile Include="DropDatabase.cs" />
-    <Compile Include="DropTable.cs" />
+    <Compile Include="ClassDropDatabase.cs" />
+    <Compile Include="ClassDropTable.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace MiniSQLEngine
 {
-    public class DropTable : Query
+    public class ClassDropTable : Query
     {
         String tableName;
 
-        public DropTable(String table)
+        public ClassDropTable(String table)
         {
             tableName = table;
         }

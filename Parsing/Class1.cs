@@ -11,7 +11,7 @@ namespace Parsing
 {
     public class Class1
     {
-        public void Parse(string pQuery)
+        public Query Parse(string pQuery)
         {
             Match matchselect = Regex.Match(pQuery,Constants.regExTypeSelect);
             Match matchcreatedatabase = Regex.Match(pQuery, Constants.regExTypesCreateDatabase);
@@ -25,44 +25,44 @@ namespace Parsing
             Match matchinsert = Regex.Match(pQuery, Constants.regExTypeInsert);
             if (matchselect.Success)
             {
-                ManageSelect(pQuery);
+               return ManageSelect(pQuery);
             }
             else if (matchinsert.Success)
             {
-                ManageInsert(pQuery);
+                return ManageInsert(pQuery);
             }
             else if (matchDropTable.Success)
             {
-                ManageDropTable(pQuery);
+                return ManageDropTable(pQuery);
             }
             else if (matchCreateTable.Success)
             {
-                ManageCreateTable(pQuery);
+                return ManageCreateTable(pQuery);
             }
 
             else if (matchcreatedatabase.Success)
             {
-                ManageCreateDatabase(pQuery);
+                return ManageCreateDatabase(pQuery);
             }
 
             else if (matchdropdatabase.Success)
             {
-                ManageDropDatabase(pQuery);
+                return ManageDropDatabase(pQuery);
             }
            
              else if (matchdelete.Success)
             {
-                ManageDelete(pQuery);
+                return ManageDelete(pQuery);
             }
             else if (matchselect.Success)
             {
-                ManageUpdate(pQuery);
+                return ManageUpdate(pQuery);
             }
-
-
+            //Manejar errores/Excepciones
+            return null;
         }
 
-        public Query ManageUpdate(string pQuery)
+        public ClassUpdate ManageUpdate(string pQuery)
         {
             Match Update = Regex.Match(pQuery, Constants.regExpUpdate);
             if(Update.Success)
@@ -78,7 +78,7 @@ namespace Parsing
            
         }
 
-        public Query ManageDelete(string pQuery)
+        public ClassDelete ManageDelete(string pQuery)
         {
             Match Update = Regex.Match(pQuery, Constants.regExpUpdate);
             if (Update.Success)
@@ -95,13 +95,13 @@ namespace Parsing
 
         
 
-        public Query ManageDropTable(String pQuery)
+        public ClassDropTable ManageDropTable(String pQuery)
         {
             Match matchDropTable = Regex.Match(pQuery, Constants.regExpDropTable);
             if (matchDropTable.Success)
             {
                 string name = matchDropTable.Groups[1].Value;
-                DropTable query = new DropTable(name);
+                ClassDropTable query = new ClassDropTable(name);
                 return query;
             }
             else
@@ -112,12 +112,12 @@ namespace Parsing
 
         }
 
-        public Query ManageCreateTable(String pQuery)
+        public ClassCreateTable ManageCreateTable(String pQuery)
         {
             Match matchCreateTable = Regex.Match(pQuery, Constants.regExpCreateTable);
             if (matchCreateTable.Success)
             {
-                CreateTable query = new CreateTable();
+                ClassCreateTable query = new ClassCreateTable();
                 return query;
             }
             else
@@ -127,7 +127,7 @@ namespace Parsing
         }
             
 
-        public Query ManageCreateDatabase(string pQuery)
+        public ClassCreateDatabase ManageCreateDatabase(string pQuery)
         {
             string name="";
             Match matchcreatedatabase2 = Regex.Match(pQuery, Constants.regExpCreateDatabase);
@@ -136,11 +136,11 @@ namespace Parsing
                 name = matchcreatedatabase2.Groups[1].Value;
 
             }
-            CreateDatabase query = new CreateDatabase(name);
+            ClassCreateDatabase query = new ClassCreateDatabase(name);
             return query;
         }
 
-        public Query ManageDropDatabase(string pQuery)
+        public ClassDropDatabase ManageDropDatabase(string pQuery)
         {
             string name = "";
             Match matchdropdatabase2 = Regex.Match(pQuery, Constants.regExpDropDatabase);
@@ -149,12 +149,12 @@ namespace Parsing
                 name = matchdropdatabase2.Groups[1].Value;
 
             }
-            DropDatabase query = new DropDatabase(name);
+            ClassDropDatabase query = new ClassDropDatabase(name);
             return query;
         }
 
 
-        public Query ManageInsert(String pQuery)
+        public ClassInsert ManageInsert(String pQuery)
         {
             //public const String regExInsert = @"INSERT\s+INTO\s+(\w+)\s+VALUES\s+\(([^\)]+)\);";
             Match match = Regex.Match(pQuery, Constants.regExInsert);
@@ -169,7 +169,7 @@ namespace Parsing
             
             return null;
         }
-        public Query ManageSelect(string pQuery)
+        public ClassSelect ManageSelect(string pQuery)
         {
             ClassSelect query;
             Match matchselect2 = Regex.Match(pQuery,Constants.regExSelect);

@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class DropDatabase:Query
+public class ClassDropDatabase:Query
 {
     private string name;
     
-    public DropDatabase(string pName)
+    public ClassDropDatabase(string pName)
     {
         name = pName;
     }

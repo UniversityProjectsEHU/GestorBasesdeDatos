@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace MiniSQLEngine
 {
-    public class CreateDatabase : Query
+    public class ClassCreateTable : Query
     {
-        private string tableName; 
-        public CreateDatabase(string pName)
+        public ClassCreateTable()
         {
-            pName = tableName;
+
         }
         public override void Run()
         {
