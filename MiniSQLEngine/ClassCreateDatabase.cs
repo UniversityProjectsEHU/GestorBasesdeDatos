@@ -20,6 +20,8 @@ namespace MiniSQLEngine
         }
         public override void Run()
         {
+            string path = @"..//..//..//data//" + tableName;
+            System.IO.Directory.CreateDirectory(path);
             throw new NotImplementedException();
         }
     }
