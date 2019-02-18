@@ -1,4 +1,5 @@
 ﻿using System;
+using MiniSQLEngine;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,10 @@ namespace MiniSQLEngine
         public ClassCreateDatabase(string pName)
         {
             pName = tableName;
+        }
+        public string getName()
+        {
+            return tableName;
         }
         public override void Run()
         {
