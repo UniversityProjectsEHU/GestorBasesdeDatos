@@ -15,6 +15,10 @@ namespace MiniSQLEngine
         {
             tableName = table;
         }
+        public string GetName()
+        {
+            return tableName;
+        }
         public override void Run()
         {
 
