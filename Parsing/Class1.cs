@@ -117,7 +117,11 @@ namespace Parsing
             Match matchCreateTable = Regex.Match(pQuery, Constants.regExpCreateTable);
             if (matchCreateTable.Success)
             {
-                ClassCreateTable query = new ClassCreateTable();
+                
+                string table = matchCreateTable.Groups[1].Value;
+                string values = matchCreateTable.Groups[2].Value;
+                string[] myArray = values.Split(',');
+                ClassCreateTable query = new ClassCreateTable(table, myArray);
                 return query;
             }
             else

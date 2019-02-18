@@ -8,9 +8,13 @@ namespace MiniSQLEngine
 {
     public class ClassCreateTable : Query
     {
-        public ClassCreateTable()
-        {
+        private string aTable;
+        private string[] values;
 
+        public ClassCreateTable(String table, String[] myArray)
+        {
+            aTable = table;
+            values = myArray;
         }
         public override void Run()
         {
