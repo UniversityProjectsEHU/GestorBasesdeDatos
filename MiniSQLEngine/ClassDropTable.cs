@@ -15,9 +15,15 @@ namespace MiniSQLEngine
         {
             tableName = table;
         }
+
+        public override string getClass()
+        {
+            return "droptable";
+        }
+
         public override void Run()
         {
-
+            
         }
     }
 }

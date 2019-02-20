@@ -16,9 +16,13 @@ namespace MiniSQLEngine
             name = pName;
         }
 
+        public override string getClass()
+        {
+            return "dropdb";
+        }
+
         public override void Run()
         {
-            throw new NotImplementedException();
         }
     }
 }

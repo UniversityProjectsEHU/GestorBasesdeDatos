@@ -17,6 +17,12 @@ namespace MiniSQLEngine
             Column = pColumn;
             Condition = pCondition;
         }
+
+        public override string getClass()
+        {
+            return "update";
+        }
+
         public override void Run()
         {
             throw new NotImplementedException();

@@ -16,6 +16,12 @@ namespace MiniSQLEngine
             aTable = table;
             values = myArray;
         }
+
+        public override string getClass()
+        {
+            return "createtable";
+        }
+
         public override void Run()
         {
             //Pendiente de cambios
@@ -31,7 +37,6 @@ namespace MiniSQLEngine
             }
 
             System.IO.File.WriteAllText(pathfileDEF, info);
-            throw new NotImplementedException();
         }
     }
 }

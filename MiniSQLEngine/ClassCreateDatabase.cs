@@ -14,6 +14,12 @@ namespace MiniSQLEngine
         {
             pName = tableName;
         }
+
+        public override string getClass()
+        {
+            return "createdb";
+        }
+
         public string getName()
         {
             return tableName;
@@ -22,7 +28,7 @@ namespace MiniSQLEngine
         {
             string path = @"..//..//..//data//" + tableName;
             System.IO.Directory.CreateDirectory(path);
-            throw new NotImplementedException();
+
         }
     }
 }

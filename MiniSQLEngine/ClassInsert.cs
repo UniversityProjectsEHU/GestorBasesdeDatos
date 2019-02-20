@@ -16,9 +16,15 @@ namespace MiniSQLEngine
             aTable = table;
             values = myArray;
         }
+
+        public override string getClass()
+        {
+            return "insert";
+        }
+
         public override void Run()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

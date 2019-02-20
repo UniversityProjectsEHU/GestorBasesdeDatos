@@ -7,7 +7,22 @@ using System.Threading.Tasks;
 namespace MiniSQLEngine
 {
     class Constants
-    { 
-        String a;
+    {
+        public const string regExSelect = @"SELECT\s+(\*|\w+)\s+FROM\s+(\w+)\s+WHERE\s+(\w+<[0-9]+|\w+>[0-9]+|\w+=[0-9]+);";
+        public const string regExDelete = @"DELETE\s+FROM\s+(\w+)\s+WHERE\s+(\w+<[0-9]+|\w+>[0-9]+|\w+=[0-9]+);";
+        public const string regExInsert = @"INSERT\s+INTO\s+(\w+)\s+VALUES\s+\(([^\)]+)\);";
+        public const string regExpUpdate = @"UPDATE\s+(\w+)\s+SET\s+([^ WHERE]+)\s+WHERE\s+(\w+>[0-9]+|\w+<[0-9]+|\w+=[0-9]+);";
+        public const string regExpCreateDatabase = @"CREATE DATABASE(\w+);";
+        public const string regExpDropDatabase = @"DROP DATABASE(\w+);";
+        public const string regExpDropTable = @"DROP TABLE(\w+);";
+        public const string regExpCreateTable = @"CREATE TABLE(\w+) \(([^\)]+)\);";
+        public const string regExTypeSelect = @"(SELECT)";
+        public const string regExTypeInsert = @"(INSERT)";
+        public const string regExTypeUpdate = @"(UPDATE)";
+        public const string regExTypeDelete = @"(DELETE\s+FROM)";
+        public const string regExTypesDropDatabase = @"(DROP\s+DATABASE)";
+        public const string regExTypesDropTable = @"(DROP\s+TABLE)";
+        public const string regExTypesCreateDatabase = @"(CREATE\s+DATABASE)";
+        public const string regExTypesCreateTable = @"(CREATE\s+TABLE)";
     }
 }

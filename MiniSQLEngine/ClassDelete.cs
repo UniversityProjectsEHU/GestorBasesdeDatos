@@ -14,9 +14,14 @@ namespace MiniSQLEngine
             Table = pTable;
             Condition = pCondition;
         }
+
+        public override string getClass()
+        {
+            return "delete";
+        }
+
         public override void Run()
         {
-            throw new NotImplementedException();
         }
     }
 }
