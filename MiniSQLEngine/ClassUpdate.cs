@@ -17,6 +17,19 @@ namespace MiniSQLEngine
             Column = pColumn;
             Condition = pCondition;
         }
+        public string GetTable()
+        {
+            return Table;
+        }
+
+        public string[] GetColumns()
+        {
+            return Column;
+        }
+        public string GetCondition()
+        {
+            return Condition;
+        }
 
         public override string getClass()
         {

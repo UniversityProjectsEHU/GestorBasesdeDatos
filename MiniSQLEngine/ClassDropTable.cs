@@ -21,6 +21,10 @@ namespace MiniSQLEngine
             return "droptable";
         }
 
+        public string GetName()
+        {
+            return tableName;
+        }
         public override void Run()
         {
             
