@@ -28,7 +28,7 @@ namespace MiniSQLEngine
             return "select";
         }
 
-        public override void Run()
+        public override void Run(string dbname)
         {
             //Here we save the result into a variable so we can then pick it
             result = "result";

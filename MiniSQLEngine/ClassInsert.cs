@@ -22,7 +22,7 @@ namespace MiniSQLEngine
             return "insert";
         }
 
-        public override void Run()
+        public override void Run(string dbname)
         {
             
         }
