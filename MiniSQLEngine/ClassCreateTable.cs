@@ -22,11 +22,11 @@ namespace MiniSQLEngine
             return "createtable";
         }
 
-        public override void Run()
+        public override void Run(string dbname)
         {
             //Pendiente de cambios
-            string pathfileDEF = @"..//..//..//data//" + "db" + aTable + ".def";
-            string pathfileDATA = @"..//..//..//data//" + "db" + aTable + ".data";
+            string pathfileDEF = @"..//..//..//data//" + dbname +"//"+ aTable + ".def";
+            string pathfileDATA = @"..//..//..//data//" + dbname + "//" + aTable + ".data";
             System.IO.File.Create(pathfileDEF);
             System.IO.File.Create(pathfileDATA);
 

@@ -21,8 +21,10 @@ namespace MiniSQLEngine
             return "dropdb";
         }
 
-        public override void Run()
+        public override void Run(string dbname)
         {
+            string path = @"..//..//..//data//" + dbname;
+            System.IO.Directory.Delete(path, true);
         }
     }
 }
