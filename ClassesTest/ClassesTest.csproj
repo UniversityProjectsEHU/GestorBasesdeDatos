@@ -60,10 +60,6 @@
       <Project>{831531c4-f4a2-492d-a4b7-50d5ee8a6805}</Project>
       <Name>MiniSQLEngine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Parsing\Parsing.csproj">
-      <Project>{e85ae59f-1281-42bc-8c7e-963ea32eb924}</Project>
-      <Name>Parsing</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

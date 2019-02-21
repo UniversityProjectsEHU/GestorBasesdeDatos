@@ -60,10 +60,6 @@
       <Project>{831531c4-f4a2-492d-a4b7-50d5ee8a6805}</Project>
       <Name>MiniSQLEngine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Parsing\Parsing.csproj">
-      <Project>{E85AE59F-1281-42BC-8C7E-963EA32EB924}</Project>
-      <Name>Parsing</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
