@@ -101,10 +101,10 @@ namespace MiniSQLEngine
             Match Update = Regex.Match(pQuery, Constants.regExpUpdate);
             if (Update.Success)
             {
-                string Table = Update.Groups[0].Value;
-                string Column = Update.Groups[1].Value;
+                string Table = Update.Groups[1].Value;
+                string Column = Update.Groups[2].Value;
                 string[] ColumnSplit = Column.Split(',');
-                string Condition = Update.Groups[2].Value;
+                string Condition = Update.Groups[3].Value;
                 ClassUpdate query = new ClassUpdate(Table, ColumnSplit, Condition);
                 return query;
             }
@@ -114,12 +114,12 @@ namespace MiniSQLEngine
 
         public ClassDelete ManageDelete(string pQuery)
         {
-            Match Update = Regex.Match(pQuery, Constants.regExpUpdate);
-            if (Update.Success)
+            Match Delete = Regex.Match(pQuery, Constants.regExDelete);
+            if (Delete.Success)
             {
                 ;
-                string Table = Update.Groups[1].Value;
-                string Condition = Update.Groups[2].Value;
+                string Table = Delete.Groups[1].Value;
+                string Condition = Delete.Groups[2].Value;
                 ClassDelete query = new ClassDelete(Table, Condition);
                 return query;
             }
