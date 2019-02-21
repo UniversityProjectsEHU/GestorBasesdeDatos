@@ -20,5 +20,13 @@ namespace MiniSQLEngine
         {
             throw new NotImplementedException();
         }
+        public string getTableName()
+        {
+            return aTable;
+        }
+        public string[] getTableValues()
+        {
+            return values;
+        }
     }
 }

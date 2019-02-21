@@ -20,5 +20,9 @@ namespace MiniSQLEngine
         {
             throw new NotImplementedException();
         }
+        public string getDatabaseName()
+        {
+            return name;
+        }
     }
 }

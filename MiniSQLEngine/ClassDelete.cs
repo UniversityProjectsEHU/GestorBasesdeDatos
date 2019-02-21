@@ -8,15 +8,24 @@ namespace MiniSQLEngine
 {
     public class ClassDelete : Query
     {
-        private string Table, Condition;
+        private string table, condition;
+
         public ClassDelete(string pTable,string pCondition)
         {
-            Table = pTable;
-            Condition = pCondition;
+            table = pTable;
+            condition = pCondition;
         }
         public override void Run()
         {
             throw new NotImplementedException();
+        }
+        public string GetTableName()
+        {
+            return table;
+        }
+        public string getCondition()
+        {
+            return condition;
         }
     }
 }
