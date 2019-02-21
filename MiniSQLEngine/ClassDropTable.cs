@@ -21,9 +21,12 @@ namespace MiniSQLEngine
             return "droptable";
         }
 
-        public override void Run()
+        public override void Run(string dbname)
         {
-            
+            string pathfileDEF = @"..//..//..//data//" + dbname + "//" + tableName + ".def";
+            string pathfileDATA = @"..//..//..//data//" + dbname + "//" + tableName + ".data";
+            System.IO.File.Delete(pathfileDEF);
+            System.IO.File.Delete(pathfileDATA);
         }
     }
 }

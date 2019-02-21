@@ -20,7 +20,7 @@ namespace MiniSQLEngine
             return "delete";
         }
 
-        public override void Run()
+        public override void Run(string dbname)
         {
         }
     }

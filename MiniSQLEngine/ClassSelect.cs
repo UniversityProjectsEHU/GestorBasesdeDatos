@@ -18,6 +18,20 @@ namespace MiniSQLEngine
             this.table = table;
             this.condition = condition;
         }
+        public string GetTable()
+        {
+            return table;
+        }
+
+        public string[] GetColumns()
+        {
+            return columns;
+        }
+
+        public string GetCondition()
+        {
+            return condition;
+        }
         public string getResult()
         {
             return result;
@@ -28,7 +42,7 @@ namespace MiniSQLEngine
             return "select";
         }
 
-        public override void Run()
+        public override void Run(string dbname)
         {
             //Here we save the result into a variable so we can then pick it
             result = "result";
