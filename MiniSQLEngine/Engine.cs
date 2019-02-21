@@ -22,19 +22,19 @@ namespace MiniSQLEngine
         {
 
         }
-        public abstract void Run();
+        public abstract void Run(string dbname);
         public abstract string getClass();
     }
 
     public class ClassParsing
     {
-        public string Query(string psentencia)
+        public string Query(string psentencia, string dbname)
         {
             Query query = Parse(psentencia);
             string a=query.getClass();
             if (a.Equals("select"))
             {
-                query.Run();
+                query.Run(dbname);
                ClassSelect q2 = (ClassSelect)query;
                return q2.getResult();
             }
@@ -228,10 +228,25 @@ namespace MiniSQLEngine
     public class Database
     {
         private string dbname;
-        public Database(string dbname)
+        private static Database database;
+        private Database(string dbname)
         {
             this.dbname = dbname;
         }
+        public Database getDatabase(string nombre)
+        {
+            if (database==null)
+            {
+                database = new Database(nombre);
+            }
+            return database;
+        }
+
+        public string getNombre()
+        {
+            return dbname;
+        }
+
         public string Query(string psentencia)
         {
             ClassParsing c = new ClassParsing();

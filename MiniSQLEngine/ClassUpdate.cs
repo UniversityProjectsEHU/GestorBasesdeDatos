@@ -36,7 +36,7 @@ namespace MiniSQLEngine
             return "update";
         }
 
-        public override void Run()
+        public override void Run(string dbname)
         {
             throw new NotImplementedException();
         }
