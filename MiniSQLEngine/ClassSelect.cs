@@ -18,6 +18,20 @@ namespace MiniSQLEngine
             this.table = table;
             this.condition = condition;
         }
+        public string GetTable()
+        {
+            return table;
+        }
+
+        public string[] GetColumns()
+        {
+            return columns;
+        }
+
+        public string GetCondition()
+        {
+            return condition;
+        }
         public string getResult()
         {
             return result;

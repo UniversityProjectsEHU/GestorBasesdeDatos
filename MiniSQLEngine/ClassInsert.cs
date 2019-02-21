@@ -16,6 +16,16 @@ namespace MiniSQLEngine
             aTable = table;
             values = myArray;
         }
+        public string GetTable()
+        {
+            return aTable;
+        }
+
+        public string[] GetValues()
+        {
+            return values;
+        }
+
 
         public override string getClass()
         {
