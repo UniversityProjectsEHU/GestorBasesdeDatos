@@ -87,28 +87,4 @@ namespace ClassesTest
             Assert.AreEqual(myClass.ManageDropDatabase(query).getDatabaseName(), myDroppedDatabase.getDatabaseName());
         }
     }
-    [TestClass]
-    public class DeleteTest
-    {
-        [TestMethod]
-        public void TestManageDeleteTable()
-        {
-            string query = @"CREATE TABLE myTable(column1 int,column2 String,column3 int);";
-            Class1 myClass = new Class1();
-            string name = "myTable";
-            string[] values = { "column1 int true", "column2 string false", "column3 int false" };
-            ClassCreateTable myCreatedTable = new ClassCreateTable(name, values);
-            Assert.AreEqual(myClass.ManageCreateTable(query).getTableName(), myCreatedTable.getTableName());
-        }
-        [TestMethod]
-        public void TestManageDeleteCondition()
-        {
-            string query = @"DELETE FROM myTable WHERE id=1;";
-            Class1 myClass = new Class1();
-            string name = "myTable";
-            string condition = "id=1";
-            ClassDelete myDeletedTable = new ClassDelete(name, condition);
-            Assert.AreEqual(myClass.ManageDelete(query).getCondition(), myDeletedTable.getCondition());
-        }
-    }
 }
