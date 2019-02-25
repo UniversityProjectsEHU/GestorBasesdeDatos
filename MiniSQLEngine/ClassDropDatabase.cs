@@ -26,5 +26,9 @@ namespace MiniSQLEngine
             string path = @"..//..//..//data//" + dbname;
             System.IO.Directory.Delete(path, true);
         }
+        public string getDatabaseName()
+        {
+            return name;
+        }
     }
 }
