@@ -42,7 +42,6 @@ namespace ClassesTest
             string name = "myTable";
             string[] values = { "column1 int true", "column2 string false", "column3 int false" };
             string[] expectedValues = myClass.ManageCreateTable(query).getTableValues();
-            ClassCreateTable myCreatedTable = new ClassCreateTable(name, values);
             for (int i = 0; i < values.Length; i++)
             {
                 Assert.AreEqual(expectedValues[i], values[i]);
