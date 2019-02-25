@@ -11,7 +11,6 @@ namespace MiniSQLEngine
     {
         private string aTable;
         private string[] values;
-
         public ClassCreateTable(String table, String[] myArray)
         {
             aTable = table;

@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Parsing;
+
 using MiniSQLEngine;
 using System.Text.RegularExpressions;
 
@@ -13,7 +13,7 @@ namespace ClassesTest
         public void TestManageCreateDatabase()
         {
             string query = @"CREATE DATABASE myDB";
-            RunTests myClass = new RunTests();
+            ClassParsing myClass = new ClassParsing();
             string name = "myDB";
             ClassCreateDatabase myCreatedDB = new ClassCreateDatabase(name);
 
@@ -28,7 +28,7 @@ namespace ClassesTest
         public void TestManageCreateTableTableName()
         {
             string query = @"CREATE TABLE myTable(column1 int true,column2 string false,column3 int false);";
-            RunTests myClass = new RunTests();
+            ClassParsing myClass = new ClassParsing();
             string name = "myTable";
             string[] values = { "column1 int true", "column2 string false", "column3 int false" };
             ClassCreateTable myCreatedTable = new ClassCreateTable(name, values);
@@ -38,7 +38,7 @@ namespace ClassesTest
         public void TestManageCreateTableTableValues()
         {
             string query = @"CREATE TABLE myTable(column1 int true,column2 string false,column3 int false);";
-            RunTests myClass = new RunTests();
+            ClassParsing myClass = new ClassParsing();
             string name = "myTable";
             string[] values = { "column1 int true", "column2 string false", "column3 int false" };
             string[] expectedValues = myClass.ManageCreateTable(query).getTableValues();
@@ -57,7 +57,7 @@ namespace ClassesTest
         public void TestManageDeleteTable()
         {
             string query = @"CREATE TABLE myTable(column1 int,column2 String,column3 int);";
-            RunTests myClass = new RunTests();
+            ClassParsing myClass = new ClassParsing();
             string name = "myTable";
             string[] values = { "column1 int true", "column2 string false", "column3 int false" };
             ClassCreateTable myCreatedTable = new ClassCreateTable(name, values);
@@ -67,7 +67,7 @@ namespace ClassesTest
         public void TestManageDeleteCondition()
         {
             string query = @"DELETE FROM myTable WHERE id=1;";
-            RunTests myClass = new RunTests();
+            ClassParsing myClass = new ClassParsing();
             string name = "myTable";
             string condition = "id=1";
             ClassDelete myDeletedTable = new ClassDelete(name, condition);
@@ -81,7 +81,7 @@ namespace ClassesTest
         public void TestManageDropDatabase()
         {
             string query = @"DROP DATABASE myDB;";
-            RunTests myClass = new RunTests();
+            ClassParsing myClass = new ClassParsing();
             string name = "myDB";
             ClassDropDatabase myDroppedDatabase = new ClassDropDatabase(name);
             Assert.AreEqual(myClass.ManageDropDatabase(query).getDatabaseName(), myDroppedDatabase.getDatabaseName());
@@ -89,7 +89,7 @@ namespace ClassesTest
     }
 
 
-{
+
     [TestClass]
     public class ParsingTests
     {

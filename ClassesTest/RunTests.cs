@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MiniSQLEngine;
+using System.Text.RegularExpressions;
 
 namespace ClassesTest
 {
-    class RunTests
+    [TestClass]
+    public class TestCreateTable
     {
     }
 }
