@@ -41,7 +41,7 @@ namespace MiniSQLEngine
             {
                 if (i == values.Length-1)
                 {
-                    texto = texto + values[i]+";";
+                    texto = texto + values[i];
                 }
                 else
                 {
