@@ -33,12 +33,12 @@ namespace MiniSQLEngine
             string cond = null;
 
 
-            Match at = Regex.Match(Condition, Constants.regExConditionAttribute);
+            Match at = Regex.Match(condition, Constants.regExConditionAttribute);
             if (at.Success)
             {
                 attr = at.Groups[1].Value;
             }
-            Match val = Regex.Match(Condition, Constants.regExConditionValue);
+            Match val = Regex.Match(condition, Constants.regExConditionValue);
             if (val.Success)
             {
                 string value = val.Groups[1].Value;
@@ -64,7 +64,7 @@ namespace MiniSQLEngine
             int index = columns.IndexOf(attr);
             
 
-            string pathfileDATA = @"..//..//..//data//" + dbname + "//" + Table + ".data";
+            string pathfileDATA = @"..//..//..//data//" + dbname + "//" + table + ".data";
             string line2 = "";
      
             using (StreamReader sr2 = new StreamReader(pathfileDATA))
