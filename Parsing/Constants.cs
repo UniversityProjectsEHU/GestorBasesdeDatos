@@ -12,10 +12,10 @@ namespace Parsing
         public const String regExDelete = @"DELETE\s+FROM\s+(\w+)\s+WHERE\s+(\w+<[0-9]+|\w+>[0-9]+|\w+=[0-9]+);";
         public const String regExInsert = @"INSERT\s+INTO\s+(\w+)\s+VALUES\s+\(([^\)]+)\);";
         public const String regExpUpdate = @"UPDATE\s+(\w+)\s+SET\s+([^ WHERE]+)\s+WHERE\s+(\w+>[0-9]+|\w+<[0-9]+|\w+=[0-9]+);";
-        public const String regExpCreateDatabase = @"CREATE DATABASE(\w+);";
-        public const String regExpDropDatabase = @"DROP DATABASE(\w+);";
+        public const String regExpCreateDatabase = @"CREATE DATABASE\s+(\w+);";
+        public const String regExpDropDatabase = @"DROP DATABASE\s+(\w+);";
         public const String regExpDropTable = @"DROP TABLE(\w+);";
-        public const String regExpCreateTable = @"CREATE TABLE(\w+) \(([^\)]+)\);";
+        public const String regExpCreateTable = @"CREATE TABLE (\w+)\(([^\)]+)\);";
         public const String regExTypeSelect = @"(SELECT)";
         public const String regExTypeInsert = @"(INSERT)";
         public const String regExTypeUpdate = @"(UPDATE)";
