@@ -13,7 +13,7 @@ namespace ClassesTest
         public void TestManageCreateDatabase()
         {
             string query = @"CREATE DATABASE myDB";
-            Class1 myClass = new Class1();
+            Cla myClass = new ClassParsing();
             string name = "myDB";
             ClassCreateDatabase myCreatedDB = new ClassCreateDatabase(name);
 
