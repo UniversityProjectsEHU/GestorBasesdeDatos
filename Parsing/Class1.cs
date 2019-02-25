@@ -80,12 +80,12 @@ namespace Parsing
 
         public ClassDelete ManageDelete(string pQuery)
         {
-            Match Update = Regex.Match(pQuery, Constants.regExpUpdate);
-            if (Update.Success)
+            Match delete = Regex.Match(pQuery, Constants.regExDelete);
+            if (delete.Success)
             {
                 ;
-                string Table = Update.Groups[1].Value;
-                string Condition = Update.Groups[2].Value;
+                string Table = delete.Groups[1].Value;
+                string Condition = delete.Groups[2].Value;
                 ClassDelete query = new ClassDelete(Table,Condition);
                 return query;
             }
@@ -116,8 +116,7 @@ namespace Parsing
         {
             Match matchCreateTable = Regex.Match(pQuery, Constants.regExpCreateTable);
             if (matchCreateTable.Success)
-            {
-                
+            { 
                 string table = matchCreateTable.Groups[1].Value;
                 string values = matchCreateTable.Groups[2].Value;
                 string[] myArray = values.Split(',');

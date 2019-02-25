@@ -11,7 +11,6 @@ namespace MiniSQLEngine
     {
         private string aTable;
         private string[] values;
-
         public ClassCreateTable(String table, String[] myArray)
         {
             aTable = table;
@@ -51,6 +50,14 @@ namespace MiniSQLEngine
                 byte[] info2 = new UTF8Encoding(true).GetBytes(";");
                 stream.Write(info2, 0, info2.Length);
             }
+        }
+        public string getTableName()
+        {
+            return aTable;
+        }
+        public string[] getTableValues()
+        {
+            return values;
         }
     }
 }

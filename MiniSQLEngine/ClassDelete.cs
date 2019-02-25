@@ -10,11 +10,12 @@ namespace MiniSQLEngine
 {
     public class ClassDelete : Query
     {
-        private string Table, Condition;
+        private string table, condition;
+
         public ClassDelete(string pTable,string pCondition)
         {
-            Table = pTable;
-            Condition = pCondition;
+            table = pTable;
+            condition = pCondition;
         }
 
         public override string getClass()
@@ -24,7 +25,7 @@ namespace MiniSQLEngine
 
         public override void Run(string dbname)
         {
-            string pathfileDEF = @"..//..//..//data//" + dbname + "//" + Table + ".def";
+            string pathfileDEF = @"..//..//..//data//" + dbname + "//" + table + ".def";
             string line1;
             List<string> columns = new List<string>();
             string attr = null;
@@ -95,6 +96,15 @@ namespace MiniSQLEngine
                 }
 
             }
+        }
+        public string GetTableName()
+        {
+            return table;
+        }
+        public string getCondition()
+        {
+            return condition;
+        }
     }
 }
 
