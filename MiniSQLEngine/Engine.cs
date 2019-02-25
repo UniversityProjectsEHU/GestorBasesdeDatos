@@ -250,7 +250,7 @@ namespace MiniSQLEngine
         public string Query(string psentencia)
         {
             ClassParsing c = new ClassParsing();
-            return c.Query(psentencia);
+            return c.Query(psentencia,dbname);
         }
     }
 }
