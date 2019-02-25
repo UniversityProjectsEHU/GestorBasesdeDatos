@@ -12,7 +12,7 @@ namespace MiniSQLEngine
         private string tableName; 
         public ClassCreateDatabase(string pName)
         {
-            pName = tableName;
+            tableName = pName;
         }
 
         public override string getClass()
