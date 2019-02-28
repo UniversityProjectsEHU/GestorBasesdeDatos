@@ -12,7 +12,7 @@ namespace ClassesTest
         [TestMethod]
         public void TestManageCreateDatabase()
         {
-            string query = @"CREATE DATABASE myDB";
+            string query = @"CREATE DATABASE myDB;";
             ClassParsing myClass = new ClassParsing();
             string name = "myDB";
             ClassCreateDatabase myCreatedDB = new ClassCreateDatabase(name);
@@ -27,7 +27,7 @@ namespace ClassesTest
         [TestMethod]
         public void TestManageCreateTableTableName()
         {
-            string query = @"CREATE TABLE myTable(column1 int true,column2 string false,column3 int false);";
+            string query = @"CREATE TABLE myTable (column1 int true,column2 string false,column3 int false);";
             ClassParsing myClass = new ClassParsing();
             string name = "myTable";
             string[] values = { "column1 int true", "column2 string false", "column3 int false" };
@@ -37,7 +37,7 @@ namespace ClassesTest
         [TestMethod]
         public void TestManageCreateTableTableValues()
         {
-            string query = @"CREATE TABLE myTable(column1 int true,column2 string false,column3 int false);";
+            string query = @"CREATE TABLE myTable (column1 int true,column2 string false,column3 int false);";
             ClassParsing myClass = new ClassParsing();
             string name = "myTable";
             string[] values = { "column1 int true", "column2 string false", "column3 int false" };
@@ -56,7 +56,7 @@ namespace ClassesTest
         [TestMethod]
         public void TestManageDeleteTable()
         {
-            string query = @"CREATE TABLE myTable(column1 int,column2 String,column3 int);";
+            string query = @"CREATE TABLE myTable (column1 int,column2 String,column3 int);";
             ClassParsing myClass = new ClassParsing();
             string name = "myTable";
             string[] values = { "column1 int true", "column2 string false", "column3 int false" };
