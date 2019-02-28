@@ -77,7 +77,7 @@ namespace MiniSQLEngine
                         {
                             if (!data[index].Equals(cond))
                             {
-                                fileWrite.Write(line2);
+                                fileWrite.WriteLine(line2);
                             }
                         }
                         if (symbol.Equals(">"))
@@ -86,7 +86,7 @@ namespace MiniSQLEngine
                             int searchCon = int.Parse(cond);
                             if (queryCon <= searchCon)
                             {
-                                fileWrite.Write(line2);
+                                fileWrite.WriteLine(line2);
                             }
                         }
                         if (symbol.Equals("<"))
@@ -95,15 +95,15 @@ namespace MiniSQLEngine
                             int searchCon = int.Parse(cond);
                             if (queryCon >= searchCon)
                             {
-                                fileWrite.Write(line2);
+                                fileWrite.WriteLine(line2);
                             }
                         }
                     }
 
                 }
-                File.Delete(pathfileDATA);
-                File.Move(pathfileTMP, pathfileDATA);
             }
+            File.Delete(pathfileDATA);
+            File.Move(pathfileTMP, pathfileDATA);
         }
         public string GetTableName()
         {
