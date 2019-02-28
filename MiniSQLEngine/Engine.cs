@@ -235,7 +235,7 @@ namespace MiniSQLEngine
         }
         public Database getDatabase(string nombre)
         {
-            if (database==null)
+            if (database == null)
             {
                 database = new Database(nombre);
             }
@@ -250,7 +250,7 @@ namespace MiniSQLEngine
         public string Query(string psentencia)
         {
             ClassParsing c = new ClassParsing();
-            return c.Query(psentencia);
+            return c.Query(psentencia, dbname);
         }
     }
 }

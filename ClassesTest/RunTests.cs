@@ -7,12 +7,13 @@ using System.IO;
 namespace ClassesTest
 {
     [TestClass]
-    class TestCreateBothWithInsert
+    public class TestCreateBothWithInsert
     {
         [TestMethod]
         public void ExecuteTest()
         {
             string dbname = "myDB";
+            string dbname1 = "myDB1";
             string myTable = "thisTable";
             string[] values = { "One String true", "Two String false", "Three String false", "Caramba String false" };
             string[] valuesToInsert = { "One", "Two", "Three", "Caramba" };
@@ -27,7 +28,15 @@ namespace ClassesTest
             bool exists = Directory.Exists(@"..//..//..//data//thisTable");
             Assert.AreEqual(true, exists);
             newTable.Run(dbname);
+            bool existsTables = Directory.Exists(@"..//..//..//data//myDB//thisTable.data");
+            Assert.AreEqual(true, existsTables);
             inserted.Run(dbname);
+            /*string fullPath = @"..//..//..//data//myDB//thisTable.data";
+            StreamWriter file = new StreamWriter(fullPath, true);
+            for (int i = 0; i < valuesToInsert.Length; i++)
+            {
+                file.WriteLine(valuesToInsert[i]);
+            }*/
             }
         }
             
