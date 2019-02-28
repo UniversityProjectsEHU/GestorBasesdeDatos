@@ -24,6 +24,8 @@ namespace ClassesTest
             ClassCreateTable newTable = new ClassCreateTable(myTable, values);
             ClassInsert inserted = new ClassInsert(myTable, valuesToInsert);
             newDB.Run(dbname);
+            bool exists = Directory.Exists(@"..//..//..//data//thisTable");
+            Assert.AreEqual(true, exists);
             newTable.Run(dbname);
             inserted.Run(dbname);
             }
