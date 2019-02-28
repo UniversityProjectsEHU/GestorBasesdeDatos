@@ -160,7 +160,7 @@ namespace MiniSQLEngine
             }
             else
             {
-                return null;
+                 return null;
             }
         }
 
