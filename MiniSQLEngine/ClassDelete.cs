@@ -42,7 +42,7 @@ namespace MiniSQLEngine
             if (val.Success)
             {
                 string value = val.Groups[1].Value;
-                symbol = value.Substring(0,1);
+                symbol = value.Substring(0, 1);
                 cond = value.Substring(1);
             }
 
@@ -57,44 +57,52 @@ namespace MiniSQLEngine
                         string type = atributes[0];
                         columns.Add(type);
                     }
-    
+
                 }
             }
 
             int index = columns.IndexOf(attr);
-            
-
             string pathfileDATA = @"..//..//..//data//" + dbname + "//" + table + ".data";
+            string pathfileTMP = @"..//..//..//data//" + dbname + "//" + table + "2.data";
             string line2 = "";
-     
-            using (StreamReader sr2 = new StreamReader(pathfileDATA))
-            {
-                while ((line2 = sr2.ReadLine()) != null)                
-                {
-                    string[] data = line2.Split(',');
-                    if (symbol.Equals("="))
-                    { 
-                        if (data[index].Equals(cond))
-                        {
-                            //Borrar linea
-                        }
-                    }
-                    if (symbol.Equals(">"))
-                    {
-                        //if ((int) data[index] > (int)cond))
-                        {
-                            //Borrar linea
-                        }
-                    }
-                    if (symbol.Equals("<"))
-                    {
-                        //if ((int) data[index] < (int)cond))
-                        {
-                            //Borrar linea
-                        }
-                    }
-                }
 
+            using (StreamWriter fileWrite = new StreamWriter(pathfileTMP))
+            {
+                using (StreamReader sr2 = new StreamReader(pathfileDATA))
+                {
+                    while ((line2 = sr2.ReadLine()) != null)
+                    {
+                        string[] data = line2.Split(',');
+                        if (symbol.Equals("="))
+                        {
+                            if (!data[index].Equals(cond))
+                            {
+                                fileWrite.Write(line2);
+                            }
+                        }
+                        if (symbol.Equals(">"))
+                        {
+                            int queryCon = int.Parse(data[index]);
+                            int searchCon = int.Parse(cond);
+                            if (queryCon <= searchCon)
+                            {
+                                fileWrite.Write(line2);
+                            }
+                        }
+                        if (symbol.Equals("<"))
+                        {
+                            int queryCon = int.Parse(data[index]);
+                            int searchCon = int.Parse(cond);
+                            if (queryCon >= searchCon)
+                            {
+                                fileWrite.Write(line2);
+                            }
+                        }
+                    }
+
+                }
+                File.Delete(pathfileDATA);
+                File.Move(pathfileTMP, pathfileDATA);
             }
         }
         public string GetTableName()
