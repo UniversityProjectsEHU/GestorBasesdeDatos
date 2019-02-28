@@ -42,8 +42,8 @@ namespace MiniSQLEngine
         public override void Run(string dbname)
         {
             String[] elements = new String[2];
-            String operador="";
-            int posicion=0;
+            String operador = "";
+            int posicion = 0;
 
             //I need to know the operator of the condition
             if (Condition.Contains("="))
@@ -71,34 +71,42 @@ namespace MiniSQLEngine
             }
 
             //Open te file .def
-            String allFile = System.IO.File.ReadAllText("..//..//..//data//" + dbname +"//"+ Table + ".def");
+            String allFile = System.IO.File.ReadAllText("..//..//..//data//" + dbname + "//" + Table + ".def");
             String[] atrib = allFile.Split(',');
 
             //Search the postion of the atribute that appears in the condition
             String buscar = elements[0];
+            Boolean parar = false;
             foreach (String atributo in atrib)
             {
-                if (atributo.Contains(buscar)==false)
+                while (!parar)
                 {
-                    posicion = posicion + 1;
+                    if (!atributo.Contains(buscar))
+                    {
+                        posicion = posicion + 1;
+                    }
+                    else
+                    {
+                        parar = true;
+                    }
                 }
             }
 
             //Open te file .data
-            String allFile2 = System.IO.File.ReadAllText("..//..//..//data//" + dbname + "//" + Table + ".data");
-            String[] lineas = allFile.Split('\n');
+            String[] lineas = System.IO.File.ReadAllLines("..//..//..//data//" + dbname + "//" + Table + ".data");
 
             //Make the update
             int inde = 0;
             foreach (String linea in lineas)
             {
+
                 String[] datos = linea.Split(',');
-                if(operador== "<")
+                if (operador == "<")
                 {
                     int numero = Int32.Parse(datos[posicion]);
-                    if(numero < Int32.Parse(elements[1]))
+                    if (numero < Int32.Parse(elements[1]))
                     {
-                        lineas.SetValue(newRow,inde);
+                        lineas.SetValue(newRow, inde);
                     }
                     inde++;
                 }
@@ -112,9 +120,9 @@ namespace MiniSQLEngine
                     inde++;
 
                 }
-                else if(operador=="=")
+                else if (operador == "=")
                 {
-                    if (datos[posicion]== elements[1])
+                    if (datos[posicion] == elements[1])
                     {
                         lineas.SetValue(newRow, inde);
                     }
