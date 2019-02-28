@@ -24,5 +24,7 @@ namespace MiniSQLEngine
         public const string regExTypesDropTable = @"(DROP\s+TABLE)";
         public const string regExTypesCreateDatabase = @"(CREATE\s+DATABASE)";
         public const string regExTypesCreateTable = @"(CREATE\s+TABLE)";
+        public const string regExConditionAttribute = @"(\w+)>\w+|(\w+)<\w+|(\w+)=\w+";
+        public const string regExConditionValue = @"\w+(>\w+)|\w+(<\w+)|\w+(=\w+)";
     }
 }
