@@ -2,19 +2,34 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MiniSQLEngine;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace ClassesTest
 {
     [TestClass]
-    class TestCreateTable
+    class TestCreateBothWithInsert
     {
-        public void RunTest()
+        [TestMethod]
+        public void ExecuteTest()
         {
             string dbname = "myDB";
-            string myTable = "aTable";
-            string[] values = { "One", "Two", "Three", "Caramba" };
-            ClassCreateTable aNewTable = new ClassCreateTable(myTable, values);
+            string myTable = "thisTable";
+            string[] values = { "One String true", "Two String false", "Three String false", "Caramba String false" };
+            string[] valuesToInsert = { "One", "Two", "Three", "Caramba" };
+            /*string queryCreateDB = @"CREATE DATABASE myDB;";
+            string queryCreateTable = @"CREATE TABLE myTable (column1 int true,column2 string false,column3 int false);";
+            string queryInsert = @"INSERT INTO table1 VALUES (10,abc,8);";
+            */
+            ClassCreateDatabase newDB = new ClassCreateDatabase(dbname);
+            ClassCreateTable newTable = new ClassCreateTable(myTable, values);
+            ClassInsert inserted = new ClassInsert(myTable, valuesToInsert);
+            newDB.Run(dbname);
+            newTable.Run(dbname);
+            inserted.Run(dbname);
+            }
         }
+            
     }
-}
+
+
 
