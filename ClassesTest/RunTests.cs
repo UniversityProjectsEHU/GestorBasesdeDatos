@@ -135,6 +135,87 @@ namespace ClassesTest
             string actual3 = "francisco,9";
             Assert.AreEqual(lineas3[0], actual3);
         }
+
+        [TestMethod]
+        public void TestDelete()
+        {
+            string myDB = "myDB";
+            ClassCreateDatabase db = new ClassCreateDatabase(myDB);
+            db.Run(myDB);
+
+            string myTable = "myTable";
+            string[] values = new string[2];
+            values[0] = "name string true";
+            values[1] = "edad int false";
+            ClassCreateTable ctable = new ClassCreateTable(myTable, values);
+            ctable.Run(myDB);
+
+            string[] insert1 = new string[2];
+            insert1[0] = "Asier";
+            insert1[1] = "1";
+
+            string[] insert2 = new string[2];
+            insert2[0] = "Leire";
+            insert2[1] = "3";
+
+            string[] insert3 = new string[2];
+            insert3[0] = "Navarro";
+            insert3[1] = "5";
+
+            string[] insert4 = new string[2];
+            insert4[0] = "Hernando";
+            insert4[1] = "2";
+
+            string[] insert5 = new string[2];
+            insert5[0] = "Josu";
+            insert5[1] = "4";
+
+            ClassInsert ins1 = new ClassInsert(myTable, insert1);
+            ins1.Run(myDB);
+
+            ClassInsert ins2 = new ClassInsert(myTable, insert2);
+            ins2.Run(myDB);
+
+            ClassInsert ins3 = new ClassInsert(myTable, insert3);
+            ins3.Run(myDB);
+
+            ClassInsert ins4 = new ClassInsert(myTable, insert4);
+            ins4.Run(myDB);
+
+            ClassInsert ins5 = new ClassInsert(myTable, insert5);
+            ins5.Run(myDB);
+
+            string cond = "edad>3";
+            ClassDelete del = new ClassDelete(myTable, cond);
+            del.Run(myDB);
+
+            string pathfileDATA = @"..//..//..//data//" + myDB + "//" + myTable + ".data";
+            String[] lines = System.IO.File.ReadAllLines(pathfileDATA);
+            //Testing Delete with >
+            Assert.AreEqual(3, lines.Length);
+            Assert.AreEqual(insert1[0] + "," + insert1[1], lines[0]);
+            Assert.AreEqual(insert2[0] + "," + insert2[1], lines[1]);
+            Assert.AreEqual(insert4[0] + "," + insert4[1], lines[2]);
+
+            string cond2 = "name=Leire";
+            ClassDelete del2 = new ClassDelete(myTable, cond2);
+            del2.Run(myDB);
+
+            String[] lines2 = System.IO.File.ReadAllLines(pathfileDATA);
+            //Testing Delete with string
+            Assert.AreEqual(2, lines2.Length);
+            Assert.AreEqual(insert1[0] + "," + insert1[1], lines2[0]);
+            Assert.AreEqual(insert4[0] + "," + insert4[1], lines2[1]);
+
+            string cond3 = "edad<2";
+            ClassDelete del3 = new ClassDelete(myTable, cond3);
+            del3.Run(myDB);
+
+            String[] lines3 = System.IO.File.ReadAllLines(pathfileDATA);
+            //Testing Delete with <
+            Assert.AreEqual(1, lines3.Length);
+            Assert.AreEqual(insert4[0] + "," + insert4[1], lines3[0]);
+        }
     }
 }
 
