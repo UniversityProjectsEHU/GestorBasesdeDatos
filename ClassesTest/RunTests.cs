@@ -45,6 +45,52 @@ namespace ClassesTest
             bool existsDrop = Directory.Exists(@"..//..//..//data//myDB");
             Assert.AreEqual(false, existsDrop);
         }
+        [TestMethod]
+        public void TestUpdate()
+        {
+            //Database
+            string myDB = "myDB2";
+            ClassCreateDatabase db = new ClassCreateDatabase(myDB);
+            db.Run(myDB);
+            //Table
+            string myTable = "myTable2";
+            string[] values = new string[2];
+            values[0] = "column1 string true";
+            values[1] = "column2 int false";
+            ClassCreateTable ctable = new ClassCreateTable(myTable, values);
+            ctable.Run(myDB);
+            //Insert
+            string[] values2 = new string[2];
+            values2[0] = "hola";
+            values2[1] = "7";
+            ClassInsert cinsert = new ClassInsert(myTable, values2);
+            cinsert.Run(myDB);
+            
+            //Update 1
+            string[] values3 = new string[2];
+            values3[0] = "column1=lola";
+            values3[1] = "column2=5";
+            string cond = "column1=hola";
+            ClassUpdate cupdate = new ClassUpdate(myTable,values3,cond);
+            cupdate.Run(myDB);
+            //Testing update 1
+            String[] lineas = System.IO.File.ReadAllLines("..//..//..//data//" + myDB + "//" + myTable + ".data");
+            string actual = "lola,5";
+            Assert.AreEqual(lineas[0], actual);
+
+            //Update 2
+            string[] values4 = new string[2];
+            values3[0] = "column1=antonio";
+            values3[1] = "column2=7";
+            string cond2 = "column2>3";
+            ClassUpdate cupdate2 = new ClassUpdate(myTable, values4, cond2);
+            cupdate2.Run(myDB);
+            //Testing update 2
+            String[] lineas2 = System.IO.File.ReadAllLines("..//..//..//data//" + myDB + "//" + myTable + ".data");
+            string actual2 = "antonio,7";
+            Assert.AreEqual(lineas2[0], actual2);
+
+        }
     }
 }
 
