@@ -6,48 +6,44 @@ using System.IO;
 
 namespace ClassesTest
 {
+    [TestClass]
     public class RunTests
     {
         [TestMethod]
-        public void TestCreateDatabase()
+        public void TestCreateDropDatabaseTable()
         {
             string myDB = "myDB";
             ClassCreateDatabase db = new ClassCreateDatabase(myDB);
             db.Run(myDB);
             bool exists = Directory.Exists(@"..//..//..//data//myDB");
+            //Testing CreateDatabase
             Assert.AreEqual(true, exists);
-        }
 
-        [TestMethod]
-        public void TestDropDatabase()
-        {
-            string myDB = "myDB";
-            ClassCreateDatabase db = new ClassCreateDatabase(myDB);
-            db.Run(myDB);
-            ClassDropDatabase drop = new ClassDropDatabase(myDB);
-            drop.Run(myDB);
-            bool exists = Directory.Exists(@"..//..//..//data//myDB");
-            Assert.AreEqual(false, exists);
-        }
-
-        [TestMethod]
-        public void TestDropTable()
-        {
-            string myDB = "myDB";
-            ClassCreateDatabase db = new ClassCreateDatabase(myDB);
-            db.Run(myDB);
             string myTable = "myTable";
             string[] values = new string[2];
-            values[1] = "column1 string true";
-            values[2] = "column2 int false";
+            values[0] = "column1 string true";
+            values[1] = "column2 int false";
             ClassCreateTable ctable = new ClassCreateTable(myTable, values);
             ctable.Run(myDB);
+            //Testing CreateTable
+            bool existsDef = File.Exists(@"..//..//..//data//myDB//myTable.def");
+            Assert.AreEqual(true, existsDef);
+            bool existsData = File.Exists(@"..//..//..//data//myDB//myTable.data");
+            Assert.AreEqual(true, existsData);
+
             ClassDropTable dtable = new ClassDropTable(myTable);
             dtable.Run(myDB);
-            bool existsDef = File.Exists(@"..//..//..//data//myDB//myTable.def");
-            Assert.AreEqual(false, existsDef);
-            bool existsData = File.Exists(@"..//..//..//data//myDB//myTable.data");
-            Assert.AreEqual(false, existsData);
+            //Testing DropTable
+            bool existsDefDrop = File.Exists(@"..//..//..//data//myDB//myTable.def");
+            Assert.AreEqual(false, existsDefDrop);
+            bool existsDataDrop = File.Exists(@"..//..//..//data//myDB//myTable.data");
+            Assert.AreEqual(false, existsDataDrop);
+
+            ClassDropDatabase drop = new ClassDropDatabase(myDB);
+            drop.Run(myDB);
+            //Testing DropDatabase
+            bool existsDrop = Directory.Exists(@"..//..//..//data//myDB");
+            Assert.AreEqual(false, existsDrop);
         }
     }
 }

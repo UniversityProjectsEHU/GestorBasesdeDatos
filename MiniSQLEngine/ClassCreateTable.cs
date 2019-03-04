@@ -27,28 +27,29 @@ namespace MiniSQLEngine
             //Pendiente de cambios
             string pathfileDEF = @"..//..//..//data//" + dbname +"//"+ aTable + ".def";
             string pathfileDATA = @"..//..//..//data//" + dbname + "//" + aTable + ".data";
-            
-            System.IO.File.Create(pathfileDATA);
 
-            using (FileStream stream = File.Create(pathfileDEF))
-            {
-                for (int i = 0; i < values.Length; i++)
+            using (System.IO.File.Create(pathfileDATA)) {
+
+                using (FileStream stream = File.Create(pathfileDEF))
                 {
-                    if (i != (values.Length - 1))
+                    for (int i = 0; i < values.Length; i++)
                     {
-                        string actual = values[i] + ",";
-                        byte[] info = new UTF8Encoding(true).GetBytes(actual);
-                        stream.Write(info, 0, info.Length);
+                        if (i != (values.Length - 1))
+                        {
+                            string actual = values[i] + ",";
+                            byte[] info = new UTF8Encoding(true).GetBytes(actual);
+                            stream.Write(info, 0, info.Length);
+                        }
+                        else
+                        {
+                            string actual = values[i];
+                            byte[] info = new UTF8Encoding(true).GetBytes(actual);
+                            stream.Write(info, 0, info.Length);
+                        }
                     }
-                    else
-                    {
-                        string actual = values[i];
-                        byte[] info = new UTF8Encoding(true).GetBytes(actual);
-                        stream.Write(info, 0, info.Length);
-                    }
+                    byte[] info2 = new UTF8Encoding(true).GetBytes(";");
+                    stream.Write(info2, 0, info2.Length);
                 }
-                byte[] info2 = new UTF8Encoding(true).GetBytes(";");
-                stream.Write(info2, 0, info2.Length);
             }
         }
         public string getTableName()
