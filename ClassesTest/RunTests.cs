@@ -80,8 +80,8 @@ namespace ClassesTest
 
             //Update 2
             string[] values4 = new string[2];
-            values3[0] = "column1=antonio";
-            values3[1] = "column2=7";
+            values4[0] = "column1=antonio";
+            values4[1] = "column2=7";
             string cond2 = "column2>3";
             ClassUpdate cupdate2 = new ClassUpdate(myTable, values4, cond2);
             cupdate2.Run(myDB);
@@ -90,6 +90,17 @@ namespace ClassesTest
             string actual2 = "antonio,7";
             Assert.AreEqual(lineas2[0], actual2);
 
+            //Update 2
+            string[] values5 = new string[2];
+            values5[0] = "column1=francisco";
+            values5[1] = "column2=9";
+            string cond3 = "column2<20";
+            ClassUpdate cupdate3 = new ClassUpdate(myTable, values5, cond3);
+            cupdate3.Run(myDB);
+            //Testing update 2
+            String[] lineas3 = System.IO.File.ReadAllLines("..//..//..//data//" + myDB + "//" + myTable + ".data");
+            string actual3 = "francisco,9";
+            Assert.AreEqual(lineas3[0], actual3);
         }
     }
 }

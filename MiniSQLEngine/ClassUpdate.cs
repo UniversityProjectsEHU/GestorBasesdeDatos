@@ -90,7 +90,7 @@ namespace MiniSQLEngine
             Boolean parar = false;
             foreach (String atributo in atrib)
             {
-                while (!parar)
+                if (!parar)
                 {
                     if (!atributo.Contains(buscar))
                     {
