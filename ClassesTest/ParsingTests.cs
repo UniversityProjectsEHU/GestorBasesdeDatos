@@ -16,7 +16,7 @@ namespace ClassesTest
             ClassParsing myClass = new ClassParsing();
             string name = "myDB";
             ClassCreateDatabase myCreatedDB = new ClassCreateDatabase(name);
-
+            string a = myClass.ManageCreateDatabase(query).getName();
             Assert.AreEqual(myClass.ManageCreateDatabase(query).getName(), myCreatedDB.getName());
         }
     }
@@ -42,7 +42,6 @@ namespace ClassesTest
             string name = "myTable";
             string[] values = { "column1 int true", "column2 string false", "column3 int false" };
             string[] expectedValues = myClass.ManageCreateTable(query).getTableValues();
-            ClassCreateTable myCreatedTable = new ClassCreateTable(name, values);
             for (int i = 0; i < values.Length; i++)
             {
                 Assert.AreEqual(expectedValues[i], values[i]);

@@ -7,7 +7,7 @@ using System.IO;
 namespace ClassesTest
 {
     [TestClass]
-    public class TestCreateBothWithInsert
+    public class RunTests
     {
         [TestMethod]
         public void ExecuteTest()
@@ -43,5 +43,25 @@ namespace ClassesTest
             
     }
 
-
+        [TestMethod]
+        public void TestDropTable()
+        {
+            string myDB = "myDB";
+            ClassCreateDatabase db = new ClassCreateDatabase(myDB);
+            db.Run(myDB);
+            string myTable = "myTable";
+            string[] values = new string[2];
+            values[1] = "column1 string true";
+            values[2] = "column2 int false";
+            ClassCreateTable ctable = new ClassCreateTable(myTable, values);
+            ctable.Run(myDB);
+            ClassDropTable dtable = new ClassDropTable(myTable);
+            dtable.Run(myDB);
+            bool existsDef = File.Exists(@"..//..//..//data//myDB//myTable.def");
+            Assert.AreEqual(false, existsDef);
+            bool existsData = File.Exists(@"..//..//..//data//myDB//myTable.data");
+            Assert.AreEqual(false, existsData);
+        }
+    }
+}
 

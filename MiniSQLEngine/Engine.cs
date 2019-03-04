@@ -46,50 +46,53 @@ namespace MiniSQLEngine
         public Query Parse(string pQuery)
         {
             Match matchselect = Regex.Match(pQuery, Constants.regExTypeSelect);
-            Match matchcreatedatabase = Regex.Match(pQuery, Constants.regExTypesCreateDatabase);
-            Match matchdropdatabase = Regex.Match(pQuery, Constants.regExTypesDropDatabase);
-            Match matchDropTable = Regex.Match(pQuery, Constants.regExTypesDropTable);
-            Match matchCreateTable = Regex.Match(pQuery, Constants.regExTypesCreateTable);
-            Match matchdelete = Regex.Match(pQuery, Constants.regExTypeDelete);
-            Match matchupdate = Regex.Match(pQuery, Constants.regExTypeUpdate);
-
-
-            Match matchinsert = Regex.Match(pQuery, Constants.regExTypeInsert);
             if (matchselect.Success)
             {
                 return ManageSelect(pQuery);
             }
-            else if (matchinsert.Success)
+            Match matchinsert = Regex.Match(pQuery, Constants.regExTypeInsert);
+
+             if (matchinsert.Success)
             {
                 return ManageInsert(pQuery);
             }
-            else if (matchDropTable.Success)
+
+            Match matchDropTable = Regex.Match(pQuery, Constants.regExTypesDropTable);
+             if (matchDropTable.Success)
             {
                 return ManageDropTable(pQuery);
             }
-            else if (matchCreateTable.Success)
+
+            Match matchCreateTable = Regex.Match(pQuery, Constants.regExTypesCreateTable);
+             if (matchCreateTable.Success)
             {
                 return ManageCreateTable(pQuery);
             }
 
-            else if (matchcreatedatabase.Success)
+            Match matchcreatedatabase = Regex.Match(pQuery, Constants.regExTypesCreateDatabase);
+            if (matchcreatedatabase.Success)
             {
                 return ManageCreateDatabase(pQuery);
             }
 
-            else if (matchdropdatabase.Success)
+            Match matchdropdatabase = Regex.Match(pQuery, Constants.regExTypesDropDatabase);
+            if (matchdropdatabase.Success)
             {
                 return ManageDropDatabase(pQuery);
             }
 
-            else if (matchdelete.Success)
+            Match matchdelete = Regex.Match(pQuery, Constants.regExTypeDelete);
+            if (matchdelete.Success)
             {
                 return ManageDelete(pQuery);
             }
-            else if (matchselect.Success)
+            Match matchupdate = Regex.Match(pQuery, Constants.regExTypeUpdate);
+
+            if (matchupdate.Success)
             {
                 return ManageUpdate(pQuery);
             }
+
             //Manejar errores/Excepciones
             return null;
         }
@@ -160,7 +163,7 @@ namespace MiniSQLEngine
             }
             else
             {
-                return null;
+                 return null;
             }
         }
 
@@ -250,7 +253,7 @@ namespace MiniSQLEngine
         public string Query(string psentencia)
         {
             ClassParsing c = new ClassParsing();
-            return c.Query(psentencia, dbname);
+            return c.Query(psentencia,dbname);
         }
     }
 }
