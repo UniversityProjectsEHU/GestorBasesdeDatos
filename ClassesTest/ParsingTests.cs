@@ -12,11 +12,11 @@ namespace ClassesTest
         [TestMethod]
         public void TestManageCreateDatabase()
         {
-            string query = @"CREATE DATABASE myDB";
+            string query = @"CREATE DATABASE myDB;";
             ClassParsing myClass = new ClassParsing();
             string name = "myDB";
             ClassCreateDatabase myCreatedDB = new ClassCreateDatabase(name);
-
+            string a = myClass.ManageCreateDatabase(query).getName();
             Assert.AreEqual(myClass.ManageCreateDatabase(query).getName(), myCreatedDB.getName());
         }
     }
