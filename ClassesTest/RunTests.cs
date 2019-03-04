@@ -17,7 +17,8 @@ namespace ClassesTest
             string myTable = "thisTable";
             string[] values = { "One String true", "Two String false", "Three String false", "Caramba String false" };
             string[] valuesToInsert = { "One", "Two", "Three", "Caramba" };
-            string pathfileDEF = @"..//..//..//data//" + dbname + "//" + myTable + ".def";
+            //string pathfileDEF = @"..//..//..//data//" + dbname + "//" + myTable + ".def";
+            string rutaCompleta = @"..//..//..//data//" + dbname + "//" + myTable + ".data";
             /*string queryCreateDB = @"CREATE DATABASE myDB;";
             string queryCreateTable = @"CREATE TABLE myTable (column1 int true,column2 string false,column3 int false);";
             string queryInsert = @"INSERT INTO table1 VALUES (10,abc,8);";
@@ -29,9 +30,11 @@ namespace ClassesTest
             bool exists = Directory.Exists(@"..//..//..//data//"+dbname);
             Assert.AreEqual(true, exists);
             newTable.Run(dbname);
-            bool existsTables = File.Exists(@"..//..//..//data//"+dbname+"//"+myTable+".data");
+            /*bool existsTables = File.Exists(@"..//..//..//data//"+dbname+"//"+myTable+".data");
             Assert.AreEqual(true, existsTables);
+            */
             inserted.Run(dbname);
+            Assert.AreNotSame(0, rutaCompleta.Length);
             /*string fullPath = @"..//..//..//data//myDB//thisTable.data";
             StreamWriter file = new StreamWriter(fullPath, true);
             for (int i = 0; i < valuesToInsert.Length; i++)
