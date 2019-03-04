@@ -44,7 +44,38 @@ namespace MiniSQLEngine
 
         public override void Run(string dbname)
         {
-            //Here we save the result into a variable so we can then pick it
+            string op;
+            string[] elements;
+            if (condition.Contains("="))
+            {
+                elements = condition.Split('=');
+                op = "=";
+            }
+            else if (condition.Contains("<"))
+            {
+                elements = condition.Split('<');
+                op = "<";
+            }
+            else
+            {
+                elements = condition.Split('>');
+                op = ">";
+            }
+            //I read all the file
+            string allFile = System.IO.File.ReadAllText("..//..//..//data//" + dbname + "//" + table + ".def");
+            string []splittedFile = allFile.Split(',');
+            string []numcolumns=;
+            int cont = 0;
+            for (int i = 0; i < splittedFile.Length; i++)
+            {
+                for (int j = 0; j < columns.Length; j++)
+                {
+                    if (splittedFile[i].Contains(columns[j]))
+                    {
+                        numcolumns[cont] = columns[j] + " in " + i;
+                    }
+                }
+            }
             result = "result";
         }
        
