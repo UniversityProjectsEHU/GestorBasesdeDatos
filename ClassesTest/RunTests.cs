@@ -10,8 +10,14 @@ namespace ClassesTest
     public class RunTests
     {
         [TestMethod]
+        public void TestCreateDropDatabaseTable()
         public void ExecuteTest()
         {
+            string myDB = "myDB";
+            ClassCreateDatabase db = new ClassCreateDatabase(myDB);
+            db.Run(myDB);
+            bool exists = Directory.Exists(@"..//..//..//data//myDB");
+            //Testing CreateDatabase
             string dbname = "myDB";
             //string dbname1 = "myDB1";
             string myTable = "thisTable";
@@ -29,6 +35,32 @@ namespace ClassesTest
             newDB.Run(dbname);
             bool exists = Directory.Exists(@"..//..//..//data//" + dbname);
             Assert.AreEqual(true, exists);
+
+            string myTable = "myTable";
+            string[] values = new string[2];
+            values[0] = "column1 string true";
+            values[1] = "column2 int false";
+            ClassCreateTable ctable = new ClassCreateTable(myTable, values);
+            ctable.Run(myDB);
+            //Testing CreateTable
+            bool existsDef = File.Exists(@"..//..//..//data//myDB//myTable.def");
+            Assert.AreEqual(true, existsDef);
+            bool existsData = File.Exists(@"..//..//..//data//myDB//myTable.data");
+            Assert.AreEqual(true, existsData);
+
+            ClassDropTable dtable = new ClassDropTable(myTable);
+            dtable.Run(myDB);
+            //Testing DropTable
+            bool existsDefDrop = File.Exists(@"..//..//..//data//myDB//myTable.def");
+            Assert.AreEqual(false, existsDefDrop);
+            bool existsDataDrop = File.Exists(@"..//..//..//data//myDB//myTable.data");
+            Assert.AreEqual(false, existsDataDrop);
+
+            ClassDropDatabase drop = new ClassDropDatabase(myDB);
+            drop.Run(myDB);
+            //Testing DropDatabase
+            bool existsDrop = Directory.Exists(@"..//..//..//data//myDB");
+            Assert.AreEqual(false, existsDrop);
             newTable.Run(dbname);
             /*bool existsTables = File.Exists(@"..//..//..//data//"+dbname+"//"+myTable+".data");
             Assert.AreEqual(true, existsTables);
@@ -42,25 +74,62 @@ namespace ClassesTest
                 file.WriteLine(valuesToInsert[i]);
             }*/
         }
-
         [TestMethod]
-        public void TestDropTable()
+        public void TestUpdate()
         {
-            string myDB = "myDB";
+            //Database
+            string myDB = "myDB2";
             ClassCreateDatabase db = new ClassCreateDatabase(myDB);
             db.Run(myDB);
-            string myTable = "myTable";
+            //Table
+            string myTable = "myTable2";
             string[] values = new string[2];
             values[0] = "column1 string true";
             values[1] = "column2 int false";
             ClassCreateTable ctable = new ClassCreateTable(myTable, values);
             ctable.Run(myDB);
-            ClassDropTable dtable = new ClassDropTable(myTable);
-            dtable.Run(myDB);
-            bool existsDef = File.Exists(@"..//..//..//data//myDB//myTable.def");
-            Assert.AreEqual(false, existsDef);
-            bool existsData = File.Exists(@"..//..//..//data//myDB//myTable.data");
-            Assert.AreEqual(false, existsData);
+            //Insert
+            string[] values2 = new string[2];
+            values2[0] = "hola";
+            values2[1] = "7";
+            ClassInsert cinsert = new ClassInsert(myTable, values2);
+            cinsert.Run(myDB);
+            
+            //Update 1
+            string[] values3 = new string[2];
+            values3[0] = "column1=lola";
+            values3[1] = "column2=5";
+            string cond = "column1=hola";
+            ClassUpdate cupdate = new ClassUpdate(myTable,values3,cond);
+            cupdate.Run(myDB);
+            //Testing update 1
+            String[] lineas = System.IO.File.ReadAllLines("..//..//..//data//" + myDB + "//" + myTable + ".data");
+            string actual = "lola,5";
+            Assert.AreEqual(lineas[0], actual);
+
+            //Update 2
+            string[] values4 = new string[2];
+            values4[0] = "column1=antonio";
+            values4[1] = "column2=7";
+            string cond2 = "column2>3";
+            ClassUpdate cupdate2 = new ClassUpdate(myTable, values4, cond2);
+            cupdate2.Run(myDB);
+            //Testing update 2
+            String[] lineas2 = System.IO.File.ReadAllLines("..//..//..//data//" + myDB + "//" + myTable + ".data");
+            string actual2 = "antonio,7";
+            Assert.AreEqual(lineas2[0], actual2);
+
+            //Update 2
+            string[] values5 = new string[2];
+            values5[0] = "column1=francisco";
+            values5[1] = "column2=9";
+            string cond3 = "column2<20";
+            ClassUpdate cupdate3 = new ClassUpdate(myTable, values5, cond3);
+            cupdate3.Run(myDB);
+            //Testing update 2
+            String[] lineas3 = System.IO.File.ReadAllLines("..//..//..//data//" + myDB + "//" + myTable + ".data");
+            string actual3 = "francisco,9";
+            Assert.AreEqual(lineas3[0], actual3);
         }
     }
 }
