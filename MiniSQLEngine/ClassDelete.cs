@@ -37,13 +37,38 @@ namespace MiniSQLEngine
             if (at.Success)
             {
                 attr = at.Groups[1].Value;
+                if (attr == "")
+                {
+                    attr = at.Groups[2].Value;
+                    if (attr == "")
+                    {
+                        attr = at.Groups[3].Value;
+                    }
+                }
             }
             Match val = Regex.Match(condition, Constants.regExConditionValue);
             if (val.Success)
             {
                 string value = val.Groups[1].Value;
-                symbol = value.Substring(0, 1);
-                cond = value.Substring(1);
+                if (value != "")
+                {
+                    symbol = value.Substring(0, 1);
+                    cond = value.Substring(1);
+                }
+
+                value = val.Groups[2].Value;
+                if (value != "")
+                {
+                    symbol = value.Substring(0, 1);
+                    cond = value.Substring(1);
+                }
+
+                value = val.Groups[3].Value;
+                if (value != "")
+                {
+                    symbol = value.Substring(0, 1);
+                    cond = value.Substring(1);
+                }
             }
 
             using (StreamReader sr = new StreamReader(pathfileDEF))
