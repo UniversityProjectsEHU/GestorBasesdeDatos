@@ -39,7 +39,7 @@ namespace ClassesTest
         {
             string query = @"CREATE TABLE myTable (column1 int true,column2 string false,column3 int false);";
             ClassParsing myClass = new ClassParsing();
-            string name = "myTable";
+            //string name = "myTable";
             string[] values = { "column1 int true", "column2 string false", "column3 int false" };
             string[] expectedValues = myClass.ManageCreateTable(query).getTableValues();
             for (int i = 0; i < values.Length; i++)

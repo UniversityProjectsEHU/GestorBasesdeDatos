@@ -13,7 +13,7 @@ namespace ClassesTest
         public void ExecuteTest()
         {
             string dbname = "myDB";
-            string dbname1 = "myDB1";
+            //string dbname1 = "myDB1";
             string myTable = "thisTable";
             string[] values = { "One String true", "Two String false", "Three String false", "Caramba String false" };
             string[] valuesToInsert = { "One", "Two", "Three", "Caramba" };
@@ -27,7 +27,7 @@ namespace ClassesTest
             ClassCreateTable newTable = new ClassCreateTable(myTable, values);
             ClassInsert inserted = new ClassInsert(myTable, valuesToInsert);
             newDB.Run(dbname);
-            bool exists = Directory.Exists(@"..//..//..//data//"+dbname);
+            bool exists = Directory.Exists(@"..//..//..//data//" + dbname);
             Assert.AreEqual(true, exists);
             newTable.Run(dbname);
             /*bool existsTables = File.Exists(@"..//..//..//data//"+dbname+"//"+myTable+".data");
@@ -41,10 +41,7 @@ namespace ClassesTest
             {
                 file.WriteLine(valuesToInsert[i]);
             }*/
-            }
         }
-            
-    }
 
         [TestMethod]
         public void TestDropTable()
@@ -54,8 +51,8 @@ namespace ClassesTest
             db.Run(myDB);
             string myTable = "myTable";
             string[] values = new string[2];
-            values[1] = "column1 string true";
-            values[2] = "column2 int false";
+            values[0] = "column1 string true";
+            values[1] = "column2 int false";
             ClassCreateTable ctable = new ClassCreateTable(myTable, values);
             ctable.Run(myDB);
             ClassDropTable dtable = new ClassDropTable(myTable);
