@@ -238,7 +238,7 @@ namespace MiniSQLEngine
         }
         public Database getDatabase(string nombre)
         {
-            if (database==null)
+            if (database == null)
             {
                 database = new Database(nombre);
             }
