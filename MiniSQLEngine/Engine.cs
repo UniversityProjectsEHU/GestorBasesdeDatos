@@ -40,6 +40,7 @@ namespace MiniSQLEngine
             }
             else
             {
+                query.Run(dbname);
                 return "";
             }
         }
@@ -235,8 +236,9 @@ namespace MiniSQLEngine
         private Database(string dbname)
         {
             this.dbname = dbname;
+            Query("CREATE DATABASE "+dbname+";");
         }
-        public Database getDatabase(string nombre)
+        public static Database getDatabase(string nombre)
         {
             if (database==null)
             {

@@ -50,7 +50,7 @@ namespace MiniSQLEngine
                 }
             }
 
-            using (StreamWriter file = new StreamWriter(rutaCompleta, true))
+            using (StreamWriter file = File.AppendText(rutaCompleta))
             {
                 //se agrega información al documento
                 file.WriteLine(texto); 
