@@ -53,12 +53,12 @@ namespace MiniSQLEngine
             }
             else if (Condition.Contains("<"))
             {
-                elements = Condition.Split('=');
+                elements = Condition.Split('<');
                 operador = "<";
             }
             else if (Condition.Contains(">"))
             {
-                elements = Condition.Split('=');
+                elements = Condition.Split('>');
                 operador = ">";
             }
 
