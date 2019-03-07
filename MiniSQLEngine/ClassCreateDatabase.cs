@@ -26,8 +26,18 @@ namespace MiniSQLEngine
         }
         public override void Run(string dbname)
         {
-            string path = @"..//..//..//data//" + tableName;
-            System.IO.Directory.CreateDirectory(path);
+            try
+            {
+                string path = @"..//..//..//data//" + tableName;
+                //string path = @"C:\Users\docencia\source\repos\sergioyeahmen\Si-funciona-no-lo-toques\data\" + tableName;
+
+                System.IO.Directory.CreateDirectory(path);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+               
+            }
 
         }
     }

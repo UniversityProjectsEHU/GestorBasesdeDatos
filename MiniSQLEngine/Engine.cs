@@ -40,6 +40,7 @@ namespace MiniSQLEngine
             }
             else
             {
+                query.Run(dbname);
                 return "";
             }
         }
@@ -220,7 +221,7 @@ namespace MiniSQLEngine
                 string table = matchselect2.Groups[2].Value;
                 string condition = matchselect2.Groups[3].Value;
                 string[] columnssplit = columns.Split(',');
-                query = new ClassSelect(columnssplit, table, condition);
+                query = new ClassSelect(columnssplit, table, condition,pQuery);
                 return query;
 
             }
@@ -235,8 +236,9 @@ namespace MiniSQLEngine
         private Database(string dbname)
         {
             this.dbname = dbname;
+            Query("CREATE DATABASE "+dbname+";");
         }
-        public Database getDatabase(string nombre)
+        public static Database getDatabase(string nombre)
         {
             if (database==null)
             {
