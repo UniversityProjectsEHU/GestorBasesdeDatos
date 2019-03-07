@@ -126,6 +126,7 @@ namespace MiniSQLEngine
                 result = "The result for the Query '" + Query + "' is: ";
 
 
+
                 foreach (string linea in allFile2)
                 {
                     string[] splittedline = linea.Split(',');
@@ -194,7 +195,7 @@ namespace MiniSQLEngine
                         }
                         else
                         {
-                            if ((splittedline[poscond].Length) < (elements[1]).Length)
+                            if ((splittedline[poscond].Length) > (elements[1]).Length)
                             {
                                 foreach (objectDef obj in list)
                                 {

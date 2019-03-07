@@ -16,13 +16,16 @@ namespace MainConsole
             Database db = new Database("usuarios1");
             db.Query("CREATE DATABASE usuarios1;");
             int contador = 1;
-            Console.WriteLine("# Test "+ contador); 
+            Console.WriteLine("# Test " + contador);
             foreach (string linea in lineas)
             {
                 if (linea != "")
-                {            
-                        
-                        db.Query(linea);                      
+                {
+                    if (linea.Contains("SELECT"))
+                    {                            
+                        Console.WriteLine(db.Query(linea));
+                    }
+                    db.Query(linea);
                 }
                 else
                 {
@@ -30,9 +33,12 @@ namespace MainConsole
                     Console.WriteLine("# Test " + contador);
                     string dbnombre = "usuarios" + contador;
                     db = new Database(dbnombre);
-                    db.Query("CREATE DATABASE "+dbnombre+";");
+                    db.Query("CREATE DATABASE " + dbnombre + ";");
                 }
             }
+            Console.ReadKey(true);
+
+            Console.WriteLine(db.Query("SELECT Name,Age FROM MyTable WHERE Age=18;"));
             Console.ReadKey(true);
         }
     }
