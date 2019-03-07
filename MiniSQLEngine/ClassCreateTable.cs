@@ -28,7 +28,8 @@ namespace MiniSQLEngine
             string pathfileDEF = @"..//..//..//data//" + dbname +"//"+ aTable + ".def";
             string pathfileDATA = @"..//..//..//data//" + dbname + "//" + aTable + ".data";
 
-            using (System.IO.File.Create(pathfileDATA)) {
+            using (FileStream stream1 = System.IO.File.Create(pathfileDATA))
+            {
 
                 using (FileStream stream = File.Create(pathfileDEF))
                 {

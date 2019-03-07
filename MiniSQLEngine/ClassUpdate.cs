@@ -64,10 +64,21 @@ namespace MiniSQLEngine
 
             //I need a new line with the new dates of the row
             String newRow = "";
+            int longitud = Column.Length;
+            int cuenta = 1;
             foreach (String colum in Column)
             {
-                String[] actual = colum.Split('=');
-                newRow = newRow + actual[1] + ",";
+                if (cuenta!=longitud)
+                {
+                    String[] actual = colum.Split('=');
+                    newRow = newRow + actual[1] + ",";
+                }
+                else
+                {
+                    String[] actual = colum.Split('=');
+                    newRow = newRow + actual[1];
+                }
+                cuenta++;
             }
 
             //Open te file .def
@@ -79,7 +90,7 @@ namespace MiniSQLEngine
             Boolean parar = false;
             foreach (String atributo in atrib)
             {
-                while (!parar)
+                if (!parar)
                 {
                     if (!atributo.Contains(buscar))
                     {
