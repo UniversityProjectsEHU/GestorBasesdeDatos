@@ -232,18 +232,9 @@ namespace MiniSQLEngine
     public class Database
     {
         private string dbname;
-        private static Database database;
-        private Database(string dbname)
+        public Database(string name)
         {
-            this.dbname = dbname;
-        }
-        public static Database getDatabase(string nombre)
-        {
-            if (database == null)
-            {
-                database = new Database(nombre);
-            }
-            return database;
+            dbname = name;
         }
 
         public string getNombre()
