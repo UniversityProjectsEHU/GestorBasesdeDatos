@@ -221,7 +221,7 @@ namespace MiniSQLEngine
                 string table = matchselect2.Groups[2].Value;
                 string condition = matchselect2.Groups[3].Value;
                 string[] columnssplit = columns.Split(',');
-                query = new ClassSelect(columnssplit, table, condition);
+                query = new ClassSelect(columnssplit, table, condition,pQuery);
                 return query;
 
             }
