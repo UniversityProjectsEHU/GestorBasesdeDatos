@@ -92,7 +92,7 @@ namespace MiniSQLEngine
 
                     }
                 }
-                if (columns.Contains("atrr") == false)
+                if (columns.Contains(attr) == false)
                 {
                     result = Constants.ColumnDoesNotExist;
                 }
@@ -154,7 +154,8 @@ namespace MiniSQLEngine
         {
             return condition;
         }
-        public string getResult()
+        
+        public override string getResult()
         {
             return result;
         }

@@ -45,7 +45,7 @@ namespace MiniSQLEngine
                 result = Constants.DropTableSuccess;
             }
         }
-        public string getResult()
+        public override string getResult()
         {
             return result;
         }

@@ -70,7 +70,7 @@ namespace MiniSQLEngine
         {
             return values;
         }
-        public string getResult()
+        public override string getResult()
         {
             return result;
         }

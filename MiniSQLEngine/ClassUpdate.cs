@@ -21,7 +21,7 @@ namespace MiniSQLEngine
             Column = pColumn;
             Condition = pCondition;
         }
-        public string getResult()
+        public override string getResult()
         {
             return result;
 
