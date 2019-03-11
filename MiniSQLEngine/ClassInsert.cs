@@ -12,7 +12,7 @@ namespace MiniSQLEngine
     {
         private string aTable;
         private string[] values;
-        private string result;
+        private string result = "";
         public ClassInsert(String table, String[] myArray)
         {
             aTable = table;
@@ -74,26 +74,47 @@ namespace MiniSQLEngine
 
                 else
                 {
-                    string texto = "";
-                    for (int i = 0; i < values.Length; i++)
+                    int index = 0;
+                    foreach (string c in columns)
                     {
-                        if (i == values.Length - 1)
-                        {
-                            texto = texto + values[i];
-                        }
-                        else
-                        {
-                            texto = texto + values[i] + ",";
 
+                        if (c.ToLower().Equals("int"))
+                        {
+                            try
+                            {
+                                int.Parse(values[index]);
+                            }
+                            catch
+                            {
+                                result = Constants.IncorrectDataType;
+                            }
                         }
+                        index++;
                     }
 
-                    using (StreamWriter file = File.AppendText(pathfileDATA))
+                    if (result == "")
                     {
-                        //Data added to the document
-                        file.WriteLine(texto);
-                        file.Close();
-                        result = Constants.InsertSuccess;
+                        string texto = "";
+                        for (int i = 0; i < values.Length; i++)
+                        {
+                            if (i == values.Length - 1)
+                            {
+                                texto = texto + values[i];
+                            }
+                            else
+                            {
+                                texto = texto + values[i] + ",";
+
+                            }
+                        }
+
+                        using (StreamWriter file = File.AppendText(pathfileDATA))
+                        {
+                            //Data added to the document
+                            file.WriteLine(texto);
+                            file.Close();
+                            result = Constants.InsertSuccess;
+                        }
                     }
                 }
             }
