@@ -35,7 +35,7 @@ namespace MiniSQLEngine
         {
             return condition;
         }
-        public string getResult()
+        public override string getResult()
         {
             return result;
 
@@ -303,7 +303,13 @@ namespace MiniSQLEngine
             }
             if (result== "The result for the Query '" + Query + "' is:")
             {
-                
+                foreach(string column in columns)
+                {
+                    foreach(string type in splittedFile)
+                    {
+                        
+                    }
+                }
             }
             }
 
