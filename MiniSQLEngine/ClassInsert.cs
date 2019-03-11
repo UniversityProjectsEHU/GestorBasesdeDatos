@@ -62,34 +62,39 @@ namespace MiniSQLEngine
                         foreach (string element in parts)
                         {
                             string[] atributes = element.Split(' ');
-                            string type = atributes[0];
+                            string type = atributes[1];
                             columns.Add(type);
+                        }
+                    }
+                }
+                if (columns.Count() != values.Length)
+                {
+                    result = Constants.WrongSyntax;
+                }
+
+                else
+                {
+                    string texto = "";
+                    for (int i = 0; i < values.Length; i++)
+                    {
+                        if (i == values.Length - 1)
+                        {
+                            texto = texto + values[i];
+                        }
+                        else
+                        {
+                            texto = texto + values[i] + ",";
 
                         }
-
                     }
-                }
 
-                string texto = "";
-                for (int i = 0; i < values.Length; i++)
-                {
-                    if (i == values.Length - 1)
+                    using (StreamWriter file = File.AppendText(pathfileDATA))
                     {
-                        texto = texto + values[i];
+                        //Data added to the document
+                        file.WriteLine(texto);
+                        file.Close();
+                        result = Constants.InsertSuccess;
                     }
-                    else
-                    {
-                        texto = texto + values[i] + ",";
-
-                    }
-                }
-
-                using (StreamWriter file = File.AppendText(pathfileDATA))
-                {
-                    //Data added to the document
-                    file.WriteLine(texto);
-                    file.Close();
-                    result = Constants.InsertSuccess;
                 }
             }
         }
