@@ -70,7 +70,7 @@ namespace MiniSQLEngine
         {
             return values;
         }
-        public string GetResult()
+        public string getResult()
         {
             return result;
         }

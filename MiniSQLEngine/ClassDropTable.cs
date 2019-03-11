@@ -45,7 +45,7 @@ namespace MiniSQLEngine
                 result = "ok";
             }
         }
-        public string GetResult()
+        public string getResult()
         {
             return result;
         }
