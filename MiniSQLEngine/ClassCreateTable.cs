@@ -11,6 +11,7 @@ namespace MiniSQLEngine
     {
         private string aTable;
         private string[] values;
+        private string result;
         public ClassCreateTable(String table, String[] myArray)
         {
             aTable = table;
@@ -24,33 +25,41 @@ namespace MiniSQLEngine
 
         public override void Run(string dbname)
         {
-            //Pendiente de cambios
             string pathfileDEF = @"..//..//..//data//" + dbname +"//"+ aTable + ".def";
             string pathfileDATA = @"..//..//..//data//" + dbname + "//" + aTable + ".data";
 
-            using (FileStream stream1 = System.IO.File.Create(pathfileDATA))
+            if (File.Exists(pathfileDATA) || File.Exists(pathfileDEF))
             {
+                result = Constants.TableAlreadyExists;
+            }
 
-                using (FileStream stream = File.Create(pathfileDEF))
+            else
+            {
+                using (FileStream stream1 = System.IO.File.Create(pathfileDATA))
                 {
-                    for (int i = 0; i < values.Length; i++)
+
+                    using (FileStream stream = File.Create(pathfileDEF))
                     {
-                        if (i != (values.Length - 1))
+                        for (int i = 0; i < values.Length; i++)
                         {
-                            string actual = values[i] + ",";
-                            byte[] info = new UTF8Encoding(true).GetBytes(actual);
-                            stream.Write(info, 0, info.Length);
+                            if (i != (values.Length - 1))
+                            {
+                                string actual = values[i] + ",";
+                                byte[] info = new UTF8Encoding(true).GetBytes(actual);
+                                stream.Write(info, 0, info.Length);
+                            }
+                            else
+                            {
+                                string actual = values[i];
+                                byte[] info = new UTF8Encoding(true).GetBytes(actual);
+                                stream.Write(info, 0, info.Length);
+                            }
                         }
-                        else
-                        {
-                            string actual = values[i];
-                            byte[] info = new UTF8Encoding(true).GetBytes(actual);
-                            stream.Write(info, 0, info.Length);
-                        }
+                        byte[] info2 = new UTF8Encoding(true).GetBytes(";");
+                        stream.Write(info2, 0, info2.Length);
                     }
-                    byte[] info2 = new UTF8Encoding(true).GetBytes(";");
-                    stream.Write(info2, 0, info2.Length);
                 }
+                result = "ok";
             }
         }
         public string getTableName()
@@ -60,6 +69,10 @@ namespace MiniSQLEngine
         public string[] getTableValues()
         {
             return values;
+        }
+        public string getResult()
+        {
+            return result;
         }
     }
 }
