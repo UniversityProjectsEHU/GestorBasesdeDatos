@@ -142,7 +142,7 @@ namespace MiniSQLEngine
                     }
                     File.Delete(pathfileDATA);
                     File.Move(pathfileTMP, pathfileDATA);
-                    result = "ok";
+                    result = Constants.TupleDeleteSuccess;
                 }
             }
         }
