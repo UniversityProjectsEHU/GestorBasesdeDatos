@@ -1,0 +1,1 @@
+id int true,nombre String false,edad int false;
