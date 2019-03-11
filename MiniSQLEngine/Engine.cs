@@ -24,6 +24,7 @@ namespace MiniSQLEngine
         }
         public abstract void Run(string dbname);
         public abstract string getClass();
+        public abstract string getResult();
     }
 
     public class ClassParsing
@@ -40,8 +41,9 @@ namespace MiniSQLEngine
             }
             else
             {
-                query.Run(dbname);
-                return "";
+                
+                 query.Run(dbname);
+                return query.getResult();
             }
         }
         public Query Parse(string pQuery)

@@ -271,7 +271,7 @@ namespace MiniSQLEngine
                     }
                     else
                     {
-                        if (comptype == "int")
+                        if (comptype.ToLower() == "int")
                         {
                             if (Int32.Parse(splittedline[poscond]) > Int32.Parse(elements[1]))
                             {
@@ -300,6 +300,10 @@ namespace MiniSQLEngine
                     }
 
                 }
+            }
+            if (result== "The result for the Query '" + Query + "' is:")
+            {
+                
             }
             }
 

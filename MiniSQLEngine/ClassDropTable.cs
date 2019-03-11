@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace MiniSQLEngine
     public class ClassDropTable : Query
     {
         String tableName;
+        String result;
 
         public ClassDropTable(String table)
         {
@@ -30,8 +32,22 @@ namespace MiniSQLEngine
         {
             string pathfileDEF = @"..//..//..//data//" + dbname + "//" + tableName + ".def";
             string pathfileDATA = @"..//..//..//data//" + dbname + "//" + tableName + ".data";
-            System.IO.File.Delete(pathfileDEF);
-            System.IO.File.Delete(pathfileDATA);
+
+            if (!File.Exists(pathfileDATA) || !File.Exists(pathfileDEF))
+            {
+                result = Constants.TableDoesNotExist;
+            }
+
+            else
+            {
+                System.IO.File.Delete(pathfileDEF);
+                System.IO.File.Delete(pathfileDATA);
+                result = Constants.DropTableSuccess;
+            }
+        }
+        public string getResult()
+        {
+            return result;
         }
     }
 }
