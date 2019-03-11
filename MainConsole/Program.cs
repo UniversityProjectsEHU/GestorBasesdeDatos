@@ -1,6 +1,7 @@
 ﻿using MiniSQLEngine;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -17,19 +18,48 @@ namespace MainConsole
             db.Query("CREATE DATABASE usuarios1;");
             int contador = 1;
             Console.WriteLine("# Test " + contador);
+            string infor = "";
             foreach (string linea in lineas)
             {
                 if (linea != "")
                 {
+                    if (linea.Contains("CREATE TABLE"))
+                    {
+                        infor = "Table created";
+                    }
+                    else if (linea.Contains("INSERT INTO"))
+                    {
+                        infor = "Tuple added";
+                    }
+                    else if (linea.Contains("SELECT"))
+                    {
+                        infor = "Select information";
+                    }
+                    else if (linea.Contains("DELETE FROM"))
+                    {
+                        infor = "Tuple delete";
+                    }
+                    else if (linea.Contains("UPDATE"))
+                    {
+                        infor = "Tuple update";
+                    }
+
+                    Stopwatch tiempo = Stopwatch.StartNew();
+
                     if (linea.Contains("SELECT"))
-                    {                            
+                    {
                         Console.WriteLine(db.Query(linea));
                     }
-                    db.Query(linea);
+                    else
+                    {
+                        db.Query(linea);
+                    }
+                    Console.WriteLine(infor + " " + tiempo.ElapsedMilliseconds.ToString() + "ms");
                 }
                 else
                 {
                     contador = contador + 1;
+                    Console.WriteLine("");
                     Console.WriteLine("# Test " + contador);
                     string dbnombre = "usuarios" + contador;
                     db = new Database(dbnombre);
