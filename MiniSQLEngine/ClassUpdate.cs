@@ -13,12 +13,18 @@ namespace MiniSQLEngine
         private string Table,Condition;
         //atrb=date ; atrib=date
         private string[] Column;
+        private string result;
         
         public ClassUpdate(string pTable,string[] pColumn,string pCondition)
         {
             Table = pTable;
             Column = pColumn;
             Condition = pCondition;
+        }
+        public string getResult()
+        {
+            return result;
+
         }
         public string GetTable()
         {
