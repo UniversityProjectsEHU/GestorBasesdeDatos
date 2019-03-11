@@ -42,7 +42,7 @@ namespace MiniSQLEngine
             {
                 System.IO.File.Delete(pathfileDEF);
                 System.IO.File.Delete(pathfileDATA);
-                result = "ok";
+                result = Constants.DropTableSuccess;
             }
         }
         public string getResult()

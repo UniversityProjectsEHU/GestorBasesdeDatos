@@ -59,7 +59,7 @@ namespace MiniSQLEngine
                         stream.Write(info2, 0, info2.Length);
                     }
                 }
-                result = "ok";
+                result = Constants.CreateTableSuccess;
             }
         }
         public string getTableName()
