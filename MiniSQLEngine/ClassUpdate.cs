@@ -47,6 +47,32 @@ namespace MiniSQLEngine
 
         public override void Run(string dbname)
         {
+            Boolean hayerror = false;
+            //Error table not exits
+            if (Directory.Exists("..//..//..//data//" + dbname + "//" + Table + ".data")==false)
+            {
+                result = Constants.TableDoesNotExist;
+                hayerror = true;
+            }
+
+            //Error column not exits
+            String[] lineadef = System.IO.File.ReadAllLines("..//..//..//data//" + dbname + "//" + Table + ".def");
+            foreach(String lacol in Column)
+            {
+                String[] yasplit = lacol.Split('=');
+                String buscar = yasplit[0];
+                if (lineadef.Contains(buscar)==false)
+                {
+                    result = Constants.ColumnDoesNotExist;
+                    hayerror = true;
+                }
+            }
+
+            //Error data type incorrect
+
+
+            if (hayerror == false)
+            {
             String[] elements = new String[2];
             String operador = "";
             int posicion = 0;
@@ -153,6 +179,8 @@ namespace MiniSQLEngine
                 {
                     sw.WriteLine(linea);
                 }
+                result = Constants.TupleUpdateSuccess;
+            }
         }
     }
 }
