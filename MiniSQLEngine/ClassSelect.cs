@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -70,6 +71,14 @@ namespace MiniSQLEngine
                 elements = condition.Split('>');
                 op = ">";
             }
+            if (!(File.Exists("..//..//..//data//" + dbname + "//" + table + ".def")))
+            {
+                result = Constants.TableDoesNotExist;
+            }
+            else
+            {
+
+            
             //I read all the file
             string allFile = System.IO.File.ReadAllText("..//..//..//data//" + dbname + "//" + table + ".def");
             string []splittedFile = allFile.Split(',');
@@ -82,16 +91,15 @@ namespace MiniSQLEngine
                 {
                     for (int j = 0; j < columns.Length; j++)
                     {
-                      
-                            string[] temp = splittedFile[i].Split(' ');
-                            if (temp[0] == elements[0])
-                            {
-                                poscond = i;
-                                comptype = temp[1];
+                        list.Add(new objectDef(columns[j], i, columns[j]));
+ 
+                    }
+                    string[] temp = splittedFile[i].Split(' ');
+                    if (temp[0] == elements[0])
+                    {
+                        poscond = i;
+                        comptype = temp[1];
 
-                            }
-                            list.Add(new objectDef(columns[j], i, temp[1]));
-                        
                     }
                 }
                 showall = true;
@@ -102,214 +110,248 @@ namespace MiniSQLEngine
 
                 for (int i = 0; i < splittedFile.Length; i++)
                 {
+                    //Miramos que atributos debemos mostrar
                     for (int j = 0; j < columns.Length; j++)
                     {
                         if (splittedFile[i].Contains(columns[j]))
                         {
-                            string[] temp = splittedFile[i].Split(' ');
-                            if (temp[0] == elements[0])
-                            {
-                                poscond = i;
+                                list.Add(new objectDef(columns[j], i, columns[j]));
+
+
+
                             }
-                            list.Add(new objectDef(columns[j], i, temp[1]));
-                            comptype = temp[1];
                         }
+                    //Miramos la posicion y el tipo de la condicion
+                    string[] temp = splittedFile[i].Split(' ');
+                    if (temp[0] == elements[0])
+                    {
+                        poscond = i;
+                        comptype = temp[1];
+
+                    }
+
+                }
+
+            }
+                List<string> atindb = new List<string>();
+                Boolean valid = true;
+                foreach (string line in splittedFile)
+                {
+                    string[] compr = line.Split(' ');
+
+                    atindb.Add(compr[0]);
+                }
+                foreach (string col in columns)
+                {
+                    if (!(atindb.Contains(col)))
+                    {
+                        valid = false;
+
+                    }
+                }
+            if ((poscond == 0 && comptype == ""))
+            {
+                result = Constants.ColumnDoesNotExist;
+            }
+            else if (!valid)
+                {
+                    result = Constants.ColumnDoesNotExist;
+
+                }
+
+
+                else
+            {
+
+
+
+
+                string[] allFile2 = System.IO.File.ReadAllLines("..//..//..//data//" + dbname + "//" + table + ".data");
+                if (!showall)
+                {
+                    result = "The result for the Query '" + Query + "' is: ";
+
+
+
+                    foreach (string linea in allFile2)
+                    {
+                        string[] splittedline = linea.Split(',');
+
+
+
+                        if (op == "=")
+                        {
+                            if (splittedline[poscond] == elements[1])
+                            {
+                                foreach (objectDef obj in list)
+                                {
+                                    result = result + obj.GetColumnName() + " " + splittedline[obj.GetPos()] + " ";
+                                }
+                                result = result + ";";
+
+                            }
+
+
+                        }
+                        else if (op == "<")
+                        {
+                            if (comptype.ToLower() == "int")
+                            {
+                                if (Int32.Parse(splittedline[poscond]) < Int32.Parse(elements[1]))
+                                {
+                                    foreach (objectDef obj in list)
+                                    {
+                                        result = result + obj.GetColumnName() + " " + splittedline[obj.GetPos()] + " ";
+
+                                    }
+                                    result = result + ";";
+
+
+
+                                }
+                            }
+                            else
+                            {
+                                if ((splittedline[poscond].Length) < (elements[1]).Length)
+                                {
+                                    foreach (objectDef obj in list)
+                                    {
+                                        result = result + obj.GetColumnName() + " " + splittedline[obj.GetPos()] + " ";
+
+                                    }
+                                    result = result + ";";
+
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (comptype.ToLower() == "int")
+                            {
+                                if (Int32.Parse(splittedline[poscond]) > Int32.Parse(elements[1]))
+                                {
+                                    foreach (objectDef obj in list)
+                                    {
+                                        result = result + obj.GetColumnName() + " " + splittedline[obj.GetPos()] + " ";
+
+                                    }
+                                    result = result + ";";
+
+                                }
+                            }
+                            else
+                            {
+                                if ((splittedline[poscond].Length) > (elements[1]).Length)
+                                {
+                                    foreach (objectDef obj in list)
+                                    {
+                                        result = result + obj.GetColumnName() + " " + splittedline[obj.GetPos()] + " ";
+
+                                    }
+                                    result = result + ";";
+
+                                }
+                            }
+                        }
+
+                    }
+                }
+                //show all
+                else
+                {
+                    result = "The result for the Query '" + Query + "' is: ";
+                    foreach (string linea in allFile2)
+                    {
+                        string[] splittedline = linea.Split(',');
+
+
+
+                        if (op == "=")
+                        {
+                            if (splittedline[poscond] == elements[1])
+                            {
+
+                                foreach (string line2 in splittedline)
+                                {
+
+
+                                    result = result + " " + line2;
+                                }
+                                result = result + ";";
+
+
+                            }
+
+
+                        }
+                        else if (op == "<")
+                        {
+                            if (comptype.ToLower() == "int")
+                            {
+                                if (Int32.Parse(splittedline[poscond]) < Int32.Parse(elements[1]))
+                                {
+                                    foreach (string line2 in splittedline)
+                                    {
+                                        result = result + " " + line2;
+
+                                    }
+
+                                    result = result + ";";
+
+
+                                }
+                            }
+                            else
+                            {
+                                if ((splittedline[poscond].Length) < (elements[1]).Length)
+                                {
+                                    foreach (string line2 in splittedline)
+                                    {
+                                        result = result + " " + line2;
+
+                                    }
+                                    result = result + ";";
+
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (comptype.ToLower() == "int")
+                            {
+                                if (Int32.Parse(splittedline[poscond]) > Int32.Parse(elements[1]))
+                                {
+                                    foreach (string line2 in splittedline)
+                                    {
+                                        result = result + " " + line2;
+
+                                    }
+                                    result = result + ";";
+
+                                }
+                            }
+                            else
+                            {
+                                if ((splittedline[poscond].Length) < (elements[1]).Length)
+                                {
+                                    foreach (string line2 in splittedline)
+                                    {
+                                        result = result + " " + line2;
+
+                                    }
+                                    result = result + ";";
+
+                                }
+                            }
+                        }
+
                     }
                 }
             }
-
-
-
-            string []allFile2 = System.IO.File.ReadAllLines("..//..//..//data//" + dbname + "//" + table + ".data");
-            if (!showall)
-            {
-                result = "The result for the Query '" + Query + "' is: ";
-
-
-
-                foreach (string linea in allFile2)
-                {
-                    string[] splittedline = linea.Split(',');
-
-
-
-                    if (op == "=")
-                    {
-                        if (splittedline[poscond] == elements[1])
-                        {
-                            foreach (objectDef obj in list)
-                            {
-                                result = result + obj.GetColumnName() + " " + splittedline[obj.GetPos()]+" ";
-                            }
-                            result = result + ";";
-
-                        }
-
-
-                    }
-                    else if (op == "<")
-                    {
-                        if (comptype.ToLower() == "int")
-                        {
-                            if (Int32.Parse(splittedline[poscond]) < Int32.Parse(elements[1]))
-                            {
-                                foreach (objectDef obj in list)
-                                {
-                                    result = result + obj.GetColumnName() + " " + splittedline[obj.GetPos()] + " ";
-
-                                }
-                                result = result + ";";
-
-
-
-                            }
-                        }
-                        else
-                        {
-                            if ((splittedline[poscond].Length) < (elements[1]).Length)
-                            {
-                                foreach (objectDef obj in list)
-                                {
-                                    result = result + obj.GetColumnName() + " " + splittedline[obj.GetPos()] + " ";
-
-                                }
-                                result = result + ";";
-
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (comptype.ToLower() == "int")
-                        {
-                            if (Int32.Parse(splittedline[poscond]) > Int32.Parse(elements[1]))
-                            {
-                                foreach (objectDef obj in list)
-                                {
-                                    result = result + obj.GetColumnName() + " " + splittedline[obj.GetPos()] + " ";
-
-                                }
-                                result = result + ";";
-
-                            }
-                        }
-                        else
-                        {
-                            if ((splittedline[poscond].Length) > (elements[1]).Length)
-                            {
-                                foreach (objectDef obj in list)
-                                {
-                                    result = result + obj.GetColumnName() + " " + splittedline[obj.GetPos()] + " ";
-
-                                }
-                                result = result + ";";
-
-                            }
-                        }
-                    }
-
-                }
             }
-            //show all
-            else
+            if (result== "The result for the Query '" + Query + "' is: ")
             {
-                result = "The result for the Query '" + Query + "' is: ";
-                foreach (string linea in allFile2)
-                {
-                    string[] splittedline = linea.Split(',');
-
-
-
-                    if (op == "=")
-                    {
-                        if (splittedline[poscond] == elements[1])
-                        {
-                            
-                                foreach (string line2 in splittedline)
-                                {
-
-
-                                    result = result + " " + line2;
-                                }
-                            result = result + ";";
-
-
-                        }
-
-
-                    }
-                    else if (op == "<")
-                    {
-                        if (comptype.ToLower() == "int")
-                        {
-                            if (Int32.Parse(splittedline[poscond]) < Int32.Parse(elements[1]))
-                            {
-                                foreach (string line2  in splittedline)
-                                {
-                                    result = result + " "+line2;
-
-                                }
-
-                                result = result + ";";
-
-
-                            }
-                        }
-                        else
-                        {
-                            if ((splittedline[poscond].Length) < (elements[1]).Length)
-                            {
-                                foreach (string line2 in splittedline)
-                                {
-                                    result = result + " " + line2;
-
-                                }
-                                result = result + ";";
-
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (comptype.ToLower() == "int")
-                        {
-                            if (Int32.Parse(splittedline[poscond]) > Int32.Parse(elements[1]))
-                            {
-                                foreach (string line2 in splittedline)
-                                {
-                                    result = result + " " + line2;
-
-                                }
-                                result = result + ";";
-
-                            }
-                        }
-                        else
-                        {
-                            if ((splittedline[poscond].Length) < (elements[1]).Length)
-                            {
-                                foreach (string line2 in splittedline)
-                                {
-                                    result = result + " " + line2;
-                                    
-                                }
-                                result = result + ";";
-
-                            }
-                        }
-                    }
-
-                }
-            }
-            if (result== "The result for the Query '" + Query + "' is:")
-            {
-                foreach(string column in columns)
-                {
-                    foreach(string type in splittedFile)
-                    {
-                        
-                    }
-                }
+                result = "Empty Query";
             }
             }
 
