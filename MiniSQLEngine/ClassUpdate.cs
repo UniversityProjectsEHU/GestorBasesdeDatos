@@ -49,136 +49,315 @@ namespace MiniSQLEngine
         {
             Boolean hayerror = false;
             //Error table not exits
-            if (Directory.Exists("..//..//..//data//" + dbname + "//" + Table + ".data")==false)
+            if (!File.Exists("..//..//..//data//" + dbname + "//" + Table + ".data"))
             {
                 result = Constants.TableDoesNotExist;
                 hayerror = true;
             }
 
             //Error column not exits
-            String[] lineadef = System.IO.File.ReadAllLines("..//..//..//data//" + dbname + "//" + Table + ".def");
-            foreach(String lacol in Column)
+            if (hayerror == false)
             {
-                String[] yasplit = lacol.Split('=');
-                String buscar = yasplit[0];
-                if (lineadef.Contains(buscar)==false)
+                String[] lineadef = System.IO.File.ReadAllLines("..//..//..//data//" + dbname + "//" + Table + ".def");
+                foreach (String lacol in Column)
                 {
-                    result = Constants.ColumnDoesNotExist;
-                    hayerror = true;
+                    String[] yasplit = lacol.Split('=');
+                    String buscar = yasplit[0];
+                    if (lineadef[0].Contains(buscar) == false)
+                    {
+                        result = Constants.ColumnDoesNotExist;
+                        hayerror = true;
+                    }
                 }
             }
 
             //Error data type incorrect
-
-
             if (hayerror == false)
             {
-            String[] elements = new String[2];
-            String operador = "";
-            int posicion = 0;
-
-            //I need to know the operator of the condition
-            if (Condition.Contains("="))
-            {
-                elements = Condition.Split('=');
-                operador = "=";
-            }
-            else if (Condition.Contains("<"))
-            {
-                elements = Condition.Split('<');
-                operador = "<";
-            }
-            else if (Condition.Contains(">"))
-            {
-                elements = Condition.Split('>');
-                operador = ">";
-            }
-
-            //I need a new line with the new dates of the row
-            String newRow = "";
-            int longitud = Column.Length;
-            int cuenta = 1;
-            foreach (String colum in Column)
-            {
-                if (cuenta!=longitud)
+                String[] lineadef = System.IO.File.ReadAllLines("..//..//..//data//" + dbname + "//" + Table + ".def");
+                foreach (String parte in lineadef)
                 {
-                    String[] actual = colum.Split('=');
-                    newRow = newRow + actual[1] + ",";
-                }
-                else
-                {
-                    String[] actual = colum.Split('=');
-                    newRow = newRow + actual[1];
-                }
-                cuenta++;
-            }
-
-            //Open te file .def
-            String allFile = System.IO.File.ReadAllText("..//..//..//data//" + dbname + "//" + Table + ".def");
-            String[] atrib = allFile.Split(',');
-
-            //Search the postion of the atribute that appears in the condition
-            String buscar = elements[0];
-            Boolean parar = false;
-            foreach (String atributo in atrib)
-            {
-                if (!parar)
-                {
-                    if (!atributo.Contains(buscar))
+                    String[] lineadef2 = parte.Split(',');
+                    foreach (String parte2 in lineadef2)
                     {
-                        posicion = posicion + 1;
-                    }
-                    else
-                    {
-                        parar = true;
+                        String[] parte3 = parte2.Split(' ');
+                        foreach (String atributoigual in Column)
+                        {
+                            String[] atributo = atributoigual.Split('=');
+                            if (parte3[0] == atributo[0])
+                            {
+                                String tipo = parte3[1].ToUpper();
+                                //INT
+                                if (tipo == "INT")
+                                {
+                                    try
+                                    {
+                                        int.Parse(atributo[1]);
+                                    }
+                                    catch
+                                    {
+                                        result = Constants.IncorrectDataType;
+                                        hayerror = true;
+                                    }
+                                }
+                                //DOUBLE
+                                if (tipo == "DOUBLE")
+                                {
+                                    try
+                                    {
+                                        double.Parse(atributo[1]);
+                                    }
+                                    catch
+                                    {
+                                        result = Constants.IncorrectDataType;
+                                        hayerror = true;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
 
-            //Open te file .data
-            String[] lineas = System.IO.File.ReadAllLines("..//..//..//data//" + dbname + "//" + Table + ".data");
-
-            //Make the update
-            int inde = 0;
-            foreach (String linea in lineas)
+            //Error primary key already exists
+            if (hayerror == false)
             {
-
-                String[] datos = linea.Split(',');
-                if (operador == "<")
+                String[] lineadef = System.IO.File.ReadAllLines("..//..//..//data//" + dbname + "//" + Table + ".def");
+                String[] atributos = lineadef[0].Split(',');
+                int posPK = 0;
+                String atribPK = "";
+                for (int i = 0; i < atributos.Length; i++)
                 {
-                    int numero = Int32.Parse(datos[posicion]);
-                    if (numero < Int32.Parse(elements[1]))
+                    if (atributos[i].Contains("true"))
                     {
-                        lineas.SetValue(newRow, inde);
+                        posPK = i;
+                        String[] atrib = atributos[i].Split(' ');
+                        atribPK = atrib[0];
                     }
-                    inde++;
                 }
-                else if (operador == ">")
+                String cambio = "";
+                Boolean semodifica = false;
+                foreach (String upda in Column)
                 {
-                    int numero = Int32.Parse(datos[posicion]);
-                    if (numero > Int32.Parse(elements[1]))
+                    String[] updaactual = upda.Split('=');
+                    String esultimo = updaactual[0] + ";";
+                    if (updaactual[0] == atribPK)
                     {
-                        lineas.SetValue(newRow, inde);
+                        cambio = updaactual[1];
+                        semodifica = true;
                     }
-                    inde++;
-
+                    else if (esultimo == atribPK)
+                    {
+                        cambio = updaactual[1];
+                        semodifica = true;
+                    }
                 }
-                else if (operador == "=")
+                if (semodifica == true)
                 {
-                    if (datos[posicion] == elements[1])
+                    String[] lineas = System.IO.File.ReadAllLines("..//..//..//data//" + dbname + "//" + Table + ".data");
+                    foreach (String lineactual in lineas)
                     {
-                        lineas.SetValue(newRow, inde);
+                        String[] lineactualsplit = lineactual.Split(',');
+                        if (lineactualsplit[posPK] == cambio)
+                        {
+                            result = Constants.Error + "primary key already exists";
+                            hayerror = true;
+                        }
                     }
-                    inde++;
                 }
             }
 
-            //Make changes on the file
-            using (StreamWriter sw = System.IO.File.CreateText("..//..//..//data//" + dbname + "//" + Table + ".data"))
+            //NO Error
+            if (hayerror == false)
+            {
+                String[] elements = new String[2];
+                String operador = "";
+                int posicion = 0;
+
+                //I need to know the operator of the condition
+                if (Condition.Contains("="))
+                {
+                    elements = Condition.Split('=');
+                    operador = "=";
+                }
+                else if (Condition.Contains("<"))
+                {
+                    elements = Condition.Split('<');
+                    operador = "<";
+                }
+                else if (Condition.Contains(">"))
+                {
+                    elements = Condition.Split('>');
+                    operador = ">";
+                }
+
+
+
+
+                //I need a new line with the new dates of the row
+                //String newRow = "";
+                //int longitud = Column.Length;
+                //int cuenta = 1;
+                //foreach (String colum in Column)
+                //{
+                //    if (cuenta!=longitud)
+                //    {
+                //        String[] actual = colum.Split('=');
+                //        newRow = newRow + actual[1] + ",";
+                //    }
+                //    else
+                //    {
+                //        String[] actual = colum.Split('=');
+                //        newRow = newRow + actual[1];
+                //    }
+                //    cuenta++;
+                //}
+
+                //Open te file .def
+                String allFile = System.IO.File.ReadAllText("..//..//..//data//" + dbname + "//" + Table + ".def");
+                String[] atrib = allFile.Split(',');
+
+                //Search the postion of the atribute that appears in the condition
+                String buscar = elements[0];
+                Boolean parar = false;
+                foreach (String atributo in atrib)
+                {
+                    if (!parar)
+                    {
+                        if (!atributo.Contains(buscar))
+                        {
+                            posicion = posicion + 1;
+                        }
+                        else
+                        {
+                            parar = true;
+                        }
+                    }
+                }
+
+                //Open te file .data
+                String[] lineas = System.IO.File.ReadAllLines("..//..//..//data//" + dbname + "//" + Table + ".data");
+
+                //[atr1/atr2]
+                String[] lineadef = System.IO.File.ReadAllLines("..//..//..//data//" + dbname + "//" + Table + ".def");
+                String[] lineacoma = lineadef[0].Split(',');
+                String[] atributos = new String[lineacoma.Length];
+                int cuantas = 0;
+                foreach (string linea in lineacoma)
+                {
+                    String[] lineaespacio = linea.Split(' ');
+                    atributos[cuantas] = lineaespacio[0];
+                    cuantas = cuantas + 1;
+                }
+                //Make the update
+                int inde = 0;
                 foreach (String linea in lineas)
                 {
-                    sw.WriteLine(linea);
+                    String[] datos = linea.Split(',');
+                    if (operador == "<")
+                    {
+                        int numero = Int32.Parse(datos[posicion]);
+                        if (numero < Int32.Parse(elements[1]))
+                        {
+                            foreach (String columna in Column)
+                            {
+                                String[] columnaSep = columna.Split('=');
+                                for (int i = 0; i < atributos.Length; i++)
+                                {
+                                    if (columnaSep[0] == atributos[i])
+                                    {
+                                        datos[i] = columnaSep[1];
+                                    }
+                                }
+                            }
+                            String newRow = "";
+                            for (int i = 0; i < datos.Length; i++)
+                            {
+                                if (i != (datos.Length - 1))
+                                {
+                                    newRow = newRow + datos[i] + ",";
+                                }
+                                else
+                                {
+                                    newRow = newRow + datos[i];
+                                }
+                            }
+                            lineas.SetValue(newRow, inde);
+                        }
+                        inde++;
+                    }
+                    else if (operador == ">")
+                    {
+                        int numero = Int32.Parse(datos[posicion]);
+                        if (numero > Int32.Parse(elements[1]))
+                        {
+                            foreach (String columna in Column)
+                            {
+                                String[] columnaSep = columna.Split('=');
+                                for (int i = 0; i < atributos.Length; i++)
+                                {
+                                    if (columnaSep[0] == atributos[i])
+                                    {
+                                        datos[i] = columnaSep[1];
+                                    }
+                                }
+                            }
+                            String newRow = "";
+                            for (int i = 0; i < datos.Length; i++)
+                            {
+                                if (i != (datos.Length - 1))
+                                {
+                                    newRow = newRow + datos[i] + ",";
+                                }
+                                else
+                                {
+                                    newRow = newRow + datos[i];
+                                }
+                            }
+                            lineas.SetValue(newRow, inde);
+                        }
+                        inde++;
+
+                    }
+                    else if (operador == "=")
+                    {
+                        if (datos[posicion] == elements[1])
+                        {
+                            foreach (String columna in Column)
+                            {
+                                String[] columnaSep = columna.Split('=');
+                                for (int i = 0; i < atributos.Length; i++)
+                                {
+                                    if (columnaSep[0] == atributos[i])
+                                    {
+                                        datos[i] = columnaSep[1];
+                                    }
+                                }
+                            }
+                            String newRow = "";
+                            for (int i = 0; i < datos.Length; i++)
+                            {
+                                if (i != (datos.Length - 1))
+                                {
+                                    newRow = newRow + datos[i] + ",";
+                                }
+                                else
+                                {
+                                    newRow = newRow + datos[i];
+                                }
+                            }
+                            lineas.SetValue(newRow, inde);
+                        }
+                        inde++;
+                    }
                 }
+
+                //Make changes on the file
+                using (StreamWriter sw = System.IO.File.CreateText("..//..//..//data//" + dbname + "//" + Table + ".data"))
+                    foreach (String linea in lineas)
+                    {
+                        sw.WriteLine(linea);
+                    }
                 result = Constants.TupleUpdateSuccess;
             }
         }
