@@ -42,7 +42,7 @@ namespace MiniSQLEngine
             {
                 try
                 {
-                    string path = @"..//..//..//data//" + tableName;
+                    string path = @"..\\..\\..\\data\\" + tableName;
                     //string path = @"C:\Users\docencia\source\repos\sergioyeahmen\Si-funciona-no-lo-toques\data\" + tableName;
 
                     System.IO.Directory.CreateDirectory(path);
