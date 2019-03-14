@@ -11,6 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassesTest", "ClassesTest\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainConsole", "MainConsole\MainConsole.csproj", "{2DC7239E-7A36-40E9-926F-3EFF27DE47D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniSQLDBConsole", "MiniSQLDBConsole\MiniSQLDBConsole.csproj", "{A6EE71CC-547C-49CB-B607-A9B0971BD31B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{831531C4-F4A2-492D-A4B7-50D5EE8A6805} = {831531C4-F4A2-492D-A4B7-50D5EE8A6805}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +34,10 @@ Global
 		{2DC7239E-7A36-40E9-926F-3EFF27DE47D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DC7239E-7A36-40E9-926F-3EFF27DE47D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DC7239E-7A36-40E9-926F-3EFF27DE47D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6EE71CC-547C-49CB-B607-A9B0971BD31B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6EE71CC-547C-49CB-B607-A9B0971BD31B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6EE71CC-547C-49CB-B607-A9B0971BD31B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6EE71CC-547C-49CB-B607-A9B0971BD31B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
