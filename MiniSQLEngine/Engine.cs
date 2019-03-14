@@ -31,20 +31,29 @@ namespace MiniSQLEngine
     {
         public string Query(string psentencia, string dbname)
         {
-            Query query = Parse(psentencia);
-            string a=query.getClass();
-            if (a.Equals("select"))
+            try
             {
-                query.Run(dbname);
-               ClassSelect q2 = (ClassSelect)query;
-               return q2.getResult();
+                Query query = Parse(psentencia);
+                string a = query.getClass();
+                if (a.Equals("select"))
+                {
+                    query.Run(dbname);
+                    ClassSelect q2 = (ClassSelect)query;
+                    return q2.getResult();
+                }
+                else
+                {
+
+                    query.Run(dbname);
+                    return query.getResult();
+                }
             }
-            else
+            catch(Exception e)
             {
-                
-                 query.Run(dbname);
-                return query.getResult();
+                string errorreg = "Your query is not valid";
+                return errorreg;
             }
+            
         }
         public Query Parse(string pQuery)
         {

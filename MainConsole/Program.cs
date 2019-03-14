@@ -14,7 +14,7 @@ namespace MainConsole
     {
         static void Main(string[] args)
         {
-            String[] lineas = System.IO.File.ReadAllLines("..//..//..//data//input.txt");
+            String[] lineas = System.IO.File.ReadAllLines("..//..//..//data//TesterInput.txt");
             Database db = new Database("usuarios1");
             db.Query("CREATE DATABASE usuarios1;");
             int contador = 1;
