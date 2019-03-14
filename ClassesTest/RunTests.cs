@@ -231,6 +231,46 @@ namespace ClassesTest
             Assert.AreEqual(1, lines3.Length);
             Assert.AreEqual(insert4[0] + "," + insert4[1], lines3[0]);
         }
+        [TestMethod]
+        public void fullTestWithSelect()
+        {
+            string dbname = "myDBFull";
+            string myTable = "thisTable111";
+            string queryCreateDB = "CREATE DATABASE myDBFull;";
+            string queryDropDB = "DROP DATABASE myDBFull;";
+            //Al hacer create van juntos, sin espacio despues de coma
+            string queryCreateTable = "CREATE TABLE thisTable111 (id int true,name String false,age int false);";
+            string queryInsert = "INSERT INTO thisTable111 VALUES (1,Alejandra,37);";
+            string queryInsert2 = "INSERT INTO thisTable111 VALUES (2,Paco,60);";
+            string querySelect = "SELECT id,name FROM thisTable111 WHERE age<50;";
+            string querySelectNotExists = "SELECT address FROM thisTable111 WHERE id=1;";
+            string querySelectAll = "SELECT * FROM thisTable111 WHERE age>10;";
+            string[] values = { "id int true", "name String false", "edad int false" };
+            string[] valuesToInsert = { "1", "Alejandra", "36" };
+            string[] valuesToInsert2 = { "2", "Paco", "60" };
+            string message = "The result for the Query '" + querySelect + "' is: id 1 name Alejandra ;";
+            string messageAll = "The result for the Query '" + querySelectAll + "' is: id 1 name Alejandra age 37; id 2 name Paco age 60;";
+            string messageNotExists = "ERROR: Column does not exist";
+            Database db = new Database(dbname);
+            /*ClassCreateDatabase newDB = new ClassCreateDatabase(dbname);
+            ClassCreateTable newTable = new ClassCreateTable(myTable, values);
+            ClassInsert newInsert1 = new ClassInsert(myTable, valuesToInsert);
+            ClassInsert newInsert2 = new ClassInsert(myTable, valuesToInsert2);
+            newDB.Run(dbname);
+            newTable.Run(dbname);
+            newInsert1.Run(dbname);
+            newInsert2.Run(dbname);
+            */
+            db.Query(queryDropDB);
+            db.Query(queryCreateDB);
+            db.Query(queryCreateTable);
+            db.Query(queryInsert);
+            db.Query(queryInsert2);
+            Assert.AreEqual(db.Query(querySelect), message);
+            Assert.AreEqual(db.Query(querySelectNotExists), messageNotExists);
+            Assert.AreEqual(db.Query(querySelectAll), messageAll);
+
+        }
     }
 }
 
