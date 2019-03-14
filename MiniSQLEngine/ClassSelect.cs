@@ -166,7 +166,10 @@ namespace MiniSQLEngine
 
 
 
-
+                    if (comptype.ToLower() == "double")
+                    {
+                        comptype = "int";
+                    }
                 string[] allFile2 = System.IO.File.ReadAllLines("..//..//..//data//" + dbname + "//" + table + ".data");
                 if (!showall)
                 {
