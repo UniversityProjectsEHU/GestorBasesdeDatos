@@ -123,17 +123,32 @@ namespace ClassesTest
             string actual2 = "antonio,7";
             Assert.AreEqual(lineas2[0], actual2);
 
-            //Update 2
+            ////Update 3
             string[] values5 = new string[2];
             values5[0] = "column1=francisco";
             values5[1] = "column2=9";
             string cond3 = "column2<20";
             ClassUpdate cupdate3 = new ClassUpdate(myTable, values5, cond3);
             cupdate3.Run(myDB);
-            //Testing update 2
+            //Testing update 3
             String[] lineas3 = System.IO.File.ReadAllLines("..//..//..//data//" + myDB + "//" + myTable + ".data");
             string actual3 = "francisco,9";
             Assert.AreEqual(lineas3[0], actual3);
+
+            ////Update 2
+            string[] values6 = new string[1];
+            values6[0] = "column1=ana";
+            string cond4 = "column2=9";
+            ClassUpdate cupdate4 = new ClassUpdate(myTable, values6, cond4);
+            cupdate4.Run(myDB);
+            //Testing update 2
+            String[] lineas4 = System.IO.File.ReadAllLines("..//..//..//data//" + myDB + "//" + myTable + ".data");
+            string actual4 = "ana,9";
+            Assert.AreEqual(lineas4[0], actual4);
+
+            ClassDropDatabase cdrop = new ClassDropDatabase(myDB);
+            cdrop.Run(myDB);
+
         }
 
         [TestMethod]

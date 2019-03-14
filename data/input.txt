@@ -14,5 +14,6 @@ SELECT Name,Age FROM MyTable WHERE Age=18;
 CREATE TABLE MyTable (Name TEXT true,Age INT false,Address TEXT false);
 INSERT INTO MyTable VALUES ('Eva',18,'Calle Los Herran 16 2 Derecha. 01005 Vitoria-Gasteiz');
 INSERT INTO MyTable VALUES ('Ramon3',26,'Larratxo kalea 23 2. Ezk. 20012 Donostia');
-INSERT INTO MyTable VALUES ('Miren',26,'Larratxo kalea 23 2. Ezk. 20012 Donostia');
+INSERT INTO MyTable VALUES ('Miren',27,'Larratxo kalea 23 2. Ezk. 20012 Donostia');
+UPDATE MyTable SET Name=lola WHERE Age=27;
 SELECT Name,Age FROM MyTable WHERE Age=18;
