@@ -134,13 +134,56 @@ namespace MiniSQLEngine
                         atributosDEF[contador] = espacio[0];
                         contador++;
                     }
-                    String linea = "";
-                    foreach (String atriActual in atributosDEF)
+                    String[] linea = new String[lineadef.Length];
+                    int indice = 0;
+                    foreach (String atriDEFActual in atributosDEF)
                     {
-                        foreach (String valor)
+                        int pos = 0;
+                        Boolean esta = false;
+                        int posVerdad = 0;
+                        foreach (String atributoActual in atributes)
                         {
-
+                            if (atributoActual == atriDEFActual)
+                            {
+                                posVerdad = pos;
+                                esta = true;
+                            }
+                            else
+                            {
+                                pos++;
+                            }
                         }
+                        indice++;
+                        if (esta==true)
+                        {
+                            linea[indice] = values[posVerdad];
+                        }
+                        else
+                        {
+                            linea[indice] = null;
+                        }
+                    }
+                    String linea2 = "";
+                    int contar = 0;
+                    foreach (String ahora in linea)
+                    {
+                        if (contar==0)
+                        {
+                            linea2 = ahora;
+                            contar++;
+                        }
+                        else
+                        {
+                            linea2 = linea2 + "," + ahora;
+                        }
+                    }
+
+                    using (StreamWriter file = File.AppendText(pathfileDATA))
+                    {
+                        //Data added to the document
+                        file.WriteLine(linea2);
+                        file.Close();
+                        result = Constants.InsertSuccess;
                     }
                 }
             }

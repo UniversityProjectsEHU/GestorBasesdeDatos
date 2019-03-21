@@ -61,7 +61,7 @@ namespace ClassesTest
             */
             ClassCreateDatabase newDB = new ClassCreateDatabase(dbname);
             ClassCreateTable newTable = new ClassCreateTable(myTable, values);
-            ClassInsert inserted = new ClassInsert(myTable, valuesToInsert);
+            ClassInsert inserted = new ClassInsert(myTable, valuesToInsert,null);
             newDB.Run(dbname);
             bool exists = Directory.Exists(@"..//..//..//data//" + dbname);
             Assert.AreEqual(true, exists);
@@ -96,7 +96,7 @@ namespace ClassesTest
             string[] values2 = new string[2];
             values2[0] = "hola";
             values2[1] = "7";
-            ClassInsert cinsert = new ClassInsert(myTable, values2);
+            ClassInsert cinsert = new ClassInsert(myTable, values2,null);
             cinsert.Run(myDB);
             
             //Update 1
@@ -185,19 +185,19 @@ namespace ClassesTest
             insert5[0] = "Josu";
             insert5[1] = "4";
 
-            ClassInsert ins1 = new ClassInsert(myTable, insert1);
+            ClassInsert ins1 = new ClassInsert(myTable, insert1,null);
             ins1.Run(myDB);
 
-            ClassInsert ins2 = new ClassInsert(myTable, insert2);
+            ClassInsert ins2 = new ClassInsert(myTable, insert2, null);
             ins2.Run(myDB);
 
-            ClassInsert ins3 = new ClassInsert(myTable, insert3);
+            ClassInsert ins3 = new ClassInsert(myTable, insert3, null);
             ins3.Run(myDB);
 
-            ClassInsert ins4 = new ClassInsert(myTable, insert4);
+            ClassInsert ins4 = new ClassInsert(myTable, insert4, null);
             ins4.Run(myDB);
 
-            ClassInsert ins5 = new ClassInsert(myTable, insert5);
+            ClassInsert ins5 = new ClassInsert(myTable, insert5, null);
             ins5.Run(myDB);
 
             string cond = "edad>3";
