@@ -126,7 +126,7 @@ namespace MiniSQLEngine
                 {
                     String[] lineadef = System.IO.File.ReadAllLines("..//..//..//data//" + dbname + "//" + aTable + ".def");
                     String[] porComas = lineadef[0].Split(',');
-                    String[] atributosDEF = new String[lineadef.Length];
+                    String[] atributosDEF = new String[porComas.Length];
                     int contador = 0;
                     foreach(String actual in porComas)
                     {
@@ -134,7 +134,7 @@ namespace MiniSQLEngine
                         atributosDEF[contador] = espacio[0];
                         contador++;
                     }
-                    String[] linea = new String[lineadef.Length];
+                    String[] linea = new String[porComas.Length];
                     int indice = 0;
                     foreach (String atriDEFActual in atributosDEF)
                     {
@@ -153,7 +153,6 @@ namespace MiniSQLEngine
                                 pos++;
                             }
                         }
-                        indice++;
                         if (esta==true)
                         {
                             linea[indice] = values[posVerdad];
@@ -162,6 +161,7 @@ namespace MiniSQLEngine
                         {
                             linea[indice] = null;
                         }
+                        indice++;
                     }
                     String linea2 = "";
                     int contar = 0;
@@ -169,12 +169,30 @@ namespace MiniSQLEngine
                     {
                         if (contar==0)
                         {
-                            linea2 = ahora;
-                            contar++;
+                            if (ahora==null)
+                            {
+                                string ahora2 = "null";
+                                linea2 = ahora2;
+                                contar++;
+                            }
+                            else
+                            {
+                                linea2 = ahora;
+                                contar++;
+                            }
                         }
                         else
                         {
-                            linea2 = linea2 + "," + ahora;
+                            if (ahora == null)
+                            {
+                                string ahora2 = "null";
+                                linea2 = linea2 + "," + ahora2;
+                                contar++;
+                            }
+                            else
+                            {
+                                linea2 = linea2 + "," + ahora;
+                            }
                         }
                     }
 

@@ -222,10 +222,10 @@ namespace MiniSQLEngine
             }
             else if (match2.Success)
             {
-                string table = match.Groups[1].Value;
-                string atributes = match.Groups[2].Value;
+                string table = match2.Groups[1].Value;
+                string atributes = match2.Groups[2].Value;
                 string[] myArray2 = atributes.Split(',');
-                string values = match.Groups[3].Value;
+                string values = match2.Groups[3].Value;
                 string[] myArray = values.Split(',');
                 
                 ClassInsert query = new ClassInsert(table, myArray, myArray2);
