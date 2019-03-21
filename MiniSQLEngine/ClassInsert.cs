@@ -13,10 +13,12 @@ namespace MiniSQLEngine
         private string aTable;
         private string[] values;
         private string result = "";
-        public ClassInsert(String table, String[] myArray)
+        private string[] atributes;
+        public ClassInsert(String table, String[] myArray, String[] myArray2)
         {
             aTable = table;
             values = myArray;
+            atributes = myArray2;
         }
         public string GetTable()
         {
@@ -50,6 +52,8 @@ namespace MiniSQLEngine
 
             else
             {
+                if (atributes==null)
+                {
                 string pathfileDEF = @"..//..//..//data//" + dbname + "//" + aTable + ".def";
                 string line1;
                 List<string> columns = new List<string>();
@@ -67,53 +71,75 @@ namespace MiniSQLEngine
                         }
                     }
                 }
-                if (columns.Count() != values.Length)
-                {
-                    result = Constants.WrongSyntax;
-                }
-
-                else
-                {
-                    int index = 0;
-                    foreach (string c in columns)
+                    if (columns.Count() != values.Length)
                     {
-
-                        if (c.ToLower().Equals("int"))
-                        {
-                            try
-                            {
-                                int.Parse(values[index]);
-                            }
-                            catch
-                            {
-                                result = Constants.IncorrectDataType;
-                            }
-                        }
-                        index++;
+                        result = Constants.WrongSyntax;
                     }
 
-                    if (result == "")
+                    else
                     {
-                        string texto = "";
-                        for (int i = 0; i < values.Length; i++)
+                        int index = 0;
+                        foreach (string c in columns)
                         {
-                            if (i == values.Length - 1)
-                            {
-                                texto = texto + values[i];
-                            }
-                            else
-                            {
-                                texto = texto + values[i] + ",";
 
+                            if (c.ToLower().Equals("int"))
+                            {
+                                try
+                                {
+                                    int.Parse(values[index]);
+                                }
+                                catch
+                                {
+                                    result = Constants.IncorrectDataType;
+                                }
                             }
+                            index++;
                         }
 
-                        using (StreamWriter file = File.AppendText(pathfileDATA))
+                        if (result == "")
                         {
-                            //Data added to the document
-                            file.WriteLine(texto);
-                            file.Close();
-                            result = Constants.InsertSuccess;
+                            string texto = "";
+                            for (int i = 0; i < values.Length; i++)
+                            {
+                                if (i == values.Length - 1)
+                                {
+                                    texto = texto + values[i];
+                                }
+                                else
+                                {
+                                    texto = texto + values[i] + ",";
+
+                                }
+                            }
+
+                            using (StreamWriter file = File.AppendText(pathfileDATA))
+                            {
+                                //Data added to the document
+                                file.WriteLine(texto);
+                                file.Close();
+                                result = Constants.InsertSuccess;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    String[] lineadef = System.IO.File.ReadAllLines("..//..//..//data//" + dbname + "//" + aTable + ".def");
+                    String[] porComas = lineadef[0].Split(',');
+                    String[] atributosDEF = new String[lineadef.Length];
+                    int contador = 0;
+                    foreach(String actual in porComas)
+                    {
+                        String[] espacio=actual.Split(' ');
+                        atributosDEF[contador] = espacio[0];
+                        contador++;
+                    }
+                    String linea = "";
+                    foreach (String atriActual in atributosDEF)
+                    {
+                        foreach (String valor)
+                        {
+
                         }
                     }
                 }

@@ -211,12 +211,24 @@ namespace MiniSQLEngine
         {
             //public const String regExInsert = @"INSERT\s+INTO\s+(\w+)\s+VALUES\s+\(([^\)]+)\);";
             Match match = Regex.Match(pQuery, Constants.regExInsert);
+            Match match2 = Regex.Match(pQuery, Constants.regExInsert2);
             if (match.Success)
             {
                 string table = match.Groups[1].Value;
                 string values = match.Groups[2].Value;
                 string[] myArray = values.Split(',');
-                ClassInsert query = new ClassInsert(table, myArray);
+                ClassInsert query = new ClassInsert(table, myArray, null);
+                return query;
+            }
+            else if (match2.Success)
+            {
+                string table = match.Groups[1].Value;
+                string atributes = match.Groups[2].Value;
+                string[] myArray2 = atributes.Split(',');
+                string values = match.Groups[3].Value;
+                string[] myArray = values.Split(',');
+                
+                ClassInsert query = new ClassInsert(table, myArray, myArray2);
                 return query;
             }
 
