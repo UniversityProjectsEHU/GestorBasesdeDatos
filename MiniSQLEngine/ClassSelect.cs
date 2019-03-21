@@ -55,7 +55,7 @@ namespace MiniSQLEngine
         {
             List<string> rm = new List<string>();
             string op;
-            string[] elements;
+            string[] elements= { };
             int poscond = 0;
             if (condition.Contains("="))
             {
@@ -67,10 +67,16 @@ namespace MiniSQLEngine
                 elements = condition.Split('<');
                 op = "<";
             }
-            else
+            else if (condition.Contains(">"))
+
             {
                 elements = condition.Split('>');
                 op = ">";
+            }
+            else
+            {
+                elements[0] = "";
+                op = "";
             }
             if (!(File.Exists("..//..//..//data//" + dbname + "//" + table + ".def")))
             {
