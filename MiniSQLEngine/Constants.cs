@@ -8,7 +8,8 @@ namespace MiniSQLEngine
 {
     class Constants
     {
-        public const string regExSelect = @"SELECT\s+([^ WHERE]+)\s+FROM\s+(\w+)\s+WHERE\s+(\w+<[0-9]+|\w+>[0-9]+|\w+=[0-9]+);";
+        public const string regExSelect = @"SELECT\s+([\w*]+|(?:\w+,\w+)+)\s+FROM\s+(\w+);";
+        public const string regExSelect2 = @"SELECT\s+([\w*]+|(?:\w+,\w+)+)\s+FROM\s+(\w+)\s+WHERE\s+(\w+<[0-9]+|\w+>[0-9]+|\w+=[0-9]+);";
         public const string regExDelete = @"DELETE\s+FROM\s+(\w+)\s+WHERE\s+(\w+<[0-9]+|\w+>[0-9]+|\w+=[0-9]+);";
         public const string regExInsert = @"INSERT\s+INTO\s+(\w+)\s+VALUES \(([^\)]+)\);";
         public const string regExInsert2 = @"INSERT\s+INTO\s+([^\(]+)\(([^\)]+)\)\s+VALUES \(([^\)]+)\);";
@@ -16,7 +17,7 @@ namespace MiniSQLEngine
         public const string regExpCreateDatabase = @"CREATE DATABASE\s+(\w+);";
         public const string regExpDropDatabase = @"DROP DATABASE\s+(\w+);";
         public const string regExpDropTable = @"DROP\s+TABLE\s+(\w+);";
-        public const string regExpCreateTable = @"CREATE TABLE\s+(\w+)\s+\(([^\)]+)\);";
+        public const string regExpCreateTable = @"CREATE TABLE\s+(\w+)\s*\(([^\)]+)\);";
         public const string regExTypeSelect = @"(SELECT)";
         public const string regExTypeInsert = @"(INSERT)";
         public const string regExTypeUpdate = @"(UPDATE)";

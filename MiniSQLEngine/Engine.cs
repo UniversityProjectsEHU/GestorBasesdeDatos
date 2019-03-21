@@ -170,6 +170,10 @@ namespace MiniSQLEngine
                 string table = matchCreateTable.Groups[1].Value;
                 string values = matchCreateTable.Groups[2].Value;
                 string[] myArray = values.Split(',');
+                foreach (String st in myArray)
+                {
+                    st.Trim();
+                }
                 ClassCreateTable query = new ClassCreateTable(table, myArray);
                 return query;
             }
@@ -247,6 +251,18 @@ namespace MiniSQLEngine
                 query = new ClassSelect(columnssplit, table, condition,pQuery);
                 return query;
 
+            }
+            else
+            {
+                Match matchselectV3= Regex.Match(pQuery, Constants.regExSelect2);
+                if (matchselectV3.Success)
+                {
+                    string columns = matchselect2.Groups[1].Value;
+                    string table = matchselect2.Groups[2].Value;
+                    string[] columnssplit = columns.Split(',');
+                    query = new ClassSelect(columnssplit, table, "", pQuery);
+                    return query;
+                }
             }
             return null;
         }
