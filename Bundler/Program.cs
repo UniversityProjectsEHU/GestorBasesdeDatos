@@ -22,7 +22,7 @@ namespace Portable_Badger
 
             version = GetVersion(mainExeRelPath);
 
-            outBaseFolder = @"/temp/oral"+ProjectName + "-" + version + @"/"; //name of the folder created inside the zip file
+            outBaseFolder = @"../temp/oral"+ProjectName + "-" + version + @"/"; //name of the folder created inside the zip file
 
             files.Add(mainExeRelPath);
             files.Add(inBaseRelPath + @"MiniSQLEngine\bin\Release\MiniSQLEngine.dll");
