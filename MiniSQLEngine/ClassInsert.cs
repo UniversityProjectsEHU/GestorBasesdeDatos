@@ -43,6 +43,16 @@ namespace MiniSQLEngine
 
         public override void Run(string dbname)
         {
+            int contando = 0;
+            foreach (String i in values)
+            {
+                
+                if (i.Contains("'"))
+                {
+                    values[contando]=i.Trim('\'');
+                }
+                contando++;
+            }
             string pathfileDATA = @"..//..//..//data//" + dbname + "//" + aTable + ".data";
             bool continuar = true;
 
@@ -53,7 +63,7 @@ namespace MiniSQLEngine
             }
 
             //Error column not exits
-            if (continuar == true)
+            if (continuar == true && atributes != null)
             {
                 String[] lineadef = System.IO.File.ReadAllLines("..//..//..//data//" + dbname + "//" + aTable + ".def");
                 foreach (String valor in atributes)
@@ -67,7 +77,7 @@ namespace MiniSQLEngine
             }
 
             //Error data type incorrect
-            if (continuar == true)
+            if (continuar == true && atributes!=null)
             {
                 String[] lineadef = System.IO.File.ReadAllLines("..//..//..//data//" + dbname + "//" + aTable + ".def");
                 foreach (String parte in lineadef)

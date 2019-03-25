@@ -25,6 +25,13 @@ namespace MiniSQLEngine
 
         public override void Run(string dbname)
         {
+            if (condition.Contains("'"))
+            {
+                String[] i = condition.Split('=');
+                i[1] = i[1].Trim('\'');
+                condition = i[0] + "=" + i[1];
+            }
+
             string pathfileDEF = @"..//..//..//data//" + dbname + "//" + table + ".def";
             if (File.Exists(pathfileDEF) == false)
             {
