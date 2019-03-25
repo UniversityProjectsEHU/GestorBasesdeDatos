@@ -53,7 +53,7 @@ namespace MiniSQLEngine
             }
 
             //Error column not exits
-            if (continuar == true)
+            if (continuar == true && atributes != null)
             {
                 String[] lineadef = System.IO.File.ReadAllLines("..//..//..//data//" + dbname + "//" + aTable + ".def");
                 foreach (String valor in atributes)
@@ -67,7 +67,7 @@ namespace MiniSQLEngine
             }
 
             //Error data type incorrect
-            if (continuar == true)
+            if (continuar == true && atributes!=null)
             {
                 String[] lineadef = System.IO.File.ReadAllLines("..//..//..//data//" + dbname + "//" + aTable + ".def");
                 foreach (String parte in lineadef)
