@@ -43,6 +43,16 @@ namespace MiniSQLEngine
 
         public override void Run(string dbname)
         {
+            int contando = 0;
+            foreach (String i in values)
+            {
+                
+                if (i.Contains("'"))
+                {
+                    values[contando]=i.Trim('\'');
+                }
+                contando++;
+            }
             string pathfileDATA = @"..//..//..//data//" + dbname + "//" + aTable + ".data";
             bool continuar = true;
 

@@ -10,10 +10,12 @@ namespace MiniSQLEngine
     {
         public const string regExSelect = @"SELECT\s+([\w*]+|(?:\w+,\w+)+)\s+FROM\s+(\w+);";
         public const string regExSelect2 = @"SELECT\s+([\w*]+|(?:\w+,\w+)+)\s+FROM\s+(\w+)\s+WHERE\s+(\w+<[0-9]+|\w+>[0-9]+|\w+=[0-9]+);";
-        public const string regExDelete = @"DELETE\s+FROM\s+(\w+)\s+WHERE\s+(\w+<[0-9]+|\w+>[0-9]+|\w+=[0-9]+);";
+        //public const string regExDelete = @"DELETE\s+FROM\s+(\w+)\s+WHERE\s+(\w+<[0-9]+|\w+>[0-9]+|\w+=[0-9]+);";
+        public const string regExDelete = @"DELETE\s+FROM\s+(\w+)\s+WHERE\s+(.+<.+|.+>.+|.+=.+);";
         public const string regExInsert = @"INSERT\s+INTO\s+(\w+)\s+VALUES \(([^\)]+)\);";
         public const string regExInsert2 = @"INSERT\s+INTO\s+([^\(]+)\(([^\)]+)\)\s+VALUES \(([^\)]+)\);";
-        public const string regExpUpdate = @"UPDATE\s+(\w+)\s+SET\s+([^WHERE]+)\s+WHERE\s+(\w+>\w+|\w+<\w+|\w+=\w+);";
+        //public const string regExpUpdate = @"UPDATE\s+(\w+)\s+SET\s+([^WHERE]+)\s+WHERE\s+(\w+>\w+|\w+<\w+|\w+=\w+);";
+        public const string regExpUpdate = @"UPDATE\s+(\w+)\s+SET\s+([^WHERE]+)\s+WHERE\s+(.+>.+|.+<.+|.+=.+);";
         public const string regExpCreateDatabase = @"CREATE DATABASE\s+(\w+);";
         public const string regExpDropDatabase = @"DROP DATABASE\s+(\w+);";
         public const string regExpDropTable = @"DROP\s+TABLE\s+(\w+);";
