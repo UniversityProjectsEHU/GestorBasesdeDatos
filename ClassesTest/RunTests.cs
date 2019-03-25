@@ -238,7 +238,7 @@ namespace ClassesTest
             string myTable = "thisTable111";
             string queryCreateDB = "CREATE DATABASE myDBFull;";
             string queryDropDB = "DROP DATABASE myDBFull;";
-            //Al hacer create van juntos, sin espacio despues de coma
+            //When doing a CREATE TABLE query, the definition of the columns have no spaces between commas
             string queryCreateTable = "CREATE TABLE thisTable111 (id int true,name String false,age int false);";
             string queryInsert = "INSERT INTO thisTable111 VALUES (1,Alejandra,37);";
             string queryInsert2 = "INSERT INTO thisTable111 VALUES (2,Paco,60);";
@@ -248,7 +248,7 @@ namespace ClassesTest
             string[] values = { "id int true", "name String false", "edad int false" };
             string[] valuesToInsert = { "1", "Alejandra", "36" };
             string[] valuesToInsert2 = { "2", "Paco", "60" };
-            string message = "The result for the Query '" + querySelect + "' is: id 1 name Alejandra ;";
+            string message = "The result for the Query '" + querySelect + "' is:id 1 name Alejandra ;";
             string messageAll = "The result for the Query '" + querySelectAll + "' is: id 1 name Alejandra age 37; id 2 name Paco age 60;";
             string messageNotExists = "ERROR: Column does not exist";
             Database db = new Database(dbname);
@@ -261,6 +261,10 @@ namespace ClassesTest
             newInsert1.Run(dbname);
             newInsert2.Run(dbname);
             */
+            /*Testing the output of the select query, this query mustn't show the "Empty Query" message when 
+            there's no matches to the query typed in console, it should show the name of the columns without any content*/
+            string querySelectNoMatches = "SELECT id FROM thisTable111 WHERE age>65;";
+            string messageNoMatches = "The result for the Query '" + querySelectNoMatches + "' is: id;";
             db.Query(queryDropDB);
             db.Query(queryCreateDB);
             db.Query(queryCreateTable);
@@ -269,6 +273,7 @@ namespace ClassesTest
             Assert.AreEqual(db.Query(querySelect), message);
             Assert.AreEqual(db.Query(querySelectNotExists), messageNotExists);
             Assert.AreEqual(db.Query(querySelectAll), messageAll);
+            Assert.AreEqual(db.Query(querySelectNoMatches), messageNoMatches);
 
         }
     }
