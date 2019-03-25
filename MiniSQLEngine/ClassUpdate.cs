@@ -47,6 +47,27 @@ namespace MiniSQLEngine
 
         public override void Run(string dbname)
         {
+            int contando = 0;
+            foreach (String i in Column)
+            {
+                String[] o = i.Split('=');
+                String dato1=o[1];
+                if (dato1.Contains("'"))
+                {
+                    o[1] = dato1.Trim('\'');
+                }
+                String nuevacolum = o[0] + "=" + o[1];
+                Column[contando] = nuevacolum;
+                contando++;
+            }
+
+            if (Condition.Contains("'"))
+            {
+                String[] i = Condition.Split('=');
+                i[1] = i[1].Trim('\'');
+                Condition = i[0] + "=" + i[1];
+            }
+
             Boolean hayerror = false;
             //Error table not exits
             if (!File.Exists("..//..//..//data//" + dbname + "//" + Table + ".data"))

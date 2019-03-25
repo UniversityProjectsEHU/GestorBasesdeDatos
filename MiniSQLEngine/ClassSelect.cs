@@ -67,17 +67,13 @@ namespace MiniSQLEngine
                 elements = condition.Split('<');
                 op = "<";
             }
-            else if (condition.Contains(">"))
+            else 
 
             {
                 elements = condition.Split('>');
                 op = ">";
             }
-            else
-            {
-                elements[0] = "";
-                op = "";
-            }
+           
             if (!(File.Exists("..//..//..//data//" + dbname + "//" + table + ".def")))
             {
                 result = Constants.TableDoesNotExist;
@@ -90,7 +86,15 @@ namespace MiniSQLEngine
                 string allFile = System.IO.File.ReadAllText("..//..//..//data//" + dbname + "//" + table + ".def");
                 string[] splittedFile = allFile.Split(',');
                 List<objectDef> list = new List<objectDef>();
-                string comptype = "";
+                string comptype;
+                if (condition == "")
+                {
+                    comptype = "nolo";
+                }
+                else
+                {
+                    comptype = "";
+                }
                 Boolean showall = false;
                 if (columns[0] == "*")
                 {
@@ -124,8 +128,6 @@ namespace MiniSQLEngine
                             {
                                 list.Add(new objectDef(columns[j], i, columns[j]));
 
-
-
                             }
                         }
                         //Miramos la posicion y el tipo de la condicion
@@ -141,7 +143,11 @@ namespace MiniSQLEngine
 
                 }
                 List<string> atindb = new List<string>();
-                atindb.Add("*");
+                if (showall)
+                {
+                    atindb.Add("*");
+
+                }
                 Boolean valid = true;
                 foreach (string line in splittedFile)
                 {
@@ -188,83 +194,96 @@ namespace MiniSQLEngine
                         {
                             string[] splittedline = linea.Split(',');
 
-
-
-                            if (op == "=")
+                            if (condition == "")
                             {
-                                if (splittedline[poscond] == elements[1])
+                                foreach(objectDef obj in list)
                                 {
-                                    foreach (objectDef obj in list)
-                                    {
-                                        result = result + obj.GetColumnName() + " " + splittedline[obj.GetPos()] + " ";
-                                    }
-                                    result = result + ";";
-
+                                    result = " "+result +" "+ obj.GetColumnName() + " " + splittedline[obj.GetPos()];
                                 }
-
-
-                            }
-                            else if (op == "<")
-                            {
-                                if (comptype.ToLower() == "int")
-                                {
-                                    if (Int32.Parse(splittedline[poscond]) < Int32.Parse(elements[1]))
-                                    {
-                                        foreach (objectDef obj in list)
-                                        {
-                                            result = result + obj.GetColumnName() + " " + splittedline[obj.GetPos()] + " ";
-
-                                        }
-                                        result = result + ";";
-
-
-
-                                    }
-                                }
-                                else
-                                {
-                                    if ((splittedline[poscond].Length) < (elements[1]).Length)
-                                    {
-                                        foreach (objectDef obj in list)
-                                        {
-                                            result = result + obj.GetColumnName() + " " + splittedline[obj.GetPos()] + " ";
-
-                                        }
-                                        result = result + ";";
-
-                                    }
-                                }
+                                result = result +";";
                             }
                             else
                             {
-                                if (comptype.ToLower() == "int")
+
+
+
+                                if (op == "=")
                                 {
-                                    if (Int32.Parse(splittedline[poscond]) > Int32.Parse(elements[1]))
+                                    if (splittedline[poscond] == elements[1])
                                     {
                                         foreach (objectDef obj in list)
                                         {
-                                            result = result + obj.GetColumnName() + " " + splittedline[obj.GetPos()] + " ";
-
+                                            result = result + obj.GetColumnName() + " " + splittedline[obj.GetPos()];
                                         }
                                         result = result + ";";
 
                                     }
+
+
+                                }
+                                else if (op == "<")
+                                {
+                                    if (comptype.ToLower() == "int")
+                                    {
+                                        if (Int32.Parse(splittedline[poscond]) < Int32.Parse(elements[1]))
+                                        {
+                                            foreach (objectDef obj in list)
+                                            {
+                                                result = result + obj.GetColumnName() + " " + splittedline[obj.GetPos()];
+
+                                            }
+                                            result = result + ";";
+
+
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if ((splittedline[poscond].Length) < (elements[1]).Length)
+                                        {
+                                            foreach (objectDef obj in list)
+                                            {
+                                                result = result + obj.GetColumnName() + " " + splittedline[obj.GetPos()];
+
+                                            }
+                                            result = result + ";";
+
+                                        }
+                                    }
+
                                 }
                                 else
                                 {
-                                    if ((splittedline[poscond].Length) > (elements[1]).Length)
+                                    if (comptype.ToLower() == "int")
                                     {
-                                        foreach (objectDef obj in list)
+                                        if (Int32.Parse(splittedline[poscond]) > Int32.Parse(elements[1]))
                                         {
-                                            result = result + obj.GetColumnName() + " " + splittedline[obj.GetPos()] + " ";
+                                            foreach (objectDef obj in list)
+                                            {
+                                                result = result + obj.GetColumnName() + " " + splittedline[obj.GetPos()];
+
+                                            }
+                                            result = result + ";";
 
                                         }
-                                        result = result + ";";
+                                    }
+                                    else
+                                    {
+                                        if ((splittedline[poscond].Length) > (elements[1]).Length)
+                                        {
+                                            foreach (objectDef obj in list)
+                                            {
+                                                result = result + obj.GetColumnName() + " " + splittedline[obj.GetPos()];
 
+                                            }
+                                            result = result + ";";
+
+                                        }
                                     }
                                 }
-                            }
 
+                            }
                         }
                     }
 
@@ -275,97 +294,38 @@ namespace MiniSQLEngine
                         foreach (string linea in allFile2)
                         {
                             string[] splittedline = linea.Split(',');
-
-
-
-                            if (op == "=")
+                            if (condition == "")
                             {
-                                if (splittedline[poscond] == elements[1])
+                                result = result + " " + atindb[1];
+                                int cont = 2;
+                                foreach (string line2 in splittedline)
                                 {
-                                    result = result + " " + atindb[1];
-                                    int cont = 2;
-                                    foreach (string line2 in splittedline)
+                                    if ((cont) < atindb.Count)
                                     {
-                                        if ((cont) < atindb.Count)
-                                        {
-                                            result = result + " " + line2 + " " + atindb[cont];
-                                            cont++;
-                                        }
-                                        else if ((cont) == atindb.Count)
-                                        {
-                                            result = result + " " + line2;
-                                        }
+                                        result = result + " " + line2 + " " + atindb[cont];
+                                        cont++;
                                     }
-                                    result = result + ";";
-
-
-
+                                    else if ((cont) == atindb.Count)
+                                    {
+                                        result = result + " " + line2;
+                                    }
                                 }
+                                result = result + ";";
+
 
 
                             }
-                            else if (op == "<")
-                            {
-                                if (comptype.ToLower() == "int")
-                                {
-                                    if (Int32.Parse(splittedline[poscond]) < Int32.Parse(elements[1]))
-                                    {
-                                        result = result + " " + atindb[1];
+                        
 
-                                        int cont = 2;
-                                        foreach (string line2 in splittedline)
-                                        {
-                                            if ((cont) < atindb.Count)
-                                            {
-                                                result = result + " " + line2 + " " + atindb[cont];
-                                                cont++;
-                                            }
-                                            else if ((cont) == atindb.Count)
-                                            {
-                                                result = result + " " + line2;
-                                            }
-                                        }
-                                        result = result + ";";
-
-
-
-
-                                    }
-                                }
-                                else
-                                {
-                                    if ((splittedline[poscond].Length) < (elements[1]).Length)
-                                    {
-                                        result = result + " " + atindb[1];
-
-                                        int cont = 2;
-                                        foreach (string line2 in splittedline)
-                                        {
-                                            if ((cont) < atindb.Count)
-                                            {
-                                                result = result + " " + line2 + " " + atindb[cont];
-                                                cont++;
-                                            }
-                                            else if ((cont) == atindb.Count)
-                                            {
-                                                result = result + " " + line2;
-                                            }
-                                        }
-                                        result = result + ";";
-
-
-
-                                    }
-                                }
-                            }
                             else
                             {
-                                if (comptype.ToLower() == "int")
+
+
+                                if (op == "=")
                                 {
-                                    if (Int32.Parse(splittedline[poscond]) > Int32.Parse(elements[1]))
+                                    if (splittedline[poscond] == elements[1])
                                     {
                                         result = result + " " + atindb[1];
-
                                         int cont = 2;
                                         foreach (string line2 in splittedline)
                                         {
@@ -383,36 +343,120 @@ namespace MiniSQLEngine
 
 
 
+                                    }
+
+
+                                }
+                                else if (op == "<")
+                                {
+                                    if (comptype.ToLower() == "int")
+                                    {
+                                        if (Int32.Parse(splittedline[poscond]) < Int32.Parse(elements[1]))
+                                        {
+                                            result = result + " " + atindb[1];
+
+                                            int cont = 2;
+                                            foreach (string line2 in splittedline)
+                                            {
+                                                if ((cont) < atindb.Count)
+                                                {
+                                                    result = result + " " + line2 + " " + atindb[cont];
+                                                    cont++;
+                                                }
+                                                else if ((cont) == atindb.Count)
+                                                {
+                                                    result = result + " " + line2;
+                                                }
+                                            }
+                                            result = result + ";";
+
+
+
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if ((splittedline[poscond].Length) < (elements[1]).Length)
+                                        {
+                                            result = result + " " + atindb[1];
+
+                                            int cont = 2;
+                                            foreach (string line2 in splittedline)
+                                            {
+                                                if ((cont) < atindb.Count)
+                                                {
+                                                    result = result + " " + line2 + " " + atindb[cont];
+                                                    cont++;
+                                                }
+                                                else if ((cont) == atindb.Count)
+                                                {
+                                                    result = result + " " + line2;
+                                                }
+                                            }
+                                            result = result + ";";
+
+
+
+                                        }
                                     }
                                 }
                                 else
                                 {
-                                    if ((splittedline[poscond].Length) < (elements[1]).Length)
+                                    if (comptype.ToLower() == "int")
                                     {
-                                        result = result + " " + atindb[1];
-
-                                        int cont = 2;
-                                        foreach (string line2 in splittedline)
+                                        if (Int32.Parse(splittedline[poscond]) > Int32.Parse(elements[1]))
                                         {
-                                            if ((cont) < atindb.Count)
+                                            result = result + " " + atindb[1];
+
+                                            int cont = 2;
+                                            foreach (string line2 in splittedline)
                                             {
-                                                result = result + " " + line2 + " " + atindb[cont];
-                                                cont++;
+                                                if ((cont) < atindb.Count)
+                                                {
+                                                    result = result + " " + line2 + " " + atindb[cont];
+                                                    cont++;
+                                                }
+                                                else if ((cont) == atindb.Count)
+                                                {
+                                                    result = result + " " + line2;
+                                                }
                                             }
-                                            else if ((cont) == atindb.Count)
-                                            {
-                                                result = result + " " + line2;
-                                            }
+                                            result = result + ";";
+
+
+
                                         }
-                                        result = result + ";";
+                                    }
+                                    else
+                                    {
+                                        if ((splittedline[poscond].Length) < (elements[1]).Length)
+                                        {
+                                            result = result + " " + atindb[1];
+
+                                            int cont = 2;
+                                            foreach (string line2 in splittedline)
+                                            {
+                                                if ((cont) < atindb.Count)
+                                                {
+                                                    result = result + " " + line2 + " " + atindb[cont];
+                                                    cont++;
+                                                }
+                                                else if ((cont) == atindb.Count)
+                                                {
+                                                    result = result + " " + line2;
+                                                }
+                                            }
+                                            result = result + ";";
 
 
 
+                                        }
                                     }
                                 }
+
+
                             }
-
-
                         }
                     }
                 }
@@ -437,7 +481,6 @@ namespace MiniSQLEngine
                     }
                 }
 
-                result = result + ";";
             }
             else
             {

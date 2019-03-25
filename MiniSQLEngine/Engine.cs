@@ -257,8 +257,8 @@ namespace MiniSQLEngine
                 Match matchselectV3= Regex.Match(pQuery, Constants.regExSelect2);
                 if (matchselectV3.Success)
                 {
-                    string columns = matchselect2.Groups[1].Value;
-                    string table = matchselect2.Groups[2].Value;
+                    string columns = matchselectV3.Groups[1].Value;
+                    string table = matchselectV3.Groups[2].Value;
                     string[] columnssplit = columns.Split(',');
                     query = new ClassSelect(columnssplit, table, "", pQuery);
                     return query;
