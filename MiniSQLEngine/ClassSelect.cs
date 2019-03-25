@@ -53,6 +53,13 @@ namespace MiniSQLEngine
 
         public override void Run(string dbname)
         {
+            if (condition.Contains("'"))
+            {
+                String[] i = condition.Split('=');
+                i[1] = i[1].Trim('\'');
+                condition = i[0] + "=" + i[1];
+            }
+
             List<string> rm = new List<string>();
             string op;
             string[] elements= { };
