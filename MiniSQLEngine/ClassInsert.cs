@@ -44,13 +44,79 @@ namespace MiniSQLEngine
         public override void Run(string dbname)
         {
             string pathfileDATA = @"..//..//..//data//" + dbname + "//" + aTable + ".data";
+            bool continuar = true;
 
             if (!File.Exists(pathfileDATA))
             {
                 result = Constants.TableDoesNotExist;
+                continuar = false;
             }
 
-            else
+            //Error column not exits
+            if (continuar == true)
+            {
+                String[] lineadef = System.IO.File.ReadAllLines("..//..//..//data//" + dbname + "//" + aTable + ".def");
+                foreach (String valor in atributes)
+                {
+                    if (lineadef[0].Contains(valor) == false)
+                    {
+                        result = Constants.ColumnDoesNotExist;
+                        continuar = false;
+                    }
+                }
+            }
+
+            //Error data type incorrect
+            if (continuar == true)
+            {
+                String[] lineadef = System.IO.File.ReadAllLines("..//..//..//data//" + dbname + "//" + aTable + ".def");
+                foreach (String parte in lineadef)
+                {
+                    String[] lineadef2 = parte.Split(',');
+                    foreach (String parte2 in lineadef2)
+                    {
+                        String[] parte3 = parte2.Split(' ');
+                        int indice = 0;
+                        foreach (String atributoigual in atributes)
+                        {
+                            if (parte3[0] == atributoigual)
+                            {
+                                String tipo = parte3[1].ToUpper();
+                                //INT
+                                if (tipo == "INT")
+                                {
+                                    try
+                                    {
+                                        int.Parse(values[indice]);
+                                    }
+                                    catch
+                                    {
+                                        result = Constants.IncorrectDataType;
+                                        continuar = false;
+                                    }
+                                }
+                                //DOUBLE
+                                if (tipo == "DOUBLE")
+                                {
+                                    try
+                                    {
+                                        double.Parse(values[indice]);
+                                    }
+                                    catch
+                                    {
+                                        result = Constants.IncorrectDataType;
+                                        continuar = false;
+                                    }
+                                }
+                            }
+                            indice++;
+                        }
+                    }
+                }
+            }
+
+
+            if (continuar==true)
             {
                 if (atributes==null)
                 {
