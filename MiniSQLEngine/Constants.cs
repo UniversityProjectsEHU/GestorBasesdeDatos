@@ -9,7 +9,8 @@ namespace MiniSQLEngine
     class Constants
     {
         public const string regExSelect2 = @"SELECT\s+([\w*]+|(?:\w+,\w+)+)\s+FROM\s+(\w+);";
-        public const string regExSelect = @"SELECT\s+([\w*]+|(?:\w+,\w+)+)\s+FROM\s+(\w+)\s+WHERE\s+(\w+<[0-9]+|\w+>[0-9]+|\w+=[0-9]+);";
+        //public const string regExSelect = @"SELECT\s+([\w*]+|(?:\w+,\w+)+)\s+FROM\s+(\w+)\s+WHERE\s+(\w+<[0-9]+|\w+>[0-9]+|\w+=[0-9]+);";
+        public const string regExSelect = @"SELECT\s+([\w*]+|(?:\w+,\w+)+)\s+FROM\s+(\w+)\s+WHERE\s+(.+<.+|.+>.+|.+=.+);";
         //public const string regExDelete = @"DELETE\s+FROM\s+(\w+)\s+WHERE\s+(\w+<[0-9]+|\w+>[0-9]+|\w+=[0-9]+);";
         public const string regExDelete = @"DELETE\s+FROM\s+(\w+)\s+WHERE\s+(.+<.+|.+>.+|.+=.+);";
         public const string regExInsert = @"INSERT\s+INTO\s+(\w+)\s+VALUES \(([^\)]+)\);";
@@ -48,5 +49,13 @@ namespace MiniSQLEngine
         public const string ColumnDoesNotExist = Error + "Column does not exist";
         public const string IncorrectDataType = Error + "Incorrect data type";
         public const string TableAlreadyExists = Error + "Table already exists";
+
+        //SECURITY
+        public const string regSecCreateProfile = @"CREATE\sSECURITY\sPROFILE\s(\w+);";
+        public const string regSecDropProfile = @"DROP\sSECURITY\sPROFILE\s(\w+);";
+        public const string regSecGrant = @"GRANT\s(\w+)\sON\s(\w+)\sTO\s(\w+);";
+        public const string regSecRevoke = @"REVOKE\s(\w+)\sON\s(\w+)\sTO\s(\w+);";
+        public const string regSecAddUser = @"ADD\sUSER\s\((\w+),\s(\w+)\);";
+        public const string regSecDeleteUser = @"DELETE\sUSER\s(\w+);;";
     }
 }

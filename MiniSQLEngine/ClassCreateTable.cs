@@ -27,6 +27,7 @@ namespace MiniSQLEngine
         {
             string pathfileDEF = @"..//..//..//data//" + dbname +"//"+ aTable + ".def";
             string pathfileDATA = @"..//..//..//data//" + dbname + "//" + aTable + ".data";
+            string pathfileSEC = @"..//..//..//data//" + dbname + "//" + aTable + ".sec";
 
             if (File.Exists(pathfileDATA) || File.Exists(pathfileDEF))
             {
@@ -58,6 +59,11 @@ namespace MiniSQLEngine
                         byte[] info2 = new UTF8Encoding(true).GetBytes(";");
                         stream.Write(info2, 0, info2.Length);
                     }
+                }
+                using (StreamWriter stream2 = File.CreateText(pathfileSEC))
+                {
+                        String linea = "admin,DELETE/INSERT/SELECT/UPDATE";
+                        stream2.WriteLine(linea);     
                 }
                 result = Constants.CreateTableSuccess;
             }
