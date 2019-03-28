@@ -205,7 +205,7 @@ namespace MiniSQLEngine
                             {
                                 foreach(objectDef obj in list)
                                 {
-                                    result = " "+result +" "+ obj.GetColumnName() + " " + splittedline[obj.GetPos()];
+                                    result =result +" "+ obj.GetColumnName() + " " + splittedline[obj.GetPos()];
                                 }
                                 result = result +";";
                             }
@@ -220,7 +220,7 @@ namespace MiniSQLEngine
                                     {
                                         foreach (objectDef obj in list)
                                         {
-                                            result = " " + result + " " + obj.GetColumnName() + " " + splittedline[obj.GetPos()];
+                                            result =  result + " " + obj.GetColumnName() + " " + splittedline[obj.GetPos()];
                                         }
                                         result = result + ";";
 
@@ -236,7 +236,7 @@ namespace MiniSQLEngine
                                         {
                                             foreach (objectDef obj in list)
                                             {
-                                                result = " " + result + " " + obj.GetColumnName() + " " + splittedline[obj.GetPos()];
+                                                result = result + " " + obj.GetColumnName() + " " + splittedline[obj.GetPos()];
 
                                             }
                                             result = result + ";";
@@ -251,7 +251,7 @@ namespace MiniSQLEngine
                                         {
                                             foreach (objectDef obj in list)
                                             {
-                                                result = " " + result + " " + obj.GetColumnName() + " " + splittedline[obj.GetPos()];
+                                                result =  result + " " + obj.GetColumnName() + " " + splittedline[obj.GetPos()];
 
                                             }
                                             result = result + ";";
@@ -268,7 +268,7 @@ namespace MiniSQLEngine
                                         {
                                             foreach (objectDef obj in list)
                                             {
-                                                result = " " + result + " " + obj.GetColumnName() + " " + splittedline[obj.GetPos()];
+                                                result = result + " " + obj.GetColumnName() + " " + splittedline[obj.GetPos()];
 
                                             }
                                             result = result + ";";
@@ -281,7 +281,7 @@ namespace MiniSQLEngine
                                         {
                                             foreach (objectDef obj in list)
                                             {
-                                                result = " " + result + " " + obj.GetColumnName() + " " + splittedline[obj.GetPos()];
+                                                result = result + " " + obj.GetColumnName() + " " + splittedline[obj.GetPos()];
 
                                             }
                                             result = result + ";";
@@ -505,6 +505,7 @@ namespace MiniSQLEngine
                     result = result + ";";
                 }
             }
+            //result.TrimStart(' ');
         }
 
 
