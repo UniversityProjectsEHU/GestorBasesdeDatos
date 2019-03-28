@@ -8,8 +8,9 @@ namespace MiniSQLEngine
 {
     class Constants
     {
-        public const string regExSelect = @"SELECT\s+([\w*]+|(?:\w+,\w+)+)\s+FROM\s+(\w+);";
-        public const string regExSelect2 = @"SELECT\s+([\w*]+|(?:\w+,\w+)+)\s+FROM\s+(\w+)\s+WHERE\s+(\w+<[0-9]+|\w+>[0-9]+|\w+=[0-9]+);";
+        public const string regExSelect2 = @"SELECT\s+([\w*]+|(?:\w+,\w+)+)\s+FROM\s+(\w+);";
+        //public const string regExSelect = @"SELECT\s+([\w*]+|(?:\w+,\w+)+)\s+FROM\s+(\w+)\s+WHERE\s+(\w+<[0-9]+|\w+>[0-9]+|\w+=[0-9]+);";
+        public const string regExSelect = @"SELECT\s+([\w*]+|(?:\w+,\w+)+)\s+FROM\s+(\w+)\s+WHERE\s+(.+<.+|.+>.+|.+=.+);";
         //public const string regExDelete = @"DELETE\s+FROM\s+(\w+)\s+WHERE\s+(\w+<[0-9]+|\w+>[0-9]+|\w+=[0-9]+);";
         public const string regExDelete = @"DELETE\s+FROM\s+(\w+)\s+WHERE\s+(.+<.+|.+>.+|.+=.+);";
         public const string regExInsert = @"INSERT\s+INTO\s+(\w+)\s+VALUES \(([^\)]+)\);";
