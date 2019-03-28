@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassCreateProfile.cs" />
     <Compile Include="ClassDelete.cs" />
+    <Compile Include="ClassDropProfile.cs" />
     <Compile Include="ClassInsert.cs" />
     <Compile Include="ClassCreateTable.cs" />
     <Compile Include="ClassUpdate.cs" />

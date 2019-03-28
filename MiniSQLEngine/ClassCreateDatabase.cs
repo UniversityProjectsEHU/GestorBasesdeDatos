@@ -44,8 +44,14 @@ namespace MiniSQLEngine
                 {
                     string path = @"..\\..\\..\\data\\" + tableName;
                     //string path = @"C:\Users\docencia\source\repos\sergioyeahmen\Si-funciona-no-lo-toques\data\" + tableName;
-
                     System.IO.Directory.CreateDirectory(path);
+
+                    string pathProfiles = @"..\\..\\..\\data\\" + tableName + "\\profiles";
+                    System.IO.Directory.CreateDirectory(pathProfiles);
+
+                    string pathfileAdmin = @"..\\..\\..\\data\\" + tableName + "\\profiles\\admin.pf";
+                    File.WriteAllText(pathfileAdmin, "admin,admin");
+
                     result = Constants.CreateDatabaseSuccess;
                 }
                 catch (Exception e)
