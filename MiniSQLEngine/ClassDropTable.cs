@@ -32,6 +32,7 @@ namespace MiniSQLEngine
         {
             string pathfileDEF = @"..//..//..//data//" + dbname + "//" + tableName + ".def";
             string pathfileDATA = @"..//..//..//data//" + dbname + "//" + tableName + ".data";
+            string pathfileSEC = @"..//..//..//data//" + dbname + "//" + tableName + ".sec";
 
             if (!File.Exists(pathfileDATA) || !File.Exists(pathfileDEF))
             {
@@ -42,6 +43,7 @@ namespace MiniSQLEngine
             {
                 System.IO.File.Delete(pathfileDEF);
                 System.IO.File.Delete(pathfileDATA);
+                System.IO.File.Delete(pathfileSEC);
                 result = Constants.DropTableSuccess;
             }
         }
