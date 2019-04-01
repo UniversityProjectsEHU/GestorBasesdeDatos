@@ -54,6 +54,8 @@
     <Compile Include="Engine.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SecCreateProfile.cs" />
+    <Compile Include="SecDropProfile.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
