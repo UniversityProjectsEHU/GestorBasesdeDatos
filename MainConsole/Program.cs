@@ -12,10 +12,12 @@ namespace MainConsole
 {
     class Program
     {
+        private string user = "myUser";
         static void Main(string[] args)
         {
             String[] lineas = System.IO.File.ReadAllLines("..//..//..//data//TesterInput.txt");
-            Database db = new Database("usuarios1","admin");
+            string user = "myUser";
+            Database db = new Database("usuarios1",user);
             db.Query("CREATE DATABASE usuarios1;");
             int contador = 1;
             Console.WriteLine("# Test " + contador);
@@ -63,7 +65,8 @@ namespace MainConsole
                     Console.WriteLine("");
                     Console.WriteLine("# Test " + contador);
                     string dbnombre = "usuarios" + contador;
-                    db = new Database(dbnombre,"admin");
+                    
+                    db = new Database(dbnombre,user);
                     db.Query("CREATE DATABASE " + dbnombre + ";");
                     tiempos.Clear();
                     totaltime = 0;
