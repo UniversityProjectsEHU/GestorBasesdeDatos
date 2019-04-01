@@ -271,14 +271,61 @@ namespace MiniSQLEngine
     public class Database
     {
         private string dbname;
-        public Database(string name)
+        private string user;
+        public Database(string name, string pUser)
         {
             dbname = name;
+            user = pUser;
         }
+        public static String init(string name, string pUser, string pPassword)
+        {
+            string res;
+            if (!Directory.Exists("..//..//..//data//" + name))
+            {
+                if (pUser.Equals("admin") && pPassword.Equals("admin"))
+                {
+                    res = "adminCreateDB";
+                    return res;
+                }
+                else
+                {
+                    res = "notAdmin";
+                    return res;
+                }
+            }
+            else
+            {
+                string pathfile = @"..//..//..//data//" + name + "//profiles";
 
+                foreach (string file in Directory.EnumerateFiles(pathfile, "*.pf"))
+                {
+                    string line;
+                    using (StreamReader sr = new StreamReader(file))
+                    {
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            string[] parts = line.Split(',');
+                            if (parts[0].Equals(pUser) && parts[1].Equals(pPassword))
+                            {
+                                res = "UserOpen";
+                                return res;
+                            }
+                        }
+                    }
+                }
+                res = "notUserOrPassw";
+                return res;
+            }
+        }
+       
         public string getNombre()
         {
             return dbname;
+        }
+
+        public string getUser()
+        {
+            return user;
         }
 
         public string Query(string psentencia)

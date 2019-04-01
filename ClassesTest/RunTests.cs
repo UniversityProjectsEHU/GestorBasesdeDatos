@@ -16,8 +16,12 @@ namespace ClassesTest
             ClassCreateDatabase db = new ClassCreateDatabase(myDB);
             db.Run(myDB);
             bool exists = Directory.Exists(@"..//..//..//data//myDB");
+            bool existsProf = Directory.Exists(@"..//..//..//data//myDB//profiles");
+            bool existsPf = File.Exists(@"..//..//..//data//myDB//profiles//admin.pf");
             //Testing CreateDatabase
             Assert.AreEqual(true, exists);
+            Assert.AreEqual(true, existsProf);
+            Assert.AreEqual(true, existsPf);
 
             string myTable = "myTable";
             string[] values = new string[2];
@@ -235,6 +239,7 @@ namespace ClassesTest
         public void fullTestWithSelect()
         {
             string dbname = "myDBFull";
+            string user = "myUser";
             string myTable = "thisTable111";
             string queryCreateDB = "CREATE DATABASE myDBFull;";
             string queryDropDB = "DROP DATABASE myDBFull;";
@@ -248,10 +253,10 @@ namespace ClassesTest
             string[] values = { "id int true", "name String false", "edad int false" };
             string[] valuesToInsert = { "1", "Alejandra", "36" };
             string[] valuesToInsert2 = { "2", "Paco", "60" };
-            string message = "  The result for the Query '" + querySelect + "' is: id 1 name Alejandra;";
+            string message = "The result for the Query '" + querySelect + "' is: id 1 name Alejandra;";
             string messageAll = "The result for the Query '" + querySelectAll + "' is: id 1 name Alejandra age 37; id 2 name Paco age 60;";
             string messageNotExists = "ERROR: Column does not exist";
-            Database db = new Database(dbname);
+            Database db = new Database(dbname, user);
             /*ClassCreateDatabase newDB = new ClassCreateDatabase(dbname);
             ClassCreateTable newTable = new ClassCreateTable(myTable, values);
             ClassInsert newInsert1 = new ClassInsert(myTable, valuesToInsert);
@@ -267,7 +272,7 @@ namespace ClassesTest
             string querySelectNoWhere = "SELECT id FROM thisTable111;";
             string querySelectAllNoWhere = "SELECT * FROM thisTable111;";
             string messageNoMatches = "The result for the Query '" + querySelectNoMatches + "' is: id;";
-            string messageNoWhere = "  The result for the Query '" + querySelectNoWhere + "' is: id 1; id 2;";
+            string messageNoWhere = "The result for the Query '" + querySelectNoWhere + "' is: id 1; id 2;";
             string messageAllNoWhere = "The result for the Query '" + querySelectAllNoWhere + "' is: id 1 name Alejandra age 37; id 2 name Paco age 60;";
             db.Query(queryDropDB);
             db.Query(queryCreateDB);
@@ -281,6 +286,43 @@ namespace ClassesTest
             Assert.AreEqual(db.Query(querySelectNoWhere), messageNoWhere);
             Assert.AreEqual(db.Query(querySelectAllNoWhere), messageAllNoWhere);
 
+        }
+        [TestMethod]
+        public void testCreateWithAdmin()
+        {
+            string dbname = "myDBFull";
+            string user = "myUser";
+            string queryCreateDB = "CREATE DATABASE myDBFull;";
+            string queryDropDB = "DROP DATABASE myDBFull;";
+            string queryCreate = "CREATE TABLE pTable (int id true, int age false);";
+            string line = "admin,DELETE/INSERT/SELECT/UPDATE";
+            string path = @"..//..//..//data//" + dbname + "//pTable.sec";
+            Database db = new Database(dbname,user);
+            db.Query(queryCreateDB);
+            db.Query(queryCreate);
+            String[] lineadef = System.IO.File.ReadAllLines(path);
+            string uno = lineadef[0];
+            Assert.AreEqual(uno, line);
+            db.Query(queryDropDB);
+        }
+        [TestMethod]
+        public void testDropWithAdmin()
+        {
+            string dbname = "myDBFull";
+            string user = "myUser";
+            string queryCreateDB = "CREATE DATABASE myDBFull;";
+            string queryDropDB = "DROP DATABASE myDBFull;";
+            string queryCreate = "CREATE TABLE pTable (int id true, int age false);";
+            string queryDrop = "DROP TABLE pTable;";
+            string line = "admin,DELETE/INSERT/SELECT/UPDATE";
+            string path = @"..//..//..//data//" + dbname + "//pTable.sec";
+            Database db = new Database(dbname, user);
+            db.Query(queryCreateDB);
+            db.Query(queryCreate);
+            Assert.AreEqual(true, File.Exists(path));
+            db.Query(queryDrop);
+            Assert.AreEqual(false, File.Exists(path));
+            db.Query(queryDropDB);
         }
     }
 }

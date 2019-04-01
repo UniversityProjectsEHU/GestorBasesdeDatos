@@ -52,6 +52,7 @@
     <Compile Include="ParsingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RunTests.cs" />
+    <Compile Include="SecurityTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
