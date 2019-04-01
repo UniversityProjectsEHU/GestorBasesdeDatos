@@ -19,34 +19,13 @@ namespace ClassesTest
             ClassCreateDatabase db = new ClassCreateDatabase(myDB);
             db.Run(myDB);
             bool exists = Directory.Exists(@"..//..//..//data//myDB");
-            //Testing CreateDatabase
+        
             Assert.AreEqual(true, exists);
+            Query q = new Query("CREATE SECURITY PROFILE user;",myDB);
+            q.run();
+            string pathProfiles = @"..\\..\\..\\data\\mydb\\profiles\\user";
+            Assert.AreEqual(true, pathProfiles);
 
-            string myTable = "myTable";
-            string[] values = new string[2];
-            values[0] = "column1 string true";
-            values[1] = "column2 int false";
-            ClassCreateTable ctable = new ClassCreateTable(myTable, values);
-            ctable.Run(myDB);
-            //Testing CreateTable
-            bool existsDef = File.Exists(@"..//..//..//data//myDB//myTable.def");
-            Assert.AreEqual(true, existsDef);
-            bool existsData = File.Exists(@"..//..//..//data//myDB//myTable.data");
-            Assert.AreEqual(true, existsData);
-
-            ClassDropTable dtable = new ClassDropTable(myTable);
-            dtable.Run(myDB);
-            //Testing DropTable
-            bool existsDefDrop = File.Exists(@"..//..//..//data//myDB//myTable.def");
-            Assert.AreEqual(false, existsDefDrop);
-            bool existsDataDrop = File.Exists(@"..//..//..//data//myDB//myTable.data");
-            Assert.AreEqual(false, existsDataDrop);
-
-            ClassDropDatabase drop = new ClassDropDatabase(myDB);
-            drop.Run(myDB);
-            //Testing DropDatabase
-            bool existsDrop = Directory.Exists(@"..//..//..//data//myDB");
-            Assert.AreEqual(false, existsDrop);
         }
     }
 }
