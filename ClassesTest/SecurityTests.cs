@@ -23,9 +23,11 @@ namespace ClassesTest
             Assert.AreEqual(true, exists);
             Query q = new Query("CREATE SECURITY PROFILE user;",myDB);
             q.run();
-            string pathProfiles = @"..\\..\\..\\data\\mydb\\profiles\\user";
-            Assert.AreEqual(true, pathProfiles);
+            string pathProfiles = @"..\\..\\..\\data\\mydb\\profiles\\user.pf";
+            bool existsPf = File.Exists(pathProfiles);
+            Assert.AreEqual(true, existsPf);
 
         }
+
     }
 }
