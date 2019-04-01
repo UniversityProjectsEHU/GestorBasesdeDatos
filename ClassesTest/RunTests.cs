@@ -16,8 +16,12 @@ namespace ClassesTest
             ClassCreateDatabase db = new ClassCreateDatabase(myDB);
             db.Run(myDB);
             bool exists = Directory.Exists(@"..//..//..//data//myDB");
+            bool existsProf = Directory.Exists(@"..//..//..//data//myDB//profiles");
+            bool existsPf = File.Exists(@"..//..//..//data//myDB//profiles//admin.pf");
             //Testing CreateDatabase
             Assert.AreEqual(true, exists);
+            Assert.AreEqual(true, existsProf);
+            Assert.AreEqual(true, existsPf);
 
             string myTable = "myTable";
             string[] values = new string[2];
