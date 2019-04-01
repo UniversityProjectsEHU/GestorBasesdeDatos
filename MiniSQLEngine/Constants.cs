@@ -53,8 +53,8 @@ namespace MiniSQLEngine
         //SECURITY
         public const string regSecCreateProfile = @"CREATE\sSECURITY\sPROFILE\s(\w+);";
         public const string regSecDropProfile = @"DROP\sSECURITY\sPROFILE\s(\w+);";
-        public const string regSecGrant = @"GRANT\s(\w+)\sON\s(\w+)\sTO\s(\w+);";
-        public const string regSecRevoke = @"REVOKE\s(\w+)\sON\s(\w+)\sTO\s(\w+);";
+        public const string regSecGrant = @"GRANT\s(DELETE||UPDATE||INSERT||SELECT)\sON\s(\w+)\sTO\s(\w+);";
+        public const string regSecRevoke = @"REVOKE\s(DELETE||UPDATE||INSERT||SELECT)\sON\s(\w+)\sTO\s(\w+);";
         public const string regSecAddUser = @"ADD\sUSER\s\((\w+),\s(\w+)\);";
         public const string regSecDeleteUser = @"DELETE\sUSER\s(\w+);;";
 
