@@ -282,6 +282,21 @@ namespace ClassesTest
             Assert.AreEqual(db.Query(querySelectAllNoWhere), messageAllNoWhere);
 
         }
+        [TestMethod]
+        public void testWithAdmin()
+        {
+            string dbname = "myDBFull";
+            string queryCreateDB = "CREATE DATABASE myDBFull;";
+            string queryDropDB = "DROP DATABASE myDBFull;";
+            string queryCreate = "CREATE TABLE pTable (int id true, int age false);";
+            string line = "admin,DELETE/INSERT/SELECT/UPDATE";
+            string path = @"..//..//..//data//" + dbname + "//pTable.sec";
+            Database db = new Database(dbname);
+            db.Query(queryCreateDB);
+            db.Query(queryCreate);
+            StreamReader str = File.OpenRead(path)
+
+        }
     }
 }
 
