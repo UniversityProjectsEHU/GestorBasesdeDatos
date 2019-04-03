@@ -41,9 +41,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassCreateProfile.cs" />
+    <Compile Include="ClassDelete.cs" />
+    <Compile Include="ClassDropProfile.cs" />
+    <Compile Include="ClassInsert.cs" />
+    <Compile Include="ClassCreateTable.cs" />
+    <Compile Include="ClassUpdate.cs" />
+    <Compile Include="ClassCreateDatabase.cs" />
+    <Compile Include="ClassSelect.cs" />
+    <Compile Include="ClassDropDatabase.cs" />
+    <Compile Include="ClassDropTable.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SecCreateProfile.cs" />
+    <Compile Include="SecDropProfile.cs" />
+    <Compile Include="SecGrant.cs" />
+    <Compile Include="SecRevoke.cs" />
+    <Compile Include="SecAddUser.cs" />
+    <Compile Include="SecDeleteUser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
