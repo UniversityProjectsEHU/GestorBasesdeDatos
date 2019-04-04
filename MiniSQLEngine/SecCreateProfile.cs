@@ -28,8 +28,8 @@ namespace MiniSQLEngine
 
         public override void Run(string dbname)
         {
-            string pathProfiles = @"..\\..\\..\\data\\" + dbname + "\\profiles\\" + name;
-            if (File.Exists(pathProfiles))
+            string pathProfiles = @"..\\..\\..\\data\\" + dbname + "\\profiles\\" + name+".pf";
+            if (!File.Exists(pathProfiles))
             {
                 System.IO.Directory.CreateDirectory(pathProfiles);
                 result = Constants.SecurityProfileCreated;
