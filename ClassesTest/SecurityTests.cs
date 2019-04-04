@@ -15,14 +15,9 @@ namespace ClassesTest
         [TestMethod]
         public void TestCreateProfile()
         {
-            string myDB = "myDB";
-            ClassCreateDatabase db = new ClassCreateDatabase(myDB);
-            db.Run(myDB);
-            bool exists = Directory.Exists(@"..//..//..//data//myDB");
-        
-            Assert.AreEqual(true, exists);
+            Database db = new Database("MyDB", "admin", "admin");
             string q = "CREATE SECURITY PROFILE user;";
-            db.query(q);
+            db.Query(q);
             string pathProfiles = @"..\\..\\..\\data\\mydb\\profiles\\user.pf";
             bool existsPf = File.Exists(pathProfiles);
             Assert.AreEqual(true, existsPf);
