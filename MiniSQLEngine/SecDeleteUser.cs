@@ -31,7 +31,7 @@ namespace MiniSQLEngine
             Boolean keepatit= true;
             if (user == "admin")
             {
-                result = "Tu arbol genealógico es una pelota";
+                result = Constants.SecurityNotSufficientPrivileges;
             }
             else
             {
@@ -75,6 +75,7 @@ namespace MiniSQLEngine
                                     sw.WriteLine(userANDpw[0]+","+userANDpw[1]);
                                 }
                             }
+                            result = Constants.SecurityUserDeleted;
                         }
                         catch(Exception e)
                         {

@@ -37,14 +37,14 @@ namespace MiniSQLEngine
 
             if (!File.Exists(pathfileDATA))
             {
-                result = "EERROOR ERROR";
+                result = Constants.SecurityProfileDoesNotExist;
             }
             using (StreamWriter file = File.AppendText(pathfileDATA))
             {
                 //Data added to the document
                 file.WriteLine(user + " " + pw);
                 file.Close();
-                result = "BIEN BIEN BIEN, bien hecho";
+                result = Constants.SecurityUserCreated;
             }
         }
     }
