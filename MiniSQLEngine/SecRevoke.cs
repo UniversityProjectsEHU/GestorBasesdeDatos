@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MiniSQLEngine
 {
-    class SecRevoke : Query
+    public class SecRevoke : Query
     {
         private string privilege_type, table, security_profile;
         private string result;

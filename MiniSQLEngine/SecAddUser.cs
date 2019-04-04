@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MiniSQLEngine
 {
-    class SecAddUser : Query
+    public class SecAddUser : Query
     {
         private string user;
         private string pw;
