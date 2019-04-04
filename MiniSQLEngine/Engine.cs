@@ -272,10 +272,13 @@ namespace MiniSQLEngine
     {
         private string dbname;
         private string user;
-        public Database(string name, string pUser)
+        private string res;
+        public Database(string name, string pUser,string pPass)
         {
             dbname = name;
             user = pUser;
+            res = init(name, pUser, pPass);
+
         }
         public static String init(string name, string pUser, string pPassword)
         {
@@ -327,7 +330,10 @@ namespace MiniSQLEngine
         {
             return user;
         }
-
+        public string getRes()
+        {
+            return res;
+        }
         public string Query(string psentencia)
         {
             ClassParsing c = new ClassParsing();
