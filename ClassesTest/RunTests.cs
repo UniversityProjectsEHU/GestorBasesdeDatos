@@ -157,14 +157,14 @@ namespace ClassesTest
         public void TestDelete()
         {
             string myDB = "DBTestDelete";
-            Database db = new Database(myDB,"admin","admin")
+            Database db = new Database(myDB, "admin", "admin");
 
 
             string myTable = "t1";
             string[] values = new string[2];
             values[0] = "name string true";
             values[1] = "edad int false";
-            String q = "CREATE TABLE" + myTable + "(" + values[0] + "," + values[1] + ");";
+            String q = "CREATE TABLE t1(name string true,edad int false);";
             db.Query(q);
 
             string[] insert1 = new string[2];
@@ -187,16 +187,16 @@ namespace ClassesTest
             insert5[0] = "Josu";
             insert5[1] = "4";
 
-            db.Query("INSERT INTO" + myTable + "VALUES(" + insert1[0] + "," + insert1[1] + ");");
-            db.Query("INSERT INTO" + myTable + "VALUES(" + insert2[0] + "," + insert2[1] + ");");
-            db.Query("INSERT INTO" + myTable + "VALUES(" + insert3[0] + "," + insert3[1] + ");");
-            db.Query("INSERT INTO" + myTable + "VALUES(" + insert4[0] + "," + insert4[1] + ");");
-            db.Query("INSERT INTO" + myTable + "VALUES(" + insert5[0] + "," + insert5[1] + ");");
-            
+            db.Query("INSERT INTO t1 VALUES (Asier,1);");
+            db.Query("INSERT INTO t1 VALUES (Leire,3);");
+            db.Query("INSERT INTO t1 VALUES (Navarro,5);");
+            db.Query("INSERT INTO t1 VALUES (Hernando,2);");
+            db.Query("INSERT INTO t1 VALUES (Josu,4);");
 
-            string cond = "edad>3";
 
-            db.Query("DELETE FROM" + myTable + "WHERE" + cond + ";");
+           
+
+            db.Query("DELETE FROM t1 WHERE edad>3;");
             
 
             string pathfileDATA = @"..//..//..//data//" + myDB + "//" + myTable + ".data";
@@ -207,8 +207,8 @@ namespace ClassesTest
             Assert.AreEqual(insert2[0] + "," + insert2[1], lines[1]);
             Assert.AreEqual(insert4[0] + "," + insert4[1], lines[2]);
 
-            string cond2 = "name=Leire";
-            db.Query("DELETE FROM" + myTable + "WHERE" + cond2 + ";");
+           
+            db.Query("DELETE FROM t1 WHERE name=Leire;");
 
             String[] lines2 = System.IO.File.ReadAllLines(pathfileDATA);
             //Testing Delete with string
@@ -216,14 +216,14 @@ namespace ClassesTest
             Assert.AreEqual(insert1[0] + "," + insert1[1], lines2[0]);
             Assert.AreEqual(insert4[0] + "," + insert4[1], lines2[1]);
 
-            string cond3 = "edad<2";
-            db.Query("DELETE FROM" + myTable + "WHERE" + cond3 + ";");
+           
+            db.Query("DELETE FROM t1 WHERE edad<2;");
 
             String[] lines3 = System.IO.File.ReadAllLines(pathfileDATA);
             //Testing Delete with <
             Assert.AreEqual(1, lines3.Length);
             Assert.AreEqual(insert4[0] + "," + insert4[1], lines3[0]);
-            db.Query("DROP DATABASE" +myDB +";");
+            db.Query("DROP DATABASE" + myDB +";");
         }
         [TestMethod]
         public void fullTestWithSelect()
