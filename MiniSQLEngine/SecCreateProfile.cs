@@ -31,7 +31,7 @@ namespace MiniSQLEngine
             string pathProfiles = @"..\\..\\..\\data\\" + dbname + "\\profiles\\" + name+".pf";
             if (!File.Exists(pathProfiles))
             {
-                System.IO.Directory.CreateDirectory(pathProfiles);
+                using(System.IO.File.CreateText(pathProfiles))
                 result = Constants.SecurityProfileCreated;
             }
             else
