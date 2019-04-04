@@ -156,16 +156,16 @@ namespace ClassesTest
         [TestMethod]
         public void TestDelete()
         {
-            string myDB = "myDB";
-            ClassCreateDatabase db = new ClassCreateDatabase(myDB);
-            db.Run(myDB);
+            string myDB = "DBTestDelete";
+            Database db = new Database(myDB,"admin","admin")
 
-            string myTable = "myTable";
+
+            string myTable = "t1";
             string[] values = new string[2];
             values[0] = "name string true";
             values[1] = "edad int false";
-            ClassCreateTable ctable = new ClassCreateTable(myTable, values);
-            ctable.Run(myDB);
+            String q = "CREATE TABLE" + myTable + "(" + values[0] + "," + values[1] + ");";
+            db.Query(q);
 
             string[] insert1 = new string[2];
             insert1[0] = "Asier";
@@ -187,24 +187,17 @@ namespace ClassesTest
             insert5[0] = "Josu";
             insert5[1] = "4";
 
-            ClassInsert ins1 = new ClassInsert(myTable, insert1,null);
-            ins1.Run(myDB);
-
-            ClassInsert ins2 = new ClassInsert(myTable, insert2, null);
-            ins2.Run(myDB);
-
-            ClassInsert ins3 = new ClassInsert(myTable, insert3, null);
-            ins3.Run(myDB);
-
-            ClassInsert ins4 = new ClassInsert(myTable, insert4, null);
-            ins4.Run(myDB);
-
-            ClassInsert ins5 = new ClassInsert(myTable, insert5, null);
-            ins5.Run(myDB);
+            db.Query("INSERT INTO" + myTable + "VALUES(" + insert1[0] + "," + insert1[1] + ");");
+            db.Query("INSERT INTO" + myTable + "VALUES(" + insert2[0] + "," + insert2[1] + ");");
+            db.Query("INSERT INTO" + myTable + "VALUES(" + insert3[0] + "," + insert3[1] + ");");
+            db.Query("INSERT INTO" + myTable + "VALUES(" + insert4[0] + "," + insert4[1] + ");");
+            db.Query("INSERT INTO" + myTable + "VALUES(" + insert5[0] + "," + insert5[1] + ");");
+            
 
             string cond = "edad>3";
-            ClassDelete del = new ClassDelete(myTable, cond);
-            del.Run(myDB);
+
+            db.Query("DELETE FROM" + myTable + "WHERE" + cond + ";");
+            
 
             string pathfileDATA = @"..//..//..//data//" + myDB + "//" + myTable + ".data";
             String[] lines = System.IO.File.ReadAllLines(pathfileDATA);
@@ -215,8 +208,7 @@ namespace ClassesTest
             Assert.AreEqual(insert4[0] + "," + insert4[1], lines[2]);
 
             string cond2 = "name=Leire";
-            ClassDelete del2 = new ClassDelete(myTable, cond2);
-            del2.Run(myDB);
+            db.Query("DELETE FROM" + myTable + "WHERE" + cond2 + ";");
 
             String[] lines2 = System.IO.File.ReadAllLines(pathfileDATA);
             //Testing Delete with string
@@ -225,13 +217,13 @@ namespace ClassesTest
             Assert.AreEqual(insert4[0] + "," + insert4[1], lines2[1]);
 
             string cond3 = "edad<2";
-            ClassDelete del3 = new ClassDelete(myTable, cond3);
-            del3.Run(myDB);
+            db.Query("DELETE FROM" + myTable + "WHERE" + cond3 + ";");
 
             String[] lines3 = System.IO.File.ReadAllLines(pathfileDATA);
             //Testing Delete with <
             Assert.AreEqual(1, lines3.Length);
             Assert.AreEqual(insert4[0] + "," + insert4[1], lines3[0]);
+            db.Query("DROP DATABASE" +myDB +";");
         }
         [TestMethod]
         public void fullTestWithSelect()
