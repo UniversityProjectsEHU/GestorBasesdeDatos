@@ -13,16 +13,23 @@ namespace ClassesTest
     class SecurityTests
     {
         [TestMethod]
-        public void TestCreateProfile()
+        public void TestCreateDropProfile()
         {
             Database db = new Database("MyDB", "admin", "admin");
             string q = "CREATE SECURITY PROFILE user;";
             db.Query(q);
             string pathProfiles = @"..\\..\\..\\data\\mydb\\profiles\\user.pf";
+            //CreateProfile testing
             bool existsPf = File.Exists(pathProfiles);
             Assert.AreEqual(true, existsPf);
 
-        }
+            string q2 = "DROP SECURITY PROFILE user;";
+            db.Query(q2);
+            //DropProfile testing
+            bool existsPf2 = File.Exists(pathProfiles);
+            Assert.AreEqual(false, existsPf);
 
+            db.Query("DROP DATABASE MyDB;");
+        }
     }
 }
