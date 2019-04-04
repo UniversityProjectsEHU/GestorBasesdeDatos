@@ -342,8 +342,8 @@ namespace MiniSQLEngine
             if (matchdropdatabase2.Success)
             {
                 priv = matchdropdatabase2.Groups[1].Value;
-                table = matchdropdatabase2.Groups[1].Value;
-                perfil = matchdropdatabase2.Groups[1].Value;
+                table = matchdropdatabase2.Groups[2].Value;
+                perfil = matchdropdatabase2.Groups[3].Value;
             }
             SecGrant query = new SecGrant(priv,table,perfil);
             return query;
@@ -357,8 +357,8 @@ namespace MiniSQLEngine
             if (matchdropdatabase2.Success)
             {
                 priv = matchdropdatabase2.Groups[1].Value;
-                table = matchdropdatabase2.Groups[1].Value;
-                perfil = matchdropdatabase2.Groups[1].Value;
+                table = matchdropdatabase2.Groups[2].Value;
+                perfil = matchdropdatabase2.Groups[3].Value;
             }
             SecRevoke query = new SecRevoke(priv, table, perfil);
             return query;
