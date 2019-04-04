@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 namespace ClassesTest
 {
     [TestClass]
-    class SecurityTests
+    public class SecurityTests
     {
         [TestMethod]
         public void TestCreateDropProfile()
         {
-            Database db = new Database("MyDB", "admin", "admin");
+            Database db = new Database("testDB", "admin", "admin");
             string q = "CREATE SECURITY PROFILE user;";
             db.Query(q);
-            string pathProfiles = @"..\\..\\..\\data\\mydb\\profiles\\user.pf";
+            string pathProfiles = @"..\\..\\..\\data\\testDB\\profiles\\user.pf";
             //CreateProfile testing
             bool existsPf = File.Exists(pathProfiles);
             Assert.AreEqual(true, existsPf);
@@ -29,7 +29,7 @@ namespace ClassesTest
             bool existsPf2 = File.Exists(pathProfiles);
             Assert.AreEqual(false, existsPf);
 
-            db.Query("DROP DATABASE MyDB;");
+            db.Query("DROP DATABASE testDB;");
         }
     }
 }

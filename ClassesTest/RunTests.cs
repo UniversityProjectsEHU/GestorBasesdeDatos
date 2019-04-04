@@ -12,12 +12,13 @@ namespace ClassesTest
         [TestMethod]
         public void TestCreateDropDatabaseTable()
         {
-            string myDB = "myDB";
-            ClassCreateDatabase db = new ClassCreateDatabase(myDB);
-            db.Run(myDB);
-            bool exists = Directory.Exists(@"..//..//..//data//myDB");
-            bool existsProf = Directory.Exists(@"..//..//..//data//myDB//profiles");
-            bool existsPf = File.Exists(@"..//..//..//data//myDB//profiles//admin.pf");
+            string myDB = "mytestDB";
+            string user = "admin";
+            string pass = "admin";
+            Database db = new Database(myDB, user, pass);
+            bool exists = Directory.Exists(@"..//..//..//data//" + myDB);
+            bool existsProf = Directory.Exists(@"..//..//..//data//"+myDB+"//profiles");
+            bool existsPf = File.Exists(@"..//..//..//data//" + myDB + "//profiles//admin.pf");
             //Testing CreateDatabase
             Assert.AreEqual(true, exists);
             Assert.AreEqual(true, existsProf);
@@ -27,26 +28,23 @@ namespace ClassesTest
             string[] values = new string[2];
             values[0] = "column1 string true";
             values[1] = "column2 int false";
-            ClassCreateTable ctable = new ClassCreateTable(myTable, values);
-            ctable.Run(myDB);
+            db.Query("CREATE TABLE " + myTable + "(" + values[0] + "," + values[1] + ");");
             //Testing CreateTable
-            bool existsDef = File.Exists(@"..//..//..//data//myDB//myTable.def");
+            bool existsDef = File.Exists(@"..//..//..//data//" + myDB + "//myTable.def");
             Assert.AreEqual(true, existsDef);
-            bool existsData = File.Exists(@"..//..//..//data//myDB//myTable.data");
+            bool existsData = File.Exists(@"..//..//..//data//" + myDB + "//myTable.data");
             Assert.AreEqual(true, existsData);
 
-            ClassDropTable dtable = new ClassDropTable(myTable);
-            dtable.Run(myDB);
+            db.Query("DROP TABLE " + myTable + ";");
             //Testing DropTable
-            bool existsDefDrop = File.Exists(@"..//..//..//data//myDB//myTable.def");
+            bool existsDefDrop = File.Exists(@"..//..//..//data//" + myDB + "//myTable.def");
             Assert.AreEqual(false, existsDefDrop);
-            bool existsDataDrop = File.Exists(@"..//..//..//data//myDB//myTable.data");
+            bool existsDataDrop = File.Exists(@"..//..//..//data//" + myDB + "//myTable.data");
             Assert.AreEqual(false, existsDataDrop);
 
-            ClassDropDatabase drop = new ClassDropDatabase(myDB);
-            drop.Run(myDB);
+            db.Query("DROP DATABASE " + myDB +";");
             //Testing DropDatabase
-            bool existsDrop = Directory.Exists(@"..//..//..//data//myDB");
+            bool existsDrop = Directory.Exists(@"..//..//..//data//" + myDB + "");
             Assert.AreEqual(false, existsDrop);
         }
         [TestMethod]
@@ -158,16 +156,16 @@ namespace ClassesTest
         [TestMethod]
         public void TestDelete()
         {
-            string myDB = "myDB";
-            ClassCreateDatabase db = new ClassCreateDatabase(myDB);
-            db.Run(myDB);
+            string myDB = "DBTestDelete";
+            Database db = new Database(myDB,"admin","admin")
 
-            string myTable = "myTable";
+
+            string myTable = "t1";
             string[] values = new string[2];
             values[0] = "name string true";
             values[1] = "edad int false";
-            ClassCreateTable ctable = new ClassCreateTable(myTable, values);
-            ctable.Run(myDB);
+            String q = "CREATE TABLE" + myTable + "(" + values[0] + "," + values[1] + ");";
+            db.Query(q);
 
             string[] insert1 = new string[2];
             insert1[0] = "Asier";
@@ -189,24 +187,17 @@ namespace ClassesTest
             insert5[0] = "Josu";
             insert5[1] = "4";
 
-            ClassInsert ins1 = new ClassInsert(myTable, insert1,null);
-            ins1.Run(myDB);
-
-            ClassInsert ins2 = new ClassInsert(myTable, insert2, null);
-            ins2.Run(myDB);
-
-            ClassInsert ins3 = new ClassInsert(myTable, insert3, null);
-            ins3.Run(myDB);
-
-            ClassInsert ins4 = new ClassInsert(myTable, insert4, null);
-            ins4.Run(myDB);
-
-            ClassInsert ins5 = new ClassInsert(myTable, insert5, null);
-            ins5.Run(myDB);
+            db.Query("INSERT INTO" + myTable + "VALUES(" + insert1[0] + "," + insert1[1] + ");");
+            db.Query("INSERT INTO" + myTable + "VALUES(" + insert2[0] + "," + insert2[1] + ");");
+            db.Query("INSERT INTO" + myTable + "VALUES(" + insert3[0] + "," + insert3[1] + ");");
+            db.Query("INSERT INTO" + myTable + "VALUES(" + insert4[0] + "," + insert4[1] + ");");
+            db.Query("INSERT INTO" + myTable + "VALUES(" + insert5[0] + "," + insert5[1] + ");");
+            
 
             string cond = "edad>3";
-            ClassDelete del = new ClassDelete(myTable, cond);
-            del.Run(myDB);
+
+            db.Query("DELETE FROM" + myTable + "WHERE" + cond + ";");
+            
 
             string pathfileDATA = @"..//..//..//data//" + myDB + "//" + myTable + ".data";
             String[] lines = System.IO.File.ReadAllLines(pathfileDATA);
@@ -217,8 +208,7 @@ namespace ClassesTest
             Assert.AreEqual(insert4[0] + "," + insert4[1], lines[2]);
 
             string cond2 = "name=Leire";
-            ClassDelete del2 = new ClassDelete(myTable, cond2);
-            del2.Run(myDB);
+            db.Query("DELETE FROM" + myTable + "WHERE" + cond2 + ";");
 
             String[] lines2 = System.IO.File.ReadAllLines(pathfileDATA);
             //Testing Delete with string
@@ -227,19 +217,20 @@ namespace ClassesTest
             Assert.AreEqual(insert4[0] + "," + insert4[1], lines2[1]);
 
             string cond3 = "edad<2";
-            ClassDelete del3 = new ClassDelete(myTable, cond3);
-            del3.Run(myDB);
+            db.Query("DELETE FROM" + myTable + "WHERE" + cond3 + ";");
 
             String[] lines3 = System.IO.File.ReadAllLines(pathfileDATA);
             //Testing Delete with <
             Assert.AreEqual(1, lines3.Length);
             Assert.AreEqual(insert4[0] + "," + insert4[1], lines3[0]);
+            db.Query("DROP DATABASE" +myDB +";");
         }
         [TestMethod]
         public void fullTestWithSelect()
         {
             string dbname = "myDBFull";
-            string user = "myUser";
+            string user = "admin";
+            string pass = "admin";
             string myTable = "thisTable111";
             string queryCreateDB = "CREATE DATABASE myDBFull;";
             string queryDropDB = "DROP DATABASE myDBFull;";
@@ -256,7 +247,7 @@ namespace ClassesTest
             string message = "The result for the Query '" + querySelect + "' is: id 1 name Alejandra;";
             string messageAll = "The result for the Query '" + querySelectAll + "' is: id 1 name Alejandra age 37; id 2 name Paco age 60;";
             string messageNotExists = "ERROR: Column does not exist";
-            Database db = new Database(dbname, user);
+            Database db = new Database(dbname, user,pass);
             /*ClassCreateDatabase newDB = new ClassCreateDatabase(dbname);
             ClassCreateTable newTable = new ClassCreateTable(myTable, values);
             ClassInsert newInsert1 = new ClassInsert(myTable, valuesToInsert);
@@ -291,13 +282,14 @@ namespace ClassesTest
         public void testCreateWithAdmin()
         {
             string dbname = "myDBFull";
-            string user = "myUser";
+            string user = "admin";
+            string pass = "admin";
             string queryCreateDB = "CREATE DATABASE myDBFull;";
             string queryDropDB = "DROP DATABASE myDBFull;";
             string queryCreate = "CREATE TABLE pTable (int id true, int age false);";
             string line = "admin,DELETE/INSERT/SELECT/UPDATE";
             string path = @"..//..//..//data//" + dbname + "//pTable.sec";
-            Database db = new Database(dbname,user);
+            Database db = new Database(dbname,user,pass);
             db.Query(queryCreateDB);
             db.Query(queryCreate);
             String[] lineadef = System.IO.File.ReadAllLines(path);
@@ -309,14 +301,15 @@ namespace ClassesTest
         public void testDropWithAdmin()
         {
             string dbname = "myDBFull";
-            string user = "myUser";
+            string user = "admin";
+            string pass = "admin";
             string queryCreateDB = "CREATE DATABASE myDBFull;";
             string queryDropDB = "DROP DATABASE myDBFull;";
             string queryCreate = "CREATE TABLE pTable (int id true, int age false);";
             string queryDrop = "DROP TABLE pTable;";
             string line = "admin,DELETE/INSERT/SELECT/UPDATE";
             string path = @"..//..//..//data//" + dbname + "//pTable.sec";
-            Database db = new Database(dbname, user);
+            Database db = new Database(dbname, user,pass);
             db.Query(queryCreateDB);
             db.Query(queryCreate);
             Assert.AreEqual(true, File.Exists(path));
