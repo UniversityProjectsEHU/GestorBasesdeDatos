@@ -351,6 +351,8 @@ namespace MiniSQLEngine
                 if (pUser.Equals("admin") && pPassword.Equals("admin"))
                 {
                     res = "adminCreateDB";
+                    ClassCreateDatabase dbc = new ClassCreateDatabase(name);
+                    dbc.Run(name);
                     return res;
                 }
                 else

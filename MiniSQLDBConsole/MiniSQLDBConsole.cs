@@ -20,20 +20,19 @@ namespace MiniSQLDBConsole
             string datab = Console.ReadLine();
 
             Database db = new Database(datab, user,pass);
+            string res = db.getRes();
 
-
-            if (Database.init(datab, user, pass) == "adminCreateDB")
+            if (res == "adminCreateDB")
             {   
-                db.Query("CREATE DATABASE " + datab +";");
                 Console.WriteLine("Database created");
             }
-            else if (Database.init(datab, user, pass) == "notAdmin")
+            else if (res == "notAdmin")
             {
                 Console.WriteLine("Not enough privileges to create that database");
                 Console.ReadKey(true);
                 Environment.Exit(0);
             }
-            else if (Database.init(datab, user, pass) == "UserOpen")
+            else if (res == "UserOpen")
             {
                 Console.WriteLine("Database opened");
             }
@@ -51,7 +50,7 @@ namespace MiniSQLDBConsole
                     pass = Console.ReadLine();
                     if(Database.init(datab, user, pass) == "UserOpen")
                     {
-                       db = new Database(datab, user);
+                       db = new Database(datab, user,pass);
                        Console.WriteLine("Database opened");
                     }
                     i--;
