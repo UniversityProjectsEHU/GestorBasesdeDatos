@@ -58,6 +58,8 @@
     <Compile Include="SecDropProfile.cs" />
     <Compile Include="SecGrant.cs" />
     <Compile Include="SecRevoke.cs" />
+    <Compile Include="SecAddUser.cs" />
+    <Compile Include="SecDeleteUser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
