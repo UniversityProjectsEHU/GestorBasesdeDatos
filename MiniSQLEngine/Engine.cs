@@ -107,38 +107,38 @@ namespace MiniSQLEngine
 
             Match matchSecAddUser = Regex.Match(pQuery, Constants.regExTypeSecAddUser);
 
-            if (matchupdate.Success)
+            if (matchSecAddUser.Success)
             {
                 return ManageSecAddUser(pQuery);
             }
 
             Match matchSecDeleteUser = Regex.Match(pQuery, Constants.regExTypeSecDeleteUser);
 
-            if (matchupdate.Success)
+            if (matchSecDeleteUser.Success)
             {
                 return ManageSecDeleteUser(pQuery);
             }
             Match matchSecGrant = Regex.Match(pQuery, Constants.regExTypeSecGrant);
 
-            if (matchupdate.Success)
+            if (matchSecGrant.Success)
             {
                 return ManageSecGrant(pQuery);
             }
             Match matchSecRevoke = Regex.Match(pQuery, Constants.regExTypeSecRevoke);
 
-            if (matchupdate.Success)
+            if (matchSecRevoke.Success)
             {
                 return ManageSecRevoke(pQuery);
             }
             Match matchSecCreateProfile = Regex.Match(pQuery, Constants.regExTypeSecCreateProfile);
 
-            if (matchupdate.Success)
+            if (matchSecCreateProfile.Success)
             {
                 return ManageSecCreateProfile(pQuery);
             }
             Match matSecDropProfile = Regex.Match(pQuery, Constants.regExTypeSecDropProfile);
 
-            if (matchupdate.Success)
+            if (matSecDropProfile.Success)
             {
                 return ManageSecDropProfile(pQuery);
             }
@@ -392,6 +392,7 @@ namespace MiniSQLEngine
         private string dbname;
         private string user;
         private string res;
+        private static string[] privileges;
         public Database(string name, string pUser,string pPass)
         {
             dbname = name;
@@ -409,6 +410,7 @@ namespace MiniSQLEngine
                     res = "adminCreateDB";
                     ClassCreateDatabase dbc = new ClassCreateDatabase(name);
                     dbc.Run(name);
+                    privileges = new String[4] { "DELETE", "INSERT", "SELECT", "UPDATE" };
                     return res;
                 }
                 else
@@ -458,92 +460,92 @@ namespace MiniSQLEngine
         public string Query(string psentencia)
         {
             ClassParsing c = new ClassParsing();
-            String eltipo = "";
-            Match matchselect = Regex.Match(psentencia, Constants.regExTypeSelect);
-            if (matchselect.Success)
-            {
-                eltipo="SELECT";
-            }
-            Match matchinsert = Regex.Match(psentencia, Constants.regExTypeInsert);
+            //String eltipo = "";
+            //Match matchselect = Regex.Match(psentencia, Constants.regExTypeSelect);
+            //if (matchselect.Success)
+            //{
+            //    eltipo="SELECT";
+            //}
+            //Match matchinsert = Regex.Match(psentencia, Constants.regExTypeInsert);
 
-            if (matchinsert.Success)
-            {
-                eltipo = "INSERT";
-            }
+            //if (matchinsert.Success)
+            //{
+            //    eltipo = "INSERT";
+            //}
 
-            Match matchDropTable = Regex.Match(psentencia, Constants.regExTypesDropTable);
-            if (matchDropTable.Success)
-            {
-                eltipo = "DROP TABLE";
-            }
+            //Match matchDropTable = Regex.Match(psentencia, Constants.regExTypesDropTable);
+            //if (matchDropTable.Success)
+            //{
+            //    eltipo = "DROP TABLE";
+            //}
 
-            Match matchCreateTable = Regex.Match(psentencia, Constants.regExTypesCreateTable);
-            if (matchCreateTable.Success)
-            {
-                eltipo = "CREATE TABLE";
-            }
+            //Match matchCreateTable = Regex.Match(psentencia, Constants.regExTypesCreateTable);
+            //if (matchCreateTable.Success)
+            //{
+            //    eltipo = "CREATE TABLE";
+            //}
 
-            Match matchcreatedatabase = Regex.Match(psentencia, Constants.regExTypesCreateDatabase);
-            if (matchcreatedatabase.Success)
-            {
-                eltipo = "CREATE DATABASE";
-            }
+            //Match matchcreatedatabase = Regex.Match(psentencia, Constants.regExTypesCreateDatabase);
+            //if (matchcreatedatabase.Success)
+            //{
+            //    eltipo = "CREATE DATABASE";
+            //}
 
-            Match matchdropdatabase = Regex.Match(psentencia, Constants.regExTypesDropDatabase);
-            if (matchdropdatabase.Success)
-            {
-                eltipo = "DROP DATABASE";
-            }
+            //Match matchdropdatabase = Regex.Match(psentencia, Constants.regExTypesDropDatabase);
+            //if (matchdropdatabase.Success)
+            //{
+            //    eltipo = "DROP DATABASE";
+            //}
 
-            Match matchdelete = Regex.Match(psentencia, Constants.regExTypeDelete);
-            if (matchdelete.Success)
-            {
-                eltipo = "DROP TAB";
-            }
-            Match matchupdate = Regex.Match(psentencia, Constants.regExTypeUpdate);
+            //Match matchdelete = Regex.Match(psentencia, Constants.regExTypeDelete);
+            //if (matchdelete.Success)
+            //{
+            //    eltipo = "DROP TAB";
+            //}
+            //Match matchupdate = Regex.Match(psentencia, Constants.regExTypeUpdate);
 
-            if (matchupdate.Success)
-            {
-                eltipo = "UPDATE";
-            }
+            //if (matchupdate.Success)
+            //{
+            //    eltipo = "UPDATE";
+            //}
 
-            Match matchSecAddUser = Regex.Match(psentencia, Constants.regExTypeSecAddUser);
+            //Match matchSecAddUser = Regex.Match(psentencia, Constants.regExTypeSecAddUser);
 
-            if (matchupdate.Success)
-            {
-                eltipo = "ADD USER";
-            }
+            //if (matchupdate.Success)
+            //{
+            //    eltipo = "ADD USER";
+            //}
 
-            Match matchSecDeleteUser = Regex.Match(psentencia, Constants.regExTypeSecDeleteUser);
+            //Match matchSecDeleteUser = Regex.Match(psentencia, Constants.regExTypeSecDeleteUser);
 
-            if (matchupdate.Success)
-            {
-                eltipo = "DELETE USER";
-            }
-            Match matchSecGrant = Regex.Match(psentencia, Constants.regExTypeSecGrant);
+            //if (matchupdate.Success)
+            //{
+            //    eltipo = "DELETE USER";
+            //}
+            //Match matchSecGrant = Regex.Match(psentencia, Constants.regExTypeSecGrant);
 
-            if (matchupdate.Success)
-            {
-                eltipo = "GRANT";
-            }
-            Match matchSecRevoke = Regex.Match(psentencia, Constants.regExTypeSecRevoke);
+            //if (matchupdate.Success)
+            //{
+            //    eltipo = "GRANT";
+            //}
+            //Match matchSecRevoke = Regex.Match(psentencia, Constants.regExTypeSecRevoke);
 
-            if (matchupdate.Success)
-            {
-                eltipo = "REVOKE";
-            }
-            Match matchSecCreateProfile = Regex.Match(psentencia, Constants.regExTypeSecCreateProfile);
+            //if (matchupdate.Success)
+            //{
+            //    eltipo = "REVOKE";
+            //}
+            //Match matchSecCreateProfile = Regex.Match(psentencia, Constants.regExTypeSecCreateProfile);
 
-            if (matchupdate.Success)
-            {
-                eltipo = "CREATE PROFILE";
-            }
-            Match matSecDropProfile = Regex.Match(psentencia, Constants.regExTypeSecDropProfile);
+            //if (matchupdate.Success)
+            //{
+            //    eltipo = "CREATE PROFILE";
+            //}
+            //Match matSecDropProfile = Regex.Match(psentencia, Constants.regExTypeSecDropProfile);
 
-            if (matchupdate.Success)
-            {
-                eltipo = "DROP PROFILE";
-            }
+            //if (matchupdate.Success)
+            //{
+            //    eltipo = "DROP PROFILE";
+            //}
 
 
             return c.Query(psentencia,dbname);
