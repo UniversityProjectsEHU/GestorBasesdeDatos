@@ -157,7 +157,7 @@ namespace ClassesTest
         public void TestDelete()
         {
             string myDB = "DBTestDelete";
-            Database db = new Database(myDB,"admin","admin")
+            Database db = new Database(myDB, "admin", "admin");
 
 
             string myTable = "t1";

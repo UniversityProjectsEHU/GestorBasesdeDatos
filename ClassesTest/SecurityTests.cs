@@ -31,5 +31,26 @@ namespace ClassesTest
 
             db.Query("DROP DATABASE testDB;");
         }
+        [TestMethod]
+        public void TestGrant()
+        {
+            string user = "admin";
+            string pass = "admin";
+            string dbname = "myDBTest";
+            string queryCreate = "CREATE TABLE pTable (int id true, int age false);";
+            string sec_priv = "myProfile";
+            string priv_type = "SELECT";
+            string queryGrant = "GRANT " + priv_type + " ON pTable TO " + sec_priv+";";
+            string queryCreateProfile = "CREATE SECURITY PROFILE myProfile;";
+            string path = @"..\\..\\..\\data\\" + dbname + "\\pTable.sec";
+            string linea = sec_priv + "," + priv_type;
+            Database db = new Database(dbname, user, pass);
+            db.Query(queryCreate);
+            db.Query(queryCreateProfile);
+            db.Query(queryGrant);
+            String[] lineadef = System.IO.File.ReadAllLines(path);
+            string line = lineadef[0];
+            Assert.AreEqual(line, linea);
+        }
     }
 }

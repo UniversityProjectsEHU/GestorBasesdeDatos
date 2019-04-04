@@ -21,7 +21,7 @@ namespace MiniSQLEngine
         public const string regExpDropDatabase = @"DROP DATABASE\s+(\w+);";
         public const string regExpDropTable = @"DROP\s+TABLE\s+(\w+);";
         public const string regExpCreateTable = @"CREATE TABLE\s+(\w+)\s*\(([^\)]+)\);";
-        public const string regExTypeSelect = @"(SELECT)";
+        public const string regExTypeSelect = @"(SELECT)\s+FROM";
         public const string regExTypeInsert = @"(INSERT)";
         public const string regExTypeUpdate = @"(UPDATE)";
         public const string regExTypeDelete = @"(DELETE\s+FROM)";
