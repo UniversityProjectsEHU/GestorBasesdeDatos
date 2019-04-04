@@ -70,5 +70,12 @@ namespace MiniSQLEngine
         public const string SecurityUserAlreadyExists = Error + "Security user already exists";
         public const string SecurityProfileDoesNotExist = Error + "Security profile does not exist";
         public const string SecurityUserDoesNotExist = Error + "Security user does not exist";
+
+        public const string regExTypeSecCreateProfile = @"(CREATE SECURITY PROFILE)";
+        public const string regExTypeSecDropProfile = @"(DROP SECURITY PROFILE)";
+        public const string regExTypeSecGrant = @"(GRANT)";
+        public const string regExTypeSecRevoke = @"(REVOKE)";
+        public const string regExTypeSecAddUser = @"(ADD\s+USER)";
+        public const string regExTypeSecDeleteUser = @"(DELETE\s+USER)";
     }
 }
