@@ -105,6 +105,44 @@ namespace MiniSQLEngine
                 return ManageUpdate(pQuery);
             }
 
+            Match matchSecAddUser = Regex.Match(pQuery, Constants.regExTypeSecAddUser);
+
+            if (matchupdate.Success)
+            {
+                return ManageSecAddUser(pQuery);
+            }
+
+            Match matchSecDeleteUser = Regex.Match(pQuery, Constants.regExTypeSecDeleteUser);
+
+            if (matchupdate.Success)
+            {
+                return ManageSecDeleteUser(pQuery);
+            }
+            Match matchSecGrant = Regex.Match(pQuery, Constants.regExTypeSecGrant);
+
+            if (matchupdate.Success)
+            {
+                return ManageSecGrant(pQuery);
+            }
+            Match matchSecRevoke = Regex.Match(pQuery, Constants.regExTypeSecRevoke);
+
+            if (matchupdate.Success)
+            {
+                return ManageSecRevoke(pQuery);
+            }
+            Match matchSecCreateProfile = Regex.Match(pQuery, Constants.regExTypeSecCreateProfile);
+
+            if (matchupdate.Success)
+            {
+                return ManageSecCreateProfile(pQuery);
+            }
+            Match matSecDropProfile = Regex.Match(pQuery, Constants.regExTypeSecDropProfile);
+
+            if (matchupdate.Success)
+            {
+                return ManageSecDropProfile(pQuery);
+            }
+
             //Manejar errores/Excepciones
             return null;
         }
@@ -264,6 +302,31 @@ namespace MiniSQLEngine
                     return query;
                 }
             }
+            return null;
+        }
+
+        public SecAddUser ManageSecAddUser(string pQuery)
+        {
+            return null;
+        }
+        public SecDeleteUser ManageSecDeleteUser(string pQuery)
+        {
+            return null;
+        }
+        public SecGrant ManageSecGrant(string pQuery)
+        {
+            return null;
+        }
+        public SecRevoke ManageSecRevoke(string pQuery)
+        {
+            return null;
+        }
+        public SecCreateProfile ManageSecCreateProfile(string pQuery)
+        {
+            return null;
+        }
+        public SecDropProfile ManageSecDropProfile(string pQuery)
+        {
             return null;
         }
     }
