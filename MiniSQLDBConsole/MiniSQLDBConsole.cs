@@ -19,7 +19,8 @@ namespace MiniSQLDBConsole
             Console.Write("Enter the name of the database: ");
             string datab = Console.ReadLine();
 
-            Database db = new Database(datab, user);
+            Database db = new Database(datab, user,pass);
+
 
             if (Database.init(datab, user, pass) == "adminCreateDB")
             {   

@@ -21,8 +21,8 @@ namespace ClassesTest
             bool exists = Directory.Exists(@"..//..//..//data//myDB");
         
             Assert.AreEqual(true, exists);
-            Query q = new Query("CREATE SECURITY PROFILE user;",myDB);
-            q.run();
+            string q = "CREATE SECURITY PROFILE user;";
+            db.query(q);
             string pathProfiles = @"..\\..\\..\\data\\mydb\\profiles\\user.pf";
             bool existsPf = File.Exists(pathProfiles);
             Assert.AreEqual(true, existsPf);
