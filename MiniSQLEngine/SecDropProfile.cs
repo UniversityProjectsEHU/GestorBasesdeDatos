@@ -35,8 +35,8 @@ namespace MiniSQLEngine
             }
             else 
             {
-               
-                System.IO.Directory.Delete(pathProfiles);
+
+                System.IO.File.Delete(pathProfiles);
                 result = Constants.SecurityProfileDeleted;
             }
         }
