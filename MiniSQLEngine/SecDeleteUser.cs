@@ -48,31 +48,33 @@ namespace MiniSQLEngine
                     }
                     else if(keepatit)
                     {
-                        string temppath = "..//..//..//data//" + dbname + "//profiles//" + tempfile + ".pf";
+                        string temppath = "..//..//..//data//" + dbname + "//profiles//" + tempfile;
                         string[] lines =File.ReadAllLines(temppath);
 
                         try
                         {
 
-                            
-                            StreamWriter sw = new StreamWriter("..//..//..//data//" + dbname + "//profiles//" + tempfile + ".pf");
 
-
-
-
-                            foreach (string line in lines)
+                            using (StreamWriter sw = new StreamWriter("..//..//..//data//" + dbname + "//profiles//" + tempfile))
                             {
-                                //The user is saved in the first index and the password in the second
-                                string[] userANDpw = line.Split(',');
-                                if (userANDpw[0] == user)
-                                {
-                                    keepatit = false;
 
-                                }
-                                else
+
+
+
+                                foreach (string line in lines)
                                 {
-                                    // Write a line of text
-                                    sw.WriteLine(userANDpw[0]+","+userANDpw[1]);
+                                    //The user is saved in the first index and the password in the second
+                                    string[] userANDpw = line.Split(',');
+                                    if (userANDpw[0] == user)
+                                    {
+                                        keepatit = false;
+
+                                    }
+                                    else
+                                    {
+                                        // Write a line of text
+                                        sw.WriteLine(userANDpw[0] + "," + userANDpw[1]);
+                                    }
                                 }
                             }
                             result = Constants.SecurityUserDeleted;
