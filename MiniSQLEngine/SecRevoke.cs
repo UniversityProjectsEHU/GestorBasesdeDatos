@@ -31,7 +31,7 @@ namespace MiniSQLEngine
 
         public override void Run(string dbname)
         {
-            string pathProfiles = @"..\\..\\..\\data\\" + dbname + "\\profiles\\" + security_profile;
+            string pathProfiles = @"..\\..\\..\\data\\" + dbname + "\\profiles\\" + security_profile+".pf";
             string pathUssers = @"..\\..\\..\\data\\" + dbname + "\\" + table + ".sec";
             if (File.Exists(pathProfiles) == false)
             {
