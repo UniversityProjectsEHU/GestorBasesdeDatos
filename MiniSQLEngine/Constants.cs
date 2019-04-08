@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MiniSQLEngine
 {
-    class Constants
+    public class Constants
     {
         public const string regExSelect2 = @"SELECT\s+([\w*]+|(?:\w+,\w+)+)\s+FROM\s+(\w+);";
         //public const string regExSelect = @"SELECT\s+([\w*]+|(?:\w+,\w+)+)\s+FROM\s+(\w+)\s+WHERE\s+(\w+<[0-9]+|\w+>[0-9]+|\w+=[0-9]+);";
@@ -22,8 +22,8 @@ namespace MiniSQLEngine
         public const string regExpDropTable = @"DROP\s+TABLE\s+(\w+);";
         public const string regExpCreateTable = @"CREATE TABLE\s+(\w+)\s*\(([^\)]+)\);";
         public const string regExTypeSelect = @"(SELECT)\s+FROM";
-        public const string regExTypeInsert = @"(INSERT)";
-        public const string regExTypeUpdate = @"(UPDATE)";
+        public const string regExTypeInsert = @"(INSERT)\s+INTO";
+        public const string regExTypeUpdate = @"(UPDATE)\s+SET";
         public const string regExTypeDelete = @"(DELETE\s+FROM)";
         public const string regExTypesDropDatabase = @"(DROP\s+DATABASE)";
         public const string regExTypesDropTable = @"(DROP\s+TABLE)";
