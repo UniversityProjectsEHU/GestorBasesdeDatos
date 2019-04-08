@@ -42,7 +42,7 @@ namespace MiniSQLEngine
                 {
                     var fi=files.ElementAt(i);
                     string tempfile=fi.Name;
-                    if (tempfile == "admin")
+                    if (tempfile == "admin.pf")
                     {
                         //DO NOTHING,CONTINUE
                     }
