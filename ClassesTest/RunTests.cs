@@ -84,72 +84,52 @@ namespace ClassesTest
         public void TestUpdate()
         {
             //Database
-            string myDB = "myDB2";
-            ClassCreateDatabase db = new ClassCreateDatabase(myDB);
-            db.Run(myDB);
+            string myDB = "DBTestUpdate";
+            string myTable = "tUpdate";
+            Database db = new Database(myDB, "admin", "admin");
             //Table
-            string myTable = "myTable2";
-            string[] values = new string[2];
-            values[0] = "column1 string true";
-            values[1] = "column2 int false";
-            ClassCreateTable ctable = new ClassCreateTable(myTable, values);
-            ctable.Run(myDB);
+            String Table = "CREATE TABLE tUpdate(column1 string true,column2 int false);";
+            db.Query(Table);
             //Insert
-            string[] values2 = new string[2];
-            values2[0] = "hola";
-            values2[1] = "7";
-            ClassInsert cinsert = new ClassInsert(myTable, values2,null);
-            cinsert.Run(myDB);
-            
+            String Insert = "INSERT INTO tUpdate VALUES (hola,7);";
+            db.Query(Insert);
+
             //Update 1
-            string[] values3 = new string[2];
-            values3[0] = "column1=lola";
-            values3[1] = "column2=5";
-            string cond = "column1=hola";
-            ClassUpdate cupdate = new ClassUpdate(myTable,values3,cond);
-            cupdate.Run(myDB);
+            string Update1 = "UPDATE tUpdate SET column1=lola,column2=5 WHERE column1=hola;";
+            db.Query(Update1);
             //Testing update 1
             String[] lineas = System.IO.File.ReadAllLines("..//..//..//data//" + myDB + "//" + myTable + ".data");
             string actual = "lola,5";
             Assert.AreEqual(lineas[0], actual);
 
             //Update 2
-            string[] values4 = new string[2];
-            values4[0] = "column1=antonio";
-            values4[1] = "column2=7";
-            string cond2 = "column2>3";
-            ClassUpdate cupdate2 = new ClassUpdate(myTable, values4, cond2);
-            cupdate2.Run(myDB);
+            string Update2 = "UPDATE tUpdate SET column1=antonio,column2=7 WHERE column2>3;";
+            db.Query(Update2);
+            
             //Testing update 2
             String[] lineas2 = System.IO.File.ReadAllLines("..//..//..//data//" + myDB + "//" + myTable + ".data");
             string actual2 = "antonio,7";
             Assert.AreEqual(lineas2[0], actual2);
 
             ////Update 3
-            string[] values5 = new string[2];
-            values5[0] = "column1=francisco";
-            values5[1] = "column2=9";
-            string cond3 = "column2<20";
-            ClassUpdate cupdate3 = new ClassUpdate(myTable, values5, cond3);
-            cupdate3.Run(myDB);
+            string Update3 = "UPDATE tUpdate SET column1=francisco,column2=9 WHERE column2<20;";
+            db.Query(Update3);
+            
             //Testing update 3
             String[] lineas3 = System.IO.File.ReadAllLines("..//..//..//data//" + myDB + "//" + myTable + ".data");
             string actual3 = "francisco,9";
             Assert.AreEqual(lineas3[0], actual3);
 
             ////Update 2
-            string[] values6 = new string[1];
-            values6[0] = "column1=ana";
-            string cond4 = "column2=9";
-            ClassUpdate cupdate4 = new ClassUpdate(myTable, values6, cond4);
-            cupdate4.Run(myDB);
+            string Update4 = "UPDATE tUpdate SET column1=ana WHERE column2=9;";
+            db.Query(Update4);
+           
             //Testing update 2
             String[] lineas4 = System.IO.File.ReadAllLines("..//..//..//data//" + myDB + "//" + myTable + ".data");
             string actual4 = "ana,9";
             Assert.AreEqual(lineas4[0], actual4);
 
-            ClassDropDatabase cdrop = new ClassDropDatabase(myDB);
-            cdrop.Run(myDB);
+            db.Query("DROP DATABASE" + myDB + ";");
 
         }
 
