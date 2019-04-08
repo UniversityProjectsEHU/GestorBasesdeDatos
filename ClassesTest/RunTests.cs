@@ -51,6 +51,8 @@ namespace ClassesTest
         public void ExecuteTest()
         {
             string dbname = "myDB";
+            string user = "admin";
+            string pass = "admin";
             //string dbname1 = "myDB1";
             string myTable = "thisTable";
             string[] values = { "One String true", "Two String false", "Three String false", "Caramba String false" };
@@ -61,17 +63,14 @@ namespace ClassesTest
             string queryCreateTable = @"CREATE TABLE myTable (column1 int true,column2 string false,column3 int false);";
             string queryInsert = @"INSERT INTO table1 VALUES (10,abc,8);";
             */
-            ClassCreateDatabase newDB = new ClassCreateDatabase(dbname);
-            ClassCreateTable newTable = new ClassCreateTable(myTable, values);
-            ClassInsert inserted = new ClassInsert(myTable, valuesToInsert,null);
-            newDB.Run(dbname);
+            Database db = new Database(dbname, user, pass);
+            db.Query("CREATE TABLE " + myTable + "(" + values[0] + "," + values[1] + "," + values[2] + "," + values[3] + ");");
+            db.Query("INSERT INTO " + myTable + " VALUES " + "(" + valuesToInsert[0] + "," + valuesToInsert[1] + valuesToInsert[2] + "," + valuesToInsert[3]+ ");");
             bool exists = Directory.Exists(@"..//..//..//data//" + dbname);
             Assert.AreEqual(true, exists);
-            newTable.Run(dbname);
             /*bool existsTables = File.Exists(@"..//..//..//data//"+dbname+"//"+myTable+".data");
             Assert.AreEqual(true, existsTables);
             */
-            inserted.Run(dbname);
             Assert.AreNotSame(0, rutaCompleta.Length);
             /*string fullPath = @"..//..//..//data//myDB//thisTable.data";
             StreamWriter file = new StreamWriter(fullPath, true);
@@ -231,7 +230,7 @@ namespace ClassesTest
             string dbname = "myDBFull";
             string user = "admin";
             string pass = "admin";
-            string myTable = "thisTable111";
+            //string myTable = "thisTable111";
             string queryCreateDB = "CREATE DATABASE myDBFull;";
             string queryDropDB = "DROP DATABASE myDBFull;";
             //When doing a CREATE TABLE query, the definition of the columns have no spaces between commas
@@ -307,7 +306,7 @@ namespace ClassesTest
             string queryDropDB = "DROP DATABASE myDBFull;";
             string queryCreate = "CREATE TABLE pTable (int id true, int age false);";
             string queryDrop = "DROP TABLE pTable;";
-            string line = "admin,DELETE/INSERT/SELECT/UPDATE";
+            //string line = "admin,DELETE/INSERT/SELECT/UPDATE";
             string path = @"..//..//..//data//" + dbname + "//pTable.sec";
             Database db = new Database(dbname, user,pass);
             db.Query(queryCreateDB);
