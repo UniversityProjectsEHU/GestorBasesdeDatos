@@ -431,7 +431,7 @@ namespace MiniSQLEngine
                 {
                     string line;
                     string tempf = file.Name;
-                    using (StreamReader sr = new StreamReader(@"..//..//..//data//" + dbname + "//profiles//"+tempf+".pf"))
+                    using (StreamReader sr = new StreamReader(@"..//..//..//data//" + dbname + "//profiles//"+tempf))
                     {
                         while ((line = sr.ReadLine()) != null)
                         {
