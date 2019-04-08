@@ -42,7 +42,7 @@ namespace MiniSQLEngine
             using (StreamWriter file = File.AppendText(pathfileDATA))
             {
                 //Data added to the document
-                file.WriteLine(user + " " + pw);
+                file.WriteLine(user + "," + pw);
                 file.Close();
                 result = Constants.SecurityUserCreated;
             }

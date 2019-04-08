@@ -44,7 +44,7 @@ namespace ClassesTest
             string pathfileDATA = @"..//..//..//data//testDB2//profiles//" + profile + ".pf";
             using (StreamReader lineadef = File.OpenText(pathfileDATA))
             {
-                string linea = "sergio 123";
+                string linea = "sergio,123";
                 Assert.AreEqual(linea, lineadef.ReadLine());
             }
             
@@ -55,7 +55,7 @@ namespace ClassesTest
             db.Query(q2);
             using (StreamReader lineadef = File.OpenText(pathfileDATA))
             {
-                string linea2 = "lola 123";
+                string linea2 = "lola,123";
                 Assert.AreEqual(linea2, lineadef.ReadLine());
             }
 
