@@ -72,6 +72,8 @@ namespace ClassesTest
             Assert.AreEqual(true, existsTables);
             */
             Assert.AreNotSame(0, rutaCompleta.Length);
+
+            db.Query("DROP DATABASE " + dbname + ";");
             /*string fullPath = @"..//..//..//data//myDB//thisTable.data";
             StreamWriter file = new StreamWriter(fullPath, true);
             for (int i = 0; i < valuesToInsert.Length; i++)
