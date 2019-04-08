@@ -77,5 +77,7 @@ namespace MiniSQLEngine
         public const string regExTypeSecRevoke = @"(REVOKE)";
         public const string regExTypeSecAddUser = @"(ADD\s+USER)";
         public const string regExTypeSecDeleteUser = @"(DELETE\s+USER)";
+
+        public const string getTable = @"(\w+).sec";
     }
 }
