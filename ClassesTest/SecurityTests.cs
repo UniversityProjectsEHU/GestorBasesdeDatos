@@ -31,6 +31,71 @@ namespace ClassesTest
 
             db.Query("DROP DATABASE testDB;");
         }
+        [TestMethod]
+        public void TestGrant()
+        {
+            string user = "admin";
+            string pass = "admin";
+            string dbname = "myDBTest";
+            string queryCreate = "CREATE TABLE pTable (int id true, int age false);";
+            string queryDrop = "DROP DATABASE myDBTest";
+            string sec_priv = "myProfile";
+            string sec_priv2 = "myProfile2";
+            string priv_type = "SELECT";
+            string priv_type2 = "UPDATE";
+            string queryGrant = "GRANT SELECT ON pTable TO myProfile;";
+            string queryGrantUpdate = "GRANT " + priv_type2 + " ON pTable TO " + sec_priv + ";";
+            string queryProfileDoesNotExist = "GRANT " + priv_type + " ON pTable TO " + sec_priv2 + ";";
+            string queryCreateProfile = "CREATE SECURITY PROFILE myProfile;";
+            string path = @"..\\..\\..\\data\\" + dbname + "\\pTable.sec";
+            string linea = sec_priv + "," + priv_type;
+            string linea2 = sec_priv + "," + priv_type + "/" + priv_type2;
+            string profDoesNotExist = Constants.SecurityProfileDoesNotExist;
+            Database db = new Database(dbname, user, pass);
+            db.Query(queryCreate);
+            db.Query(queryCreateProfile);
+            db.Query(queryGrant);
+            db.Query(queryGrantUpdate);
+            String[] lineadef = System.IO.File.ReadAllLines(path);
+            string line = lineadef[1];
+            Assert.AreEqual(line, linea2);
+            Assert.AreEqual(db.Query(queryProfileDoesNotExist), profDoesNotExist);
+            db.Query(queryDrop);
+        }
+        [TestMethod]
+        public void TestRevoke()
+        {
+            string user = "admin";
+            string pass = "admin";
+            string dbname = "myDBTest";
+            string queryCreate = "CREATE TABLE pTable (int id true, int age false);";
+            string queryDrop = "DROP DATABASE myDBTest;";
+            string sec_priv = "myProfile";
+            string sec_priv2 = "myProfile2";
+            string priv_type = "SELECT";
+            string priv_type2 = "UPDATE";
+            string priv_type3 = "DELETE";
+            string queryGrantSelect = "GRANT "+ priv_type + " ON pTable TO " + sec_priv + ";";
+            string queryGrantUpdate = "GRANT " + priv_type2 + " ON pTable TO " + sec_priv + ";";
+            string queryRevoke = "REVOKE " + priv_type2 + " ON pTable TO " + sec_priv + ";";
+            string queryRevokeNotExists = "REVOKE " + priv_type3 + " ON pTable TO " + sec_priv + ";";
+            string queryCreateProfile = "CREATE SECURITY PROFILE myProfile;";
+            string path = @"..\\..\\..\\data\\" + dbname + "\\pTable.sec";
+            string linea = sec_priv + "," + priv_type;
+            string Error = "ERROR: ";
+            string RevDoesNotExist = Constants.SecurityPrivilegeRevoked;
+            Database db = new Database(dbname, user, pass);
+            db.Query(queryCreate);
+            db.Query(queryCreateProfile);
+            db.Query(queryGrantSelect);
+            db.Query(queryGrantUpdate);
+            db.Query(queryRevoke);
+            Assert.AreEqual(db.Query(queryRevokeNotExists), RevDoesNotExist);
+            String[] lineadef = System.IO.File.ReadAllLines(path);
+            string line = lineadef[1];
+            Assert.AreEqual(line, linea);
+            db.Query(queryDrop);
+        }
 
         [TestMethod]
         public void TestDeleteUser()
@@ -44,7 +109,7 @@ namespace ClassesTest
             string pathfileDATA = @"..//..//..//data//testDB2//profiles//" + profile + ".pf";
             using (StreamReader lineadef = File.OpenText(pathfileDATA))
             {
-                string linea = "sergio 123";
+                string linea = "sergio,123";
                 Assert.AreEqual(linea, lineadef.ReadLine());
             }
             
@@ -55,7 +120,7 @@ namespace ClassesTest
             db.Query(q2);
             using (StreamReader lineadef = File.OpenText(pathfileDATA))
             {
-                string linea2 = "lola 123";
+                string linea2 = "lola,123";
                 Assert.AreEqual(linea2, lineadef.ReadLine());
             }
 

@@ -38,6 +38,7 @@ namespace MiniSQLEngine
             {
                 result = Constants.SecurityProfileAlreadyExists;
             }
+
         }
     }
 }
