@@ -389,10 +389,12 @@ namespace MiniSQLEngine
 
     public class Database
     {
-        private string dbname;
-        private string user;
+        private static string dbname;
+        private static string user;
         private string res;
         private static string[] privileges;
+        private static List<TablePrivileges> userprivileges;
+        private static string profile="notfound";
         public Database(string name, string pUser,string pPass)
         {
             dbname = name;
@@ -411,6 +413,7 @@ namespace MiniSQLEngine
                     ClassCreateDatabase dbc = new ClassCreateDatabase(name);
                     dbc.Run(name);
                     privileges = new String[4] { "DELETE", "INSERT", "SELECT", "UPDATE" };
+                    
                     return res;
                 }
                 else
@@ -421,12 +424,14 @@ namespace MiniSQLEngine
             }
             else
             {
-                string pathfile = @"..//..//..//data//" + name + "//profiles";
+                DirectoryInfo di = new DirectoryInfo(@"..//..//..//data//" + dbname + "//profiles");
+                FileInfo[] files = di.GetFiles();
 
-                foreach (string file in Directory.EnumerateFiles(pathfile, "*.pf"))
+                foreach (var file in files)
                 {
                     string line;
-                    using (StreamReader sr = new StreamReader(file))
+                    string tempf = file.Name;
+                    using (StreamReader sr = new StreamReader(@"..//..//..//data//" + dbname + "//profiles//"+tempf+".pf"))
                     {
                         while ((line = sr.ReadLine()) != null)
                         {
@@ -434,6 +439,28 @@ namespace MiniSQLEngine
                             if (parts[0].Equals(pUser) && parts[1].Equals(pPassword))
                             {
                                 res = "UserOpen";
+                                profile = tempf;
+                                //We identify all the user's privileges
+                                string[] dirs = Directory.GetDirectories(@"..//..//..//data//"+dbname, "*.sec");
+                                int size = dirs.Length;
+                                userprivileges = new List<TablePrivileges>();
+                                foreach(string filesec in dirs)
+                                {
+                                    string[] temppriv = File.ReadAllLines(filesec);
+                                    foreach(string prfsec in temppriv)
+                                    {
+                                        string[] splittedprof = prfsec.Split(',');
+                                        if (splittedprof[0] == profile)
+                                        {
+                                            string[] privilegesprf = splittedprof[1].Split('/');
+                                            Match a=Regex.Match(filesec,Constants.getTable);
+                                            userprivileges.Add(new TablePrivileges(a.Groups[1].Value,privilegesprf));
+                                        }
+                                    }
+
+
+                                    
+                                }
                                 return res;
                             }
                         }
@@ -457,98 +484,36 @@ namespace MiniSQLEngine
         {
             return res;
         }
+        public string[] getPrivilegesAdmin()
+        {
+            return privileges;
+        }
+        public List<TablePrivileges> GetTablePrivileges()
+        {
+            return userprivileges;
+        }
+
         public string Query(string psentencia)
         {
             ClassParsing c = new ClassParsing();
-            //String eltipo = "";
-            //Match matchselect = Regex.Match(psentencia, Constants.regExTypeSelect);
-            //if (matchselect.Success)
-            //{
-            //    eltipo="SELECT";
-            //}
-            //Match matchinsert = Regex.Match(psentencia, Constants.regExTypeInsert);
-
-            //if (matchinsert.Success)
-            //{
-            //    eltipo = "INSERT";
-            //}
-
-            //Match matchDropTable = Regex.Match(psentencia, Constants.regExTypesDropTable);
-            //if (matchDropTable.Success)
-            //{
-            //    eltipo = "DROP TABLE";
-            //}
-
-            //Match matchCreateTable = Regex.Match(psentencia, Constants.regExTypesCreateTable);
-            //if (matchCreateTable.Success)
-            //{
-            //    eltipo = "CREATE TABLE";
-            //}
-
-            //Match matchcreatedatabase = Regex.Match(psentencia, Constants.regExTypesCreateDatabase);
-            //if (matchcreatedatabase.Success)
-            //{
-            //    eltipo = "CREATE DATABASE";
-            //}
-
-            //Match matchdropdatabase = Regex.Match(psentencia, Constants.regExTypesDropDatabase);
-            //if (matchdropdatabase.Success)
-            //{
-            //    eltipo = "DROP DATABASE";
-            //}
-
-            //Match matchdelete = Regex.Match(psentencia, Constants.regExTypeDelete);
-            //if (matchdelete.Success)
-            //{
-            //    eltipo = "DROP TAB";
-            //}
-            //Match matchupdate = Regex.Match(psentencia, Constants.regExTypeUpdate);
-
-            //if (matchupdate.Success)
-            //{
-            //    eltipo = "UPDATE";
-            //}
-
-            //Match matchSecAddUser = Regex.Match(psentencia, Constants.regExTypeSecAddUser);
-
-            //if (matchupdate.Success)
-            //{
-            //    eltipo = "ADD USER";
-            //}
-
-            //Match matchSecDeleteUser = Regex.Match(psentencia, Constants.regExTypeSecDeleteUser);
-
-            //if (matchupdate.Success)
-            //{
-            //    eltipo = "DELETE USER";
-            //}
-            //Match matchSecGrant = Regex.Match(psentencia, Constants.regExTypeSecGrant);
-
-            //if (matchupdate.Success)
-            //{
-            //    eltipo = "GRANT";
-            //}
-            //Match matchSecRevoke = Regex.Match(psentencia, Constants.regExTypeSecRevoke);
-
-            //if (matchupdate.Success)
-            //{
-            //    eltipo = "REVOKE";
-            //}
-            //Match matchSecCreateProfile = Regex.Match(psentencia, Constants.regExTypeSecCreateProfile);
-
-            //if (matchupdate.Success)
-            //{
-            //    eltipo = "CREATE PROFILE";
-            //}
-            //Match matSecDropProfile = Regex.Match(psentencia, Constants.regExTypeSecDropProfile);
-
-            //if (matchupdate.Success)
-            //{
-            //    eltipo = "DROP PROFILE";
-            //}
+            
 
 
             return c.Query(psentencia,dbname);
+        }
+    }
+    public class TablePrivileges
+    {
+        private string table_name;
+        private List<string> table_privileges;
+        public TablePrivileges(string table_name, string[] privileges)
+        {
+            table_privileges = new List<string>();
+            this.table_name = table_name;
+            foreach (string privilege in privileges)
+            {
+                table_privileges.Add(privilege);
+            }
         }
     }
 }
