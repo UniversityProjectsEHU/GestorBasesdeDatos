@@ -72,7 +72,7 @@ namespace MiniSQLDBConsole
             {            
                 string infor = "";
                 Stopwatch tiempo = Stopwatch.StartNew();
-                infor = db.Query(q);
+                infor = db.Query(q,db);
                 long mitiempo = tiempo.ElapsedMilliseconds;
                 Console.WriteLine(infor + " " + mitiempo + "ms");
 

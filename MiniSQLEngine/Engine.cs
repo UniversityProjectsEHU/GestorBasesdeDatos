@@ -29,12 +29,13 @@ namespace MiniSQLEngine
 
     public class ClassParsing
     {
-        public string Query(string psentencia, string dbname)
+        public string Query(string psentencia, string dbname,Database pDB)
         {
             try
             {
                 Query query = Parse(psentencia);
                 string a = query.getClass();
+                
                 if (a.Equals("select"))
                 {
                     query.Run(dbname);
@@ -316,9 +317,11 @@ namespace MiniSQLEngine
                user = matchdropdatabase2.Groups[1].Value;
                pass = matchdropdatabase2.Groups[2].Value;
                prof = matchdropdatabase2.Groups[3].Value;
+               SecAddUser query = new SecAddUser(user, pass, prof);
+                return query;
             }
-            SecAddUser query = new SecAddUser(user,pass,prof);
-            return query;
+            return null;
+           
         }
         public SecDeleteUser ManageSecDeleteUser(string pQuery)
         {
@@ -386,6 +389,7 @@ namespace MiniSQLEngine
             return query;
         }
     }
+    
 
     public class Database
     {
@@ -400,11 +404,17 @@ namespace MiniSQLEngine
             dbname = name;
             user = pUser;
             res = init(name, pUser, pPass);
+            dbname = name;
+            
 
         }
         public static String init(string name, string pUser, string pPassword)
         {
             string res;
+            if (pUser == "admin" && pPassword == "admin")
+            {
+                privileges = new String[4] { "DELETE", "INSERT", "SELECT", "UPDATE" };
+            }
             if (!Directory.Exists("..//..//..//data//" + name))
             {
                 if (pUser.Equals("admin") && pPassword.Equals("admin"))
@@ -412,7 +422,7 @@ namespace MiniSQLEngine
                     res = "adminCreateDB";
                     ClassCreateDatabase dbc = new ClassCreateDatabase(name);
                     dbc.Run(name);
-                    privileges = new String[4] { "DELETE", "INSERT", "SELECT", "UPDATE" };
+                    
                     
                     return res;
                 }
@@ -441,32 +451,37 @@ namespace MiniSQLEngine
                                 res = "UserOpen";
                                 profile = tempf;
                                 //We identify all the user's privileges
-                                string[] dirs = Directory.GetDirectories(@"..//..//..//data//"+dbname, "*.sec");
+                                
+                                string[] dirs = Directory.GetFiles(@"..//..//..//data//"+dbname);
                                 int size = dirs.Length;
                                 userprivileges = new List<TablePrivileges>();
-                                foreach(string filesec in dirs)
+                                foreach (string filesec in dirs)
                                 {
+                                    if (filesec.Contains(".sec"))
+                                    {
+
+                                    
                                     string[] temppriv = File.ReadAllLines(filesec);
-                                    foreach(string prfsec in temppriv)
+                                    foreach (string prfsec in temppriv)
                                     {
                                         string[] splittedprof = prfsec.Split(',');
                                         if (splittedprof[0] == profile)
                                         {
                                             string[] privilegesprf = splittedprof[1].Split('/');
-                                            Match a=Regex.Match(filesec,Constants.getTable);
-                                            userprivileges.Add(new TablePrivileges(a.Groups[1].Value,privilegesprf));
+                                            Match a = Regex.Match(filesec, Constants.getTable);
+                                            userprivileges.Add(new TablePrivileges(a.Groups[1].Value, privilegesprf));
                                         }
                                     }
 
 
-                                    
+                                }
                                 }
                                 return res;
                             }
                         }
                     }
                 }
-                res = "notUserOrPassw";
+                res = "Incorrect Login";
                 return res;
             }
         }
@@ -493,13 +508,13 @@ namespace MiniSQLEngine
             return userprivileges;
         }
 
-        public string Query(string psentencia)
+        public string Query(string psentencia,Database pDB)
         {
             ClassParsing c = new ClassParsing();
             
 
 
-            return c.Query(psentencia,dbname);
+            return c.Query(psentencia,dbname,pDB);
         }
     }
     public class TablePrivileges
