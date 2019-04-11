@@ -419,16 +419,16 @@ namespace MiniSQLEngine
             {
                 if (pUser.Equals("admin") && pPassword.Equals("admin"))
                 {
-                    res = "adminCreateDB";
+                    res = Constants.CreateDatabaseSuccess;
                     ClassCreateDatabase dbc = new ClassCreateDatabase(name);
                     dbc.Run(name);
                     
                     
                     return res;
                 }
-                else
+                else 
                 {
-                    res = "notAdmin";
+                    res = Constants.SecurityNotSufficientPrivileges + "Not Admin";
                     return res;
                 }
             }
@@ -448,7 +448,7 @@ namespace MiniSQLEngine
                             string[] parts = line.Split(',');
                             if (parts[0].Equals(pUser) && parts[1].Equals(pPassword))
                             {
-                                res = "UserOpen";
+                                res = Constants.OpenDatabaseSuccess;
                                 profile = tempf;
                                 //We identify all the user's privileges
                                 
@@ -481,7 +481,7 @@ namespace MiniSQLEngine
                         }
                     }
                 }
-                res = "Incorrect Login";
+                res = Constants.SecurityIncorrectLogin; 
                 return res;
             }
         }

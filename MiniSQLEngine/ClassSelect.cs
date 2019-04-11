@@ -84,6 +84,7 @@ namespace MiniSQLEngine
             if (!(File.Exists("..//..//..//data//" + dbname + "//" + table + ".def")))
             {
                 result = Constants.TableDoesNotExist;
+                return;
             }
             else
             {

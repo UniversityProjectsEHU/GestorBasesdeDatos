@@ -14,62 +14,80 @@ namespace MainConsole
     {
         static void Main(string[] args)
         {
-            String[] lineas = System.IO.File.ReadAllLines("..//..//..//data//TesterInput.txt");
-            string user = "admin";
-            string pass = "admin";
-            Database db = new Database("usuarios1",user,pass);
-            db.Query("CREATE DATABASE usuarios1;");
+            String[] lineas = System.IO.File.ReadAllLines("..//..//..//data//TesterInput2.txt");
+            String[] datosBase = lineas[0].Split(',');
+            Database db = new Database(datosBase[0], datosBase[1], datosBase[2]);
             int contador = 1;
             Console.WriteLine("# Test " + contador);
+            Console.WriteLine(db.getRes());
             string infor = "";
             List<long> tiempos = new List<long>();
             long totaltime = 0;
             int cuantas = lineas.Length;
-            int contar = 0;
+            int contarLineas = 0;
             foreach (string linea in lineas)
             {
-                contar = contar + 1;
-                if (linea != "" && contar != cuantas)
+                if (contarLineas == 0)
                 {
-                    Stopwatch tiempo = Stopwatch.StartNew();
-                    infor = db.Query(linea);
-                    long mitiempo = tiempo.ElapsedMilliseconds;
-                    Console.WriteLine(infor + " " + mitiempo + "ms");
-                    tiempos.Add(mitiempo);
-                }
-                else if (linea != "" && contar == cuantas)
-                {
-                    Stopwatch tiempo = Stopwatch.StartNew();
-                    infor = db.Query(linea);
-                    long mitiempo = tiempo.ElapsedMilliseconds;
-                    Console.WriteLine(infor + " " + mitiempo + "ms");
-                    tiempos.Add(mitiempo);
-                    for (int i = 0; i < tiempos.Count; i++)
-                    {
-                        long eltime = tiempos.ElementAt(i);
-                        totaltime = totaltime + eltime;
-                    }
-                    Console.WriteLine("TOTAL TIME: " + totaltime);
-                    tiempos.Clear();
-                    totaltime = 0;
+                    contarLineas = contarLineas + 1;
                 }
                 else
                 {
-                    for (int i = 0; i < tiempos.Count; i++)
+                    contarLineas = contarLineas + 1;
+                    if (linea.Contains(";"))
                     {
-                        long eltime = tiempos.ElementAt(i);
-                        totaltime = totaltime + eltime;
+                        if (linea != "" && contarLineas != cuantas)
+                        {
+                            Stopwatch tiempo = Stopwatch.StartNew();
+                            infor = db.Query(linea);
+                            long mitiempo = tiempo.ElapsedMilliseconds;
+                            Console.WriteLine(infor + " " + mitiempo + "ms");
+                            tiempos.Add(mitiempo);
+                        }
+                        else if (linea != "" && contarLineas == cuantas)
+                        {
+                            Stopwatch tiempo = Stopwatch.StartNew();
+                            infor = db.Query(linea);
+                            long mitiempo = tiempo.ElapsedMilliseconds;
+                            Console.WriteLine(infor + " " + mitiempo + "ms");
+                            tiempos.Add(mitiempo);
+                            for (int i = 0; i < tiempos.Count; i++)
+                            {
+                                long eltime = tiempos.ElementAt(i);
+                                totaltime = totaltime + eltime;
+                            }
+                            Console.WriteLine("TOTAL TIME: " + totaltime);
+                            tiempos.Clear();
+                            totaltime = 0;
+                        }
                     }
-                    Console.WriteLine("TOTAL TIME: " + totaltime);
-                    contador = contador + 1;
-                    Console.WriteLine("");
-                    Console.WriteLine("# Test " + contador);
-                    string dbnombre = "usuarios" + contador;
-                    
-                    db = new Database(dbnombre,user,pass);
-                    db.Query("CREATE DATABASE " + dbnombre + ";");
-                    tiempos.Clear();
-                    totaltime = 0;
+                    else
+                    {
+                        if (linea == "")
+                        {
+                            for (int i = 0; i < tiempos.Count; i++)
+                            {
+                                long eltime = tiempos.ElementAt(i);
+                                totaltime = totaltime + eltime;
+                            }
+                            Console.WriteLine("TOTAL TIME: " + totaltime);
+                            contador = contador + 1;
+                            Console.WriteLine("");
+                            Console.WriteLine("# Test " + contador);
+
+                            //String lineaAbrir
+                            //db = new Database(dbnombre,user,pass);
+                            //db.Query("CREATE DATABASE " + dbnombre + ";");
+                            tiempos.Clear();
+                            totaltime = 0;
+                        }
+                        else
+                        {
+                            String[] datosBase2 = linea.Split(',');
+                            db = new Database(datosBase2[0], datosBase2[1], datosBase2[2]);
+                            Console.WriteLine(db.getRes());
+                        }
+                    }
                 }
             }
             Console.ReadKey(true);
