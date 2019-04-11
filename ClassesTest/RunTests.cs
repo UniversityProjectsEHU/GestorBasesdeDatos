@@ -58,28 +58,61 @@ namespace ClassesTest
             string[] values = { "One String true", "Two String false", "Three String false", "Caramba String false" };
             string[] valuesToInsert = { "One", "Two", "Three", "Caramba" };
             //string pathfileDEF = @"..//..//..//data//" + dbname + "//" + myTable + ".def";
-            string rutaCompleta = @"..//..//..//data//" + dbname + "//" + myTable + ".data";
+            string pathfileDATA = @"..//..//..//data//" + dbname + "//" + myTable + ".data";
             /*string queryCreateDB = @"CREATE DATABASE myDB;";
             string queryCreateTable = @"CREATE TABLE myTable (column1 int true,column2 string false,column3 int false);";
             string queryInsert = @"INSERT INTO table1 VALUES (10,abc,8);";
             */
             Database db = new Database(dbname, user, pass);
             db.Query("CREATE TABLE " + myTable + "(" + values[0] + "," + values[1] + "," + values[2] + "," + values[3] + ");");
-            db.Query("INSERT INTO " + myTable + " VALUES " + "(" + valuesToInsert[0] + "," + valuesToInsert[1] + valuesToInsert[2] + "," + valuesToInsert[3]+ ");");
+            db.Query("INSERT INTO " + myTable + " VALUES " + "(" + valuesToInsert[0] + "," + valuesToInsert[1] + "," + valuesToInsert[2] + "," + valuesToInsert[3]+ ");");
             bool exists = Directory.Exists(@"..//..//..//data//" + dbname);
             Assert.AreEqual(true, exists);
             /*bool existsTables = File.Exists(@"..//..//..//data//"+dbname+"//"+myTable+".data");
             Assert.AreEqual(true, existsTables);
             */
-            Assert.AreNotSame(0, rutaCompleta.Length);
+            String[] lines = System.IO.File.ReadAllLines(pathfileDATA);
+            Assert.AreEqual(1, lines.Length);
+            Assert.AreEqual("One,Two,Three,Caramba", lines[0]);
 
-            db.Query("DROP DATABASE " + dbname + ";");
+
             /*string fullPath = @"..//..//..//data//myDB//thisTable.data";
             StreamWriter file = new StreamWriter(fullPath, true);
             for (int i = 0; i < valuesToInsert.Length; i++)
             {
                 file.WriteLine(valuesToInsert[i]);
             }*/
+            //Delete .data
+            String delete = "DELETE FROM thisTable WHERE One=One;";
+            db.Query(delete);
+
+            //Create profile
+            string CreateProfile = "CREATE SECURITY PROFILE User;";
+            db.Query(CreateProfile);
+            //Add User
+            string user1 = "user1";
+            string passUser = "1234";
+            string addUser = "ADD USER (user1,1234,User);";
+            db.Query(addUser);
+            //Open DB
+            Database db1 = new Database(dbname, user1, passUser);
+            //Insert doesn´t work
+            string Insert = "INSERT INTO thisTable VALUES (a,a,a,a);";
+            db1.Query(Insert);
+            String[] lines2 = System.IO.File.ReadAllLines(pathfileDATA);
+            Assert.AreEqual(0, lines2.Length);
+
+            //Grant
+            string Grant = "GRANT INSERT ON thisTable TO User;";
+            db.Query(Grant);
+            //Insert work
+            db1.Query(Insert);
+            String[] lines3 = System.IO.File.ReadAllLines(pathfileDATA);
+            Assert.AreEqual(1, lines3.Length);
+            Assert.AreEqual("a,a,a,a", lines3[0]);
+
+            db.Query("DROP DATABASE " + dbname + ";");
+
         }
         [TestMethod]
         public void TestUpdate()
