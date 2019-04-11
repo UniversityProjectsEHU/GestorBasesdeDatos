@@ -298,6 +298,45 @@ namespace ClassesTest
             Assert.AreEqual(false, File.Exists(path));
             db.Query(queryDropDB);
         }
+        [TestMethod]
+        public void testPrivileges()
+        {
+            string dbname = "dataBaseTest";
+            string user = "admin";
+            string pass = "admin";
+            //Create a new DB using admin
+            Database db = new Database(dbname, user, pass);
+            string queryDrop = "DROP DATABASE " + dbname + ";";
+            string querySecProfile = "CREATE SECURITY PROFILE myUser;";
+            db.Query(querySecProfile);
+            string addUser = "ADD USER (Mike, 001, myUser);";
+            db.Query(addUser);
+            string queryCreate = "CREATE TABLE pTable (id int true,name string false,age int false);";
+            db.Query(queryCreate);
+            string queryInsert = "INSERT INTO pTable VALUES (1,Alejandra,37);";
+            string queryInsert2 = "INSERT INTO pTable VALUES (2,Paco,60);";
+            db.Query(queryInsert);
+            db.Query(queryInsert2);
+            Database db1 = new Database("dataBaseTest", "Mike", "001");
+            string priv_type2 = "UPDATE";
+            string queryGrant = "GRANT SELECT ON pTable TO myUser;";
+            string queryGrantUpdate = "GRANT " + priv_type2 + " ON pTable TO myUser;";
+            db1.Query(queryGrant);
+            db1.Query(queryGrantUpdate);
+            string querySelect = "SELECT id,name FROM pTable WHERE age<50;";
+            string queryMessageSelect = "The result for the Query '" + querySelect + "' is: id 1 name Alejandra;";
+            Assert.AreEqual(db1.Query(querySelect), queryMessageSelect);
+            string queryUpdate = "UPDATE pTable SET id=4 WHERE name=Paco;";
+            db1.Query(queryUpdate);
+            String[] lineas = System.IO.File.ReadAllLines("..//..//..//data//" + dbname + "//pTable.data");
+            string actual = "4,Paco,60";
+            Assert.AreEqual(lineas[1], actual);
+            string queryRevoke = "REVOKE SELECT ON pTable TO myUser;";
+            string noQuerySelect = "SELECT id,name FROM pTable WHERE age>50;";
+            db.Query(queryRevoke);
+            Assert.AreEqual(db.Query(noQuerySelect),Constants.SecurityNotSufficientPrivileges);
+            db.Query(queryDrop);
+        }
     }
 }
 
