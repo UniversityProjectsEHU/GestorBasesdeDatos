@@ -173,8 +173,6 @@ namespace ClassesTest
             db.Query("INSERT INTO t1 VALUES (Navarro,5);");
             db.Query("INSERT INTO t1 VALUES (Hernando,2);");
             db.Query("INSERT INTO t1 VALUES (Josu,4);");
-
-
            
 
             db.Query("DELETE FROM t1 WHERE edad>3;");
@@ -204,6 +202,39 @@ namespace ClassesTest
             //Testing Delete with <
             Assert.AreEqual(1, lines3.Length);
             Assert.AreEqual(insert4[0] + "," + insert4[1], lines3[0]);
+
+            //Testing security
+            db.Query("DELETE FROM t1 WHERE edad=2;");
+            db.Query("INSERT INTO t1 VALUES (Test,1);");
+            db.Query("INSERT INTO t1 VALUES (Test2,3);");
+            db.Query("INSERT INTO t1 VALUES (Test3,5);");
+            db.Query("CREATE SECURITY PROFILE usertest;");
+            db.Query("ADD USER (test, test, usertest);");
+
+            db = null;
+            db = new Database(myDB, "test", "test");
+            db.Query("DELETE FROM t1 WHERE edad>3;");
+            String[] lines4 = System.IO.File.ReadAllLines(pathfileDATA);
+            //Testing nothing is deleted
+            Assert.AreEqual(3, lines4.Length);
+            Assert.AreEqual("Test,1", lines4[0]);
+            Assert.AreEqual("Test2,2", lines4[1]);
+            Assert.AreEqual("Test3,5", lines4[2]);
+
+            //Going back to admin to grant 'usertest' delete privileges
+            db = null;
+            db = new Database(myDB, "admin", "admin");
+            db.Query("GRANT DELETE ON t1 TO usertest;");
+
+            //Testing if 'usertest' can delete now
+            db = null;
+            db = new Database(myDB, "test", "test");
+            db.Query("DELETE FROM t1 WHERE edad>3;");
+            String[] lines5 = System.IO.File.ReadAllLines(pathfileDATA);
+            Assert.AreEqual(2, lines5.Length);
+            Assert.AreEqual("Test,1", lines5[0]);
+            Assert.AreEqual("Test2,2", lines5[1]);
+
             db.Query("DROP DATABASE" + myDB +";");
         }
         [TestMethod]
