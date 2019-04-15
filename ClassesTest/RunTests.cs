@@ -28,21 +28,21 @@ namespace ClassesTest
             string[] values = new string[2];
             values[0] = "column1 string true";
             values[1] = "column2 int false";
-            db.Query("CREATE TABLE " + myTable + "(" + values[0] + "," + values[1] + ");");
+            db.Query("CREATE TABLE " + myTable + "(" + values[0] + "," + values[1] + ");",db);
             //Testing CreateTable
             bool existsDef = File.Exists(@"..//..//..//data//" + myDB + "//myTable.def");
             Assert.AreEqual(true, existsDef);
             bool existsData = File.Exists(@"..//..//..//data//" + myDB + "//myTable.data");
             Assert.AreEqual(true, existsData);
 
-            db.Query("DROP TABLE " + myTable + ";");
+            db.Query("DROP TABLE " + myTable + ";", db);
             //Testing DropTable
             bool existsDefDrop = File.Exists(@"..//..//..//data//" + myDB + "//myTable.def");
             Assert.AreEqual(false, existsDefDrop);
             bool existsDataDrop = File.Exists(@"..//..//..//data//" + myDB + "//myTable.data");
             Assert.AreEqual(false, existsDataDrop);
 
-            db.Query("DROP DATABASE " + myDB +";");
+            db.Query("DROP DATABASE " + myDB +";", db);
             //Testing DropDatabase
             bool existsDrop = Directory.Exists(@"..//..//..//data//" + myDB + "");
             Assert.AreEqual(false, existsDrop);
@@ -64,8 +64,8 @@ namespace ClassesTest
             string queryInsert = @"INSERT INTO table1 VALUES (10,abc,8);";
             */
             Database db = new Database(dbname, user, pass);
-            db.Query("CREATE TABLE " + myTable + "(" + values[0] + "," + values[1] + "," + values[2] + "," + values[3] + ");");
-            db.Query("INSERT INTO " + myTable + " VALUES " + "(" + valuesToInsert[0] + "," + valuesToInsert[1] + "," + valuesToInsert[2] + "," + valuesToInsert[3]+ ");");
+            db.Query("CREATE TABLE " + myTable + "(" + values[0] + "," + values[1] + "," + values[2] + "," + values[3] + ");", db);
+            db.Query("INSERT INTO " + myTable + " VALUES " + "(" + valuesToInsert[0] + "," + valuesToInsert[1] + "," + valuesToInsert[2] + "," + valuesToInsert[3]+ ");", db);
             bool exists = Directory.Exists(@"..//..//..//data//" + dbname);
             Assert.AreEqual(true, exists);
             /*bool existsTables = File.Exists(@"..//..//..//data//"+dbname+"//"+myTable+".data");
@@ -84,34 +84,34 @@ namespace ClassesTest
             }*/
             //Delete .data
             String delete = "DELETE FROM thisTable WHERE One=One;";
-            db.Query(delete);
+            db.Query(delete, db);
 
             //Create profile
             string CreateProfile = "CREATE SECURITY PROFILE User;";
-            db.Query(CreateProfile);
+            db.Query(CreateProfile, db);
             //Add User
             string user1 = "user1";
             string passUser = "1234";
             string addUser = "ADD USER (user1,1234,User);";
-            db.Query(addUser);
+            db.Query(addUser, db);
             //Open DB
             Database db1 = new Database(dbname, user1, passUser);
             //Insert doesn´t work
             string Insert = "INSERT INTO thisTable VALUES (a,a,a,a);";
-            db1.Query(Insert);
+            db1.Query(Insert, db1);
             String[] lines2 = System.IO.File.ReadAllLines(pathfileDATA);
             Assert.AreEqual(0, lines2.Length);
 
             //Grant
             string Grant = "GRANT INSERT ON thisTable TO User;";
-            db.Query(Grant);
+            db.Query(Grant, db);
             //Insert work
-            db1.Query(Insert);
+            db1.Query(Insert, db1);
             String[] lines3 = System.IO.File.ReadAllLines(pathfileDATA);
             Assert.AreEqual(1, lines3.Length);
             Assert.AreEqual("a,a,a,a", lines3[0]);
 
-            db.Query("DROP DATABASE " + dbname + ";");
+            db.Query("DROP DATABASE " + dbname + ";", db);
 
         }
         [TestMethod]
@@ -123,14 +123,14 @@ namespace ClassesTest
             Database db = new Database(myDB, "admin", "admin");
             //Table
             String Table = "CREATE TABLE tUpdate(column1 string true,column2 int false);";
-            db.Query(Table);
+            db.Query(Table, db);
             //Insert
             String Insert = "INSERT INTO tUpdate VALUES (hola,7);";
-            db.Query(Insert);
+            db.Query(Insert, db);
 
             //Update 1
             string Update1 = "UPDATE tUpdate SET column1=lola,column2=5 WHERE column1=hola;";
-            db.Query(Update1);
+            db.Query(Update1, db);
             //Testing update 1
             String[] lineas = System.IO.File.ReadAllLines("..//..//..//data//" + myDB + "//" + myTable + ".data");
             string actual = "lola,5";
@@ -138,7 +138,7 @@ namespace ClassesTest
 
             //Update 2
             string Update2 = "UPDATE tUpdate SET column1=antonio,column2=7 WHERE column2>3;";
-            db.Query(Update2);
+            db.Query(Update2, db);
             
             //Testing update 2
             String[] lineas2 = System.IO.File.ReadAllLines("..//..//..//data//" + myDB + "//" + myTable + ".data");
@@ -147,7 +147,7 @@ namespace ClassesTest
 
             ////Update 3
             string Update3 = "UPDATE tUpdate SET column1=francisco,column2=9 WHERE column2<20;";
-            db.Query(Update3);
+            db.Query(Update3, db);
             
             //Testing update 3
             String[] lineas3 = System.IO.File.ReadAllLines("..//..//..//data//" + myDB + "//" + myTable + ".data");
@@ -156,14 +156,14 @@ namespace ClassesTest
 
             ////Update 2
             string Update4 = "UPDATE tUpdate SET column1=ana WHERE column2=9;";
-            db.Query(Update4);
+            db.Query(Update4, db);
            
             //Testing update 2
             String[] lineas4 = System.IO.File.ReadAllLines("..//..//..//data//" + myDB + "//" + myTable + ".data");
             string actual4 = "ana,9";
             Assert.AreEqual(lineas4[0], actual4);
 
-            db.Query("DROP DATABASE" + myDB + ";");
+            db.Query("DROP DATABASE" + myDB + ";", db);
 
         }
 
