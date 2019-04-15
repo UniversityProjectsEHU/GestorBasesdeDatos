@@ -31,6 +31,7 @@ namespace MiniSQLEngine
     {
         public string Query(string psentencia, string dbname,Database pDB)
         {
+            Boolean existTablePrivileges = false;
             try
             {
                 Query query = Parse(psentencia);
@@ -43,7 +44,7 @@ namespace MiniSQLEngine
                 }
                 else if (a.Equals("select"))
                 {
-                    Match matchtableselect = Regex.Match(psentencia, @"SELECT\s+\w+\s+FROM\s+(\w+)");
+                    Match matchtableselect = Regex.Match(psentencia, @"SELECT\s+.+\s+FROM\s+(\w+)");
                     string table = matchtableselect.Groups[1].Value;
                     List<TablePrivileges> userprivileges = pDB.GetTablePrivileges();
                     foreach (TablePrivileges tableprv in userprivileges)
@@ -52,6 +53,7 @@ namespace MiniSQLEngine
                         {
                             if (tableprv.getTablePrivileges().Contains("SELECT"))
                             {
+                                existTablePrivileges = true;
                                 query.Run(dbname);
                                 ClassSelect q2 = (ClassSelect)query;
                                 return q2.getResult();
@@ -79,6 +81,7 @@ namespace MiniSQLEngine
                         {
                             if (tableprv.getTablePrivileges().Contains("DELETE"))
                             {
+                                existTablePrivileges = true;
                                 query.Run(dbname);
                                 ClassDelete q2 = (ClassDelete)query;
                                 return q2.getResult();
@@ -105,6 +108,7 @@ namespace MiniSQLEngine
                         {
                             if (tableprv.getTablePrivileges().Contains("INSERT"))
                             {
+                                existTablePrivileges = true;
                                 query.Run(dbname);
                                 ClassInsert q2 = (ClassInsert)query;
                                 return q2.getResult();
@@ -131,6 +135,7 @@ namespace MiniSQLEngine
                         {
                             if (tableprv.getTablePrivileges().Contains("UPDATE"))
                             {
+                                existTablePrivileges = true;
                                 query.Run(dbname);
                                 ClassUpdate q2 = (ClassUpdate)query;
                                 return q2.getResult();
@@ -145,8 +150,11 @@ namespace MiniSQLEngine
 
 
                 }
-                
-               
+
+                if (!existTablePrivileges)
+                {
+                    return Constants.SecurityNotSufficientPrivileges;
+                }
                 return null;
             }
             catch(Exception e)
