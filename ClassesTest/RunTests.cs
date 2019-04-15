@@ -92,21 +92,24 @@ namespace ClassesTest
             //Add User
             string user1 = "user1";
             string passUser = "1234";
-            string addUser = "ADD USER (user1,1234,User);";
+            string addUser = "ADD USER ('user1','1234',User);";
             db.Query(addUser, db);
             //Open DB
-            Database db1 = new Database(dbname, user1, passUser);
+            db = null;
+            db = new Database(dbname, user1, passUser);
             //Insert doesn´t work
             string Insert = "INSERT INTO thisTable VALUES (a,a,a,a);";
-            db1.Query(Insert, db1);
+            db.Query(Insert, db);
             String[] lines2 = System.IO.File.ReadAllLines(pathfileDATA);
             Assert.AreEqual(0, lines2.Length);
-
+            db = new Database(dbname, "admin", "admin");
             //Grant
             string Grant = "GRANT INSERT ON thisTable TO User;";
             db.Query(Grant, db);
             //Insert work
-            db1.Query(Insert, db1);
+            db = null;
+            db = new Database(dbname, user1, passUser);
+            db.Query(Insert, db);
             String[] lines3 = System.IO.File.ReadAllLines(pathfileDATA);
             Assert.AreEqual(1, lines3.Length);
             Assert.AreEqual("a,a,a,a", lines3[0]);
@@ -242,7 +245,7 @@ namespace ClassesTest
             db.Query("INSERT INTO t1 VALUES (Test2,3);",db);
             db.Query("INSERT INTO t1 VALUES (Test3,5);",db);
             db.Query("CREATE SECURITY PROFILE usertest;",db);
-            db.Query("ADD USER (test, test, usertest);",db);
+            db.Query("ADD USER ('test', 'test', usertest);", db);
 
             db = null;
             db = new Database(myDB, "test", "test");
@@ -251,7 +254,7 @@ namespace ClassesTest
             //Testing nothing is deleted
             Assert.AreEqual(3, lines4.Length);
             Assert.AreEqual("Test,1", lines4[0]);
-            Assert.AreEqual("Test2,2", lines4[1]);
+            Assert.AreEqual("Test2,3", lines4[1]);
             Assert.AreEqual("Test3,5", lines4[2]);
 
             //Going back to admin to grant 'usertest' delete privileges
@@ -266,7 +269,7 @@ namespace ClassesTest
             String[] lines5 = System.IO.File.ReadAllLines(pathfileDATA);
             Assert.AreEqual(2, lines5.Length);
             Assert.AreEqual("Test,1", lines5[0]);
-            Assert.AreEqual("Test2,2", lines5[1]);
+            Assert.AreEqual("Test2,3", lines5[1]);
 
             db.Query("DROP DATABASE" + myDB +";",db);
         }
