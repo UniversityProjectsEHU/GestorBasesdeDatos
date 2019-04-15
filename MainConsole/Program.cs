@@ -39,7 +39,7 @@ namespace MainConsole
                         if (linea != "" && contarLineas != cuantas)
                         {
                             Stopwatch tiempo = Stopwatch.StartNew();
-                            infor = db.Query(linea);
+                            infor = db.Query(linea,db);
                             long mitiempo = tiempo.ElapsedMilliseconds;
                             Console.WriteLine(infor + " " + mitiempo + "ms");
                             tiempos.Add(mitiempo);
@@ -47,7 +47,7 @@ namespace MainConsole
                         else if (linea != "" && contarLineas == cuantas)
                         {
                             Stopwatch tiempo = Stopwatch.StartNew();
-                            infor = db.Query(linea);
+                            infor = db.Query(linea, db);
                             long mitiempo = tiempo.ElapsedMilliseconds;
                             Console.WriteLine(infor + " " + mitiempo + "ms");
                             tiempos.Add(mitiempo);
