@@ -113,7 +113,7 @@ namespace ClassesTest
             String[] lines3 = System.IO.File.ReadAllLines(pathfileDATA);
             Assert.AreEqual(1, lines3.Length);
             Assert.AreEqual("a,a,a,a", lines3[0]);
-
+            db = new Database(dbname, user, pass);
             db.Query("DROP DATABASE " + dbname + ";", db);
 
         }
@@ -166,6 +166,26 @@ namespace ClassesTest
             string actual4 = "ana,9";
             Assert.AreEqual(lineas4[0], actual4);
 
+            db.Query("CREATE SECURITY PROFILE usertest;", db);
+            db.Query("ADD USER ('usr', 'pss', usertest);", db);
+            db.Query("CREATE SECURITY PROFILE usertest2;", db);
+            db.Query("ADD USER ('test', 'test', usertest2);", db);
+            db.Query("GRANT UPDATE ON tUpdate TO usertest;", db);
+            db = null;
+            db = new Database(myDB, "usr", "pss");
+            string Update5 = "UPDATE tUpdate SET column1=paco,column2=7 WHERE column2=9;";
+            db.Query(Update5, db);
+            String[] lineas5 = System.IO.File.ReadAllLines("..//..//..//data//" + myDB + "//" + myTable + ".data");
+            string actual5 = "paco,7";
+            Assert.AreEqual(lineas5[0], actual5);
+            db = null;
+            db = new Database(myDB, "test", "test");
+            string Update6 = "UPDATE tUpdate SET column1=josu,column2=1 WHERE column2=7;";
+            db.Query(Update6, db);
+            String[] lineas6 = System.IO.File.ReadAllLines("..//..//..//data//" + myDB + "//" + myTable + ".data");
+            string actual6= "josu,1";
+            Assert.AreNotEqual(lineas6[0], actual6);
+            db = new Database(myDB, "admin", "admin");
             db.Query("DROP DATABASE" + myDB + ";", db);
 
         }
@@ -270,7 +290,7 @@ namespace ClassesTest
             Assert.AreEqual(2, lines5.Length);
             Assert.AreEqual("Test,1", lines5[0]);
             Assert.AreEqual("Test2,3", lines5[1]);
-
+            db = new Database(myDB, "admin", "admin");
             db.Query("DROP DATABASE" + myDB +";",db);
         }
         [TestMethod]
