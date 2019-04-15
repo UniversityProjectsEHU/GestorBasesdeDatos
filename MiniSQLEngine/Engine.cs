@@ -35,19 +35,119 @@ namespace MiniSQLEngine
             {
                 Query query = Parse(psentencia);
                 string a = query.getClass();
-                
-                if (a.Equals("select"))
-                {
-                    query.Run(dbname);
-                    ClassSelect q2 = (ClassSelect)query;
-                    return q2.getResult();
-                }
-                else
+                 if (pDB.getUser() == "admin")
                 {
 
                     query.Run(dbname);
                     return query.getResult();
                 }
+                else if (a.Equals("select"))
+                {
+                    Match matchtableselect = Regex.Match(psentencia, @"SELECT\s+\w+\s+FROM\s+(\w+)");
+                    string table = matchtableselect.Groups[1].Value;
+                    List<TablePrivileges> userprivileges = pDB.GetTablePrivileges();
+                    foreach (TablePrivileges tableprv in userprivileges)
+                    {
+                        if (tableprv.getTableName() == table)
+                        {
+                            if (tableprv.getTablePrivileges().Contains("SELECT"))
+                            {
+                                query.Run(dbname);
+                                ClassSelect q2 = (ClassSelect)query;
+                                return q2.getResult();
+                            }
+                            else
+                            {
+                                return Constants.SecurityNotSufficientPrivileges;
+                            }
+                        }
+                      
+                    }
+
+
+                   
+                }
+
+                else if (a.Equals("delete"))
+                {
+                    Match matchtableselect = Regex.Match(psentencia, @"DELETE\s+FROM\s+(\w+)");
+                    string table = matchtableselect.Groups[1].Value;
+                    List<TablePrivileges> userprivileges = pDB.GetTablePrivileges();
+                    foreach (TablePrivileges tableprv in userprivileges)
+                    {
+                        if (tableprv.getTableName() == table)
+                        {
+                            if (tableprv.getTablePrivileges().Contains("DELETE"))
+                            {
+                                query.Run(dbname);
+                                ClassDelete q2 = (ClassDelete)query;
+                                return q2.getResult();
+                            }
+                            else
+                            {
+                                return Constants.SecurityNotSufficientPrivileges;
+                            }
+                        }
+                       
+                    }
+
+
+                }
+
+                else if (a.Equals("insert"))
+                {
+                    Match matchtableselect = Regex.Match(psentencia, @"INSERT\s+INTO\s+(\w+)");
+                    string table = matchtableselect.Groups[1].Value;
+                    List<TablePrivileges> userprivileges = pDB.GetTablePrivileges();
+                    foreach (TablePrivileges tableprv in userprivileges)
+                    {
+                        if (tableprv.getTableName() == table)
+                        {
+                            if (tableprv.getTablePrivileges().Contains("INSERT"))
+                            {
+                                query.Run(dbname);
+                                ClassInsert q2 = (ClassInsert)query;
+                                return q2.getResult();
+                            }
+                            else
+                            {
+                                return Constants.SecurityNotSufficientPrivileges;
+                            }
+                        }
+                       
+                    }
+
+
+                }
+
+                else if (a.Equals("update"))
+                {
+                    Match matchtableselect = Regex.Match(psentencia, @"UPDATE\s+(\w+)");
+                    string table = matchtableselect.Groups[1].Value;
+                    List<TablePrivileges> userprivileges = pDB.GetTablePrivileges();
+                    foreach (TablePrivileges tableprv in userprivileges)
+                    {
+                        if (tableprv.getTableName() == table)
+                        {
+                            if (tableprv.getTablePrivileges().Contains("UPDATE"))
+                            {
+                                query.Run(dbname);
+                                ClassUpdate q2 = (ClassUpdate)query;
+                                return q2.getResult();
+                            }
+                            else
+                            {
+                                return Constants.SecurityNotSufficientPrivileges;
+                            }
+                        }
+                      
+                    }
+
+
+                }
+                
+               
+                return null;
             }
             catch(Exception e)
             {
@@ -411,10 +511,7 @@ namespace MiniSQLEngine
         public static String init(string name, string pUser, string pPassword)
         {
             string res;
-            if (pUser == "admin" && pPassword == "admin")
-            {
-                privileges = new String[4] { "DELETE", "INSERT", "SELECT", "UPDATE" };
-            }
+            
             if (!Directory.Exists("..//..//..//data//" + name))
             {
                 if (pUser.Equals("admin") && pPassword.Equals("admin"))
@@ -431,6 +528,13 @@ namespace MiniSQLEngine
                     res = Constants.SecurityNotSufficientPrivileges + "Not Admin";
                     return res;
                 }
+            }
+            if (pUser == "admin" && pPassword == "admin")
+            {
+                privileges = new String[4] { "DELETE", "INSERT", "SELECT", "UPDATE" };
+                res = "logadmin";
+                return res;
+
             }
             else
             {
@@ -465,7 +569,7 @@ namespace MiniSQLEngine
                                     foreach (string prfsec in temppriv)
                                     {
                                         string[] splittedprof = prfsec.Split(',');
-                                        if (splittedprof[0] == profile)
+                                        if (splittedprof[0]+".pf" == profile)
                                         {
                                             string[] privilegesprf = splittedprof[1].Split('/');
                                             Match a = Regex.Match(filesec, Constants.getTable);
@@ -529,6 +633,15 @@ namespace MiniSQLEngine
             {
                 table_privileges.Add(privilege);
             }
+        }
+        public string getTableName()
+        {
+            return table_name;
+        }
+
+        public List<String> getTablePrivileges()
+        {
+            return table_privileges;
         }
     }
 }
