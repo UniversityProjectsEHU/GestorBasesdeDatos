@@ -179,7 +179,7 @@ namespace ClassesTest
             values[0] = "name string true";
             values[1] = "edad int false";
             String q = "CREATE TABLE t1(name string true,edad int false);";
-            db.Query(q);
+            db.Query(q,db);
 
             string[] insert1 = new string[2];
             insert1[0] = "Asier";
@@ -201,14 +201,14 @@ namespace ClassesTest
             insert5[0] = "Josu";
             insert5[1] = "4";
 
-            db.Query("INSERT INTO t1 VALUES (Asier,1);");
-            db.Query("INSERT INTO t1 VALUES (Leire,3);");
-            db.Query("INSERT INTO t1 VALUES (Navarro,5);");
-            db.Query("INSERT INTO t1 VALUES (Hernando,2);");
-            db.Query("INSERT INTO t1 VALUES (Josu,4);");
+            db.Query("INSERT INTO t1 VALUES (Asier,1);",db);
+            db.Query("INSERT INTO t1 VALUES (Leire,3);",db);
+            db.Query("INSERT INTO t1 VALUES (Navarro,5);",db);
+            db.Query("INSERT INTO t1 VALUES (Hernando,2);",db);
+            db.Query("INSERT INTO t1 VALUES (Josu,4);",db);
            
 
-            db.Query("DELETE FROM t1 WHERE edad>3;");
+            db.Query("DELETE FROM t1 WHERE edad>3;",db);
             
 
             string pathfileDATA = @"..//..//..//data//" + myDB + "//" + myTable + ".data";
@@ -220,7 +220,7 @@ namespace ClassesTest
             Assert.AreEqual(insert4[0] + "," + insert4[1], lines[2]);
 
            
-            db.Query("DELETE FROM t1 WHERE name=Leire;");
+            db.Query("DELETE FROM t1 WHERE name=Leire;",db);
 
             String[] lines2 = System.IO.File.ReadAllLines(pathfileDATA);
             //Testing Delete with string
@@ -229,7 +229,7 @@ namespace ClassesTest
             Assert.AreEqual(insert4[0] + "," + insert4[1], lines2[1]);
 
            
-            db.Query("DELETE FROM t1 WHERE edad<2;");
+            db.Query("DELETE FROM t1 WHERE edad<2;",db);
 
             String[] lines3 = System.IO.File.ReadAllLines(pathfileDATA);
             //Testing Delete with <
@@ -237,16 +237,16 @@ namespace ClassesTest
             Assert.AreEqual(insert4[0] + "," + insert4[1], lines3[0]);
 
             //Testing security
-            db.Query("DELETE FROM t1 WHERE edad=2;");
-            db.Query("INSERT INTO t1 VALUES (Test,1);");
-            db.Query("INSERT INTO t1 VALUES (Test2,3);");
-            db.Query("INSERT INTO t1 VALUES (Test3,5);");
-            db.Query("CREATE SECURITY PROFILE usertest;");
-            db.Query("ADD USER (test, test, usertest);");
+            db.Query("DELETE FROM t1 WHERE edad=2;",db);
+            db.Query("INSERT INTO t1 VALUES (Test,1);",db);
+            db.Query("INSERT INTO t1 VALUES (Test2,3);",db);
+            db.Query("INSERT INTO t1 VALUES (Test3,5);",db);
+            db.Query("CREATE SECURITY PROFILE usertest;",db);
+            db.Query("ADD USER (test, test, usertest);",db);
 
             db = null;
             db = new Database(myDB, "test", "test");
-            db.Query("DELETE FROM t1 WHERE edad>3;");
+            db.Query("DELETE FROM t1 WHERE edad>3;",db);
             String[] lines4 = System.IO.File.ReadAllLines(pathfileDATA);
             //Testing nothing is deleted
             Assert.AreEqual(3, lines4.Length);
@@ -257,18 +257,18 @@ namespace ClassesTest
             //Going back to admin to grant 'usertest' delete privileges
             db = null;
             db = new Database(myDB, "admin", "admin");
-            db.Query("GRANT DELETE ON t1 TO usertest;");
+            db.Query("GRANT DELETE ON t1 TO usertest;",db);
 
             //Testing if 'usertest' can delete now
             db = null;
             db = new Database(myDB, "test", "test");
-            db.Query("DELETE FROM t1 WHERE edad>3;");
+            db.Query("DELETE FROM t1 WHERE edad>3;",db);
             String[] lines5 = System.IO.File.ReadAllLines(pathfileDATA);
             Assert.AreEqual(2, lines5.Length);
             Assert.AreEqual("Test,1", lines5[0]);
             Assert.AreEqual("Test2,2", lines5[1]);
 
-            db.Query("DROP DATABASE" + myDB +";");
+            db.Query("DROP DATABASE" + myDB +";",db);
         }
         [TestMethod]
         public void fullTestWithSelect()
@@ -310,17 +310,17 @@ namespace ClassesTest
             string messageNoMatches = "The result for the Query '" + querySelectNoMatches + "' is: id;";
             string messageNoWhere = "The result for the Query '" + querySelectNoWhere + "' is: id 1; id 2;";
             string messageAllNoWhere = "The result for the Query '" + querySelectAllNoWhere + "' is: id 1 name Alejandra age 37; id 2 name Paco age 60;";
-            db.Query(queryDropDB);
-            db.Query(queryCreateDB);
-            db.Query(queryCreateTable);
-            db.Query(queryInsert);
-            db.Query(queryInsert2);
-            Assert.AreEqual(db.Query(querySelect), message);
-            Assert.AreEqual(db.Query(querySelectNotExists), messageNotExists);
-            Assert.AreEqual(db.Query(querySelectAll), messageAll);
-            Assert.AreEqual(db.Query(querySelectNoMatches), messageNoMatches);
-            Assert.AreEqual(db.Query(querySelectNoWhere), messageNoWhere);
-            Assert.AreEqual(db.Query(querySelectAllNoWhere), messageAllNoWhere);
+            db.Query(queryDropDB,db);
+            db.Query(queryCreateDB,db);
+            db.Query(queryCreateTable,db);
+            db.Query(queryInsert,db);
+            db.Query(queryInsert2,db);
+            Assert.AreEqual(db.Query(querySelect,db), message);
+            Assert.AreEqual(db.Query(querySelectNotExists,db), messageNotExists);
+            Assert.AreEqual(db.Query(querySelectAll,db), messageAll);
+            Assert.AreEqual(db.Query(querySelectNoMatches,db), messageNoMatches);
+            Assert.AreEqual(db.Query(querySelectNoWhere,db), messageNoWhere);
+            Assert.AreEqual(db.Query(querySelectAllNoWhere,db), messageAllNoWhere);
 
         }
         [TestMethod]
@@ -335,12 +335,12 @@ namespace ClassesTest
             string line = "admin,DELETE/INSERT/SELECT/UPDATE";
             string path = @"..//..//..//data//" + dbname + "//pTable.sec";
             Database db = new Database(dbname,user,pass);
-            db.Query(queryCreateDB);
-            db.Query(queryCreate);
+            db.Query(queryCreateDB,db);
+            db.Query(queryCreate,db);
             String[] lineadef = System.IO.File.ReadAllLines(path);
             string uno = lineadef[0];
             Assert.AreEqual(uno, line);
-            db.Query(queryDropDB);
+            db.Query(queryDropDB,db);
         }
         [TestMethod]
         public void testDropWithAdmin()
@@ -355,12 +355,12 @@ namespace ClassesTest
             //string line = "admin,DELETE/INSERT/SELECT/UPDATE";
             string path = @"..//..//..//data//" + dbname + "//pTable.sec";
             Database db = new Database(dbname, user,pass);
-            db.Query(queryCreateDB);
-            db.Query(queryCreate);
+            db.Query(queryCreateDB,db);
+            db.Query(queryCreate,db);
             Assert.AreEqual(true, File.Exists(path));
-            db.Query(queryDrop);
+            db.Query(queryDrop,db);
             Assert.AreEqual(false, File.Exists(path));
-            db.Query(queryDropDB);
+            db.Query(queryDropDB,db);
         }
     }
 }
