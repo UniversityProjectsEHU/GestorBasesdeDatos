@@ -103,7 +103,7 @@ namespace ClassesTest
             Database db = new Database("testDB2", "admin", "admin");
             string q = "CREATE SECURITY PROFILE user;";
             db.Query(q, db);
-            string a = "ADD USER (sergio, 123, user);";
+            string a = "ADD USER ('sergio', '123', user);";
             db.Query(a, db);
             string profile = "user";
             string pathfileDATA = @"..//..//..//data//testDB2//profiles//" + profile + ".pf";
@@ -113,7 +113,7 @@ namespace ClassesTest
                 Assert.AreEqual(linea, lineadef.ReadLine());
             }
             
-            string b = "ADD USER (lola, 123, user);";
+            string b = "ADD USER ('lola', '123', user);";
             db.Query(b, db);
 
             string q2 = "DELETE USER sergio;";
