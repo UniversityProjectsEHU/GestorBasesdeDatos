@@ -30,6 +30,7 @@ namespace MiniSQLEngine
         public const string regExConditionValue = @"\w+(>\w+)|\w+(<\w+)|\w+(=\w+)";
         public const string CreateDatabaseSuccess = "Database created";
         public const string DeleteDatabaseSuccess = "Database deleted";
+        public const string OpenDatabaseSuccess = "Database opened";
         public const string BackupDatabaseSuccess = "Database backed up";
 
         public const string CreateTableSuccess = "Table created";
@@ -52,7 +53,7 @@ namespace MiniSQLEngine
         public const string regSecDropProfile = @"DROP\sSECURITY\sPROFILE\s(\w+);";
         public const string regSecGrant = @"GRANT\s(DELETE||UPDATE||INSERT||SELECT)\sON\s(\w+)\sTO\s(\w+);";
         public const string regSecRevoke = @"REVOKE\s(DELETE||UPDATE||INSERT||SELECT)\sON\s(\w+)\sTO\s(\w+);";
-        public const string regSecAddUser = @"ADD\s+USER\s+\((\w+),\s+(\w+),\s+(\w+)\);";
+        public const string regSecAddUser = @"ADD\s+USER\s+\('(\w+)',\s*'(\w+)',\s*(\w+)\);";
         public const string regSecDeleteUser = @"DELETE\sUSER\s(\w+);";
 
         public const string SecurityProfileCreated = "Security profile created";
@@ -62,6 +63,7 @@ namespace MiniSQLEngine
         public const string SecurityPrivilegeGranted = "Security privilege granted";
         public const string SecurityPrivilegeRevoked = "Security privilege revoked";
 
+        public const string SecurityIncorrectLogin = Error + "Incorrect login";
         public const string SecurityNotSufficientPrivileges = Error + "Not sufficient privileges";
         public const string SecurityProfileAlreadyExists = Error + "Security profile already exists";
         public const string SecurityUserAlreadyExists = Error + "Security user already exists";
@@ -74,6 +76,7 @@ namespace MiniSQLEngine
         public const string regExTypeSecRevoke = @"(REVOKE)";
         public const string regExTypeSecAddUser = @"(ADD\s+USER)";
         public const string regExTypeSecDeleteUser = @"(DELETE\s+USER)";
+
 
         public const string getTable = @"(\w+).sec";
     }
