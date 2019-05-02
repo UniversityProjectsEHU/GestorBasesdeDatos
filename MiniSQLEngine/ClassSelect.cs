@@ -473,6 +473,84 @@ namespace MiniSQLEngine
                     rm.Add(at);
                 }
             }
+
+            if (result != "The result for the Query '" + Query + "' is:")
+            {
+                
+                string[] separate = result.Split(':');
+                string values = separate[1];
+                string[] separate2 = values.Split(' ');
+                List<string> atribs = new List<string>();
+                List<string> val = new List<string>();
+
+                for (int v = 1; v < separate2.Length; v = v + 2)
+                {
+                    if (!atribs.Contains(separate2[v]))
+                    {
+                        atribs.Add(separate2[v]);
+                    }
+                    val.Add(separate2[v + 1]);
+                }
+                result = "{";
+                int tam = atribs.Count;
+                int cont = 1;
+                if (atribs.Count != 1)
+                {
+                    for(int i = 0; i < atribs.Count; i++)
+                    {
+                        if (i == atribs.Count - 1)
+                        {
+                            result = result + atribs[i]+"}{";
+
+                        }
+                        else
+                        {
+                            result = result + atribs[i]+",";
+                        }
+                    }
+                    for (int i = 0; i < val.Count; i++)
+                    {
+                        if (cont != tam)
+                        {
+                            result = result + val[i] + ",";
+                            cont++;
+                        }
+                        else
+                        {
+                            string[] a = val[i].Split(';');
+                            result = result + a[0] + "}";
+                            cont = 1;
+                            if (i != val.Count - 1)
+                            {
+                                result = result + "{";
+
+                            }
+                        }
+                        
+                        
+                        
+                    }
+                    
+                }
+                else
+                {
+                    foreach(string atr in atribs)
+                    {
+                        result = result + atr + "}{";
+                    }
+                    foreach(string v in val)
+                    {
+                        result = result + v + "}";
+                    }
+                }
+            }
+
+
+
+
+
+
+            
             if (rm[0] == "*")
             {
 
@@ -480,12 +558,33 @@ namespace MiniSQLEngine
                 if (result == "The result for the Query '" + Query + "' is:")
                 {
 
-                    foreach (string at in rm)
+
+
+
+                    result = "{";
+                    if (rm.Count != 1)
                     {
-                        if (at != "*")
+
+
+                        foreach (string at in rm)
                         {
-                            result = result + " " + at;
+                            if (at != "*")
+                            {
+                                result = result + at + ",";
+                            }
                         }
+                        result = result + "}{}";
+                    }
+                    else
+                    {
+                        foreach (string at in rm)
+                        {
+                            if (at != "*")
+                            {
+                                result = result + at;
+                            }
+                        }
+                        result = result + "}{}";
                     }
                 }
 
@@ -494,19 +593,41 @@ namespace MiniSQLEngine
             {
                 if (result == "The result for the Query '" + Query + "' is:")
                 {
-                    foreach (string at in columns)
+
+
+
+                    result = "{";
+                    if (rm.Count != 1)
                     {
-                        if (at != "*")
+
+
+                        foreach (string at in rm)
                         {
-                            result = result + " " + at;
+                            if (at != "*")
+                            {
+                                result = result + at + ",";
+                            }
                         }
+                        result = result + "}{}";
                     }
-
-
-                    result = result + ";";
+                    else
+                    {
+                        foreach (string at in rm)
+                        {
+                            if (at != "*")
+                            {
+                                result = result + at;
+                            }
+                        }
+                        result = result + "}{}";
+                    }
                 }
-            }
-            //result.TrimStart(' ');
+
+                }
+
+            
+
+
         }
 
 
