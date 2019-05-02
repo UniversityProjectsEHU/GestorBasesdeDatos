@@ -92,25 +92,28 @@ namespace ClassesTest
             //Add User
             string user1 = "user1";
             string passUser = "1234";
-            string addUser = "ADD USER (user1,1234,User);";
+            string addUser = "ADD USER ('user1','1234',User);";
             db.Query(addUser, db);
             //Open DB
-            Database db1 = new Database(dbname, user1, passUser);
+            db = null;
+            db = new Database(dbname, user1, passUser);
             //Insert doesn´t work
             string Insert = "INSERT INTO thisTable VALUES (a,a,a,a);";
-            db1.Query(Insert, db1);
+            db.Query(Insert, db);
             String[] lines2 = System.IO.File.ReadAllLines(pathfileDATA);
             Assert.AreEqual(0, lines2.Length);
-
+            db = new Database(dbname, "admin", "admin");
             //Grant
             string Grant = "GRANT INSERT ON thisTable TO User;";
             db.Query(Grant, db);
             //Insert work
-            db1.Query(Insert, db1);
+            db = null;
+            db = new Database(dbname, user1, passUser);
+            db.Query(Insert, db);
             String[] lines3 = System.IO.File.ReadAllLines(pathfileDATA);
             Assert.AreEqual(1, lines3.Length);
             Assert.AreEqual("a,a,a,a", lines3[0]);
-
+            db = new Database(dbname, user, pass);
             db.Query("DROP DATABASE " + dbname + ";", db);
 
         }
@@ -163,6 +166,26 @@ namespace ClassesTest
             string actual4 = "ana,9";
             Assert.AreEqual(lineas4[0], actual4);
 
+            db.Query("CREATE SECURITY PROFILE usertest;", db);
+            db.Query("ADD USER ('usr', 'pss', usertest);", db);
+            db.Query("CREATE SECURITY PROFILE usertest2;", db);
+            db.Query("ADD USER ('test', 'test', usertest2);", db);
+            db.Query("GRANT UPDATE ON tUpdate TO usertest;", db);
+            db = null;
+            db = new Database(myDB, "usr", "pss");
+            string Update5 = "UPDATE tUpdate SET column1=paco,column2=7 WHERE column2=9;";
+            db.Query(Update5, db);
+            String[] lineas5 = System.IO.File.ReadAllLines("..//..//..//data//" + myDB + "//" + myTable + ".data");
+            string actual5 = "paco,7";
+            Assert.AreEqual(lineas5[0], actual5);
+            db = null;
+            db = new Database(myDB, "test", "test");
+            string Update6 = "UPDATE tUpdate SET column1=josu,column2=1 WHERE column2=7;";
+            db.Query(Update6, db);
+            String[] lineas6 = System.IO.File.ReadAllLines("..//..//..//data//" + myDB + "//" + myTable + ".data");
+            string actual6= "josu,1";
+            Assert.AreNotEqual(lineas6[0], actual6);
+            db = new Database(myDB, "admin", "admin");
             db.Query("DROP DATABASE" + myDB + ";", db);
 
         }
@@ -242,7 +265,7 @@ namespace ClassesTest
             db.Query("INSERT INTO t1 VALUES (Test2,3);",db);
             db.Query("INSERT INTO t1 VALUES (Test3,5);",db);
             db.Query("CREATE SECURITY PROFILE usertest;",db);
-            db.Query("ADD USER (test, test, usertest);",db);
+            db.Query("ADD USER ('test', 'test', usertest);", db);
 
             db = null;
             db = new Database(myDB, "test", "test");
@@ -251,7 +274,7 @@ namespace ClassesTest
             //Testing nothing is deleted
             Assert.AreEqual(3, lines4.Length);
             Assert.AreEqual("Test,1", lines4[0]);
-            Assert.AreEqual("Test2,2", lines4[1]);
+            Assert.AreEqual("Test2,3", lines4[1]);
             Assert.AreEqual("Test3,5", lines4[2]);
 
             //Going back to admin to grant 'usertest' delete privileges
@@ -266,8 +289,8 @@ namespace ClassesTest
             String[] lines5 = System.IO.File.ReadAllLines(pathfileDATA);
             Assert.AreEqual(2, lines5.Length);
             Assert.AreEqual("Test,1", lines5[0]);
-            Assert.AreEqual("Test2,2", lines5[1]);
-
+            Assert.AreEqual("Test2,3", lines5[1]);
+            db = new Database(myDB, "admin", "admin");
             db.Query("DROP DATABASE" + myDB +";",db);
         }
         [TestMethod]

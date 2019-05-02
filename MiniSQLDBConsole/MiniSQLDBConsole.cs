@@ -22,16 +22,16 @@ namespace MiniSQLDBConsole
             Database db = new Database(datab, user,pass);
             string res = db.getRes();
 
-            if (res == "adminCreateDB")
+            if (res == Constants.CreateDatabaseSuccess)
             {   
                 Console.WriteLine("Database created");
             }
-            else if (res == "logadmin")
+            else if (res == Constants.OpenDatabaseSuccess)
             {
                 Console.WriteLine("Login correct as admin. Database open.");
                 
             }
-            else if (res == "notAdmin")
+            else if (res == Constants.SecurityNotSufficientPrivileges +"Not Admin")
             {
                 Console.WriteLine("Not enough privileges to create that database");
                 Console.ReadKey(true);
