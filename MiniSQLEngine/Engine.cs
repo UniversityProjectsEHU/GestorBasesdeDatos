@@ -540,7 +540,7 @@ namespace MiniSQLEngine
             if (pUser == "admin" && pPassword == "admin")
             {
                 privileges = new String[4] { "DELETE", "INSERT", "SELECT", "UPDATE" };
-                res = "logadmin";
+                res = Constants.OpenDatabaseSuccess;
                 return res;
 
             }
