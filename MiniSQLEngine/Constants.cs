@@ -79,5 +79,10 @@ namespace MiniSQLEngine
 
 
         public const string getTable = @"(\w+).sec";
+
+
+        //Regular Expressions for Server/Client
+        public const string regExOpenDatabase = "<Open Database=\"(\\w+)\" User=\"(\\w+)\" Password=\"(\\w+)\"/>";
+
     }
 }
