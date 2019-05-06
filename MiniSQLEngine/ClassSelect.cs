@@ -474,7 +474,7 @@ namespace MiniSQLEngine
                 }
             }
 
-            if (result != "The result for the Query '" + Query + "' is:")
+            if (result != "The result for the Query '" + Query + "' is:" && result != Constants.ColumnDoesNotExist)
             {
                 
                 string[] separate = result.Split(':');
@@ -534,13 +534,39 @@ namespace MiniSQLEngine
                 }
                 else
                 {
-                    foreach(string atr in atribs)
+                    for (int i = 0; i < atribs.Count; i++)
                     {
-                        result = result + atr + "}{";
+                        if (i == atribs.Count - 1)
+                        {
+                            result = result + atribs[i] + "}{";
+
+                        }
+                        else
+                        {
+                            result = result + atribs[i] + ",";
+                        }
                     }
-                    foreach(string v in val)
+                    for (int i = 0; i < val.Count; i++)
                     {
-                        result = result + v + "}";
+                        if (cont != tam)
+                        {
+                            result = result + val[i] + ",";
+                            cont++;
+                        }
+                        else
+                        {
+                            string[] a = val[i].Split(';');
+                            result = result + a[0] + "}";
+                            cont = 1;
+                            if (i != val.Count - 1)
+                            {
+                                result = result + "{";
+
+                            }
+                        }
+
+
+
                     }
                 }
             }

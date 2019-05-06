@@ -312,8 +312,8 @@ namespace ClassesTest
             string[] values = { "id int true", "name String false", "edad int false" };
             string[] valuesToInsert = { "1", "Alejandra", "36" };
             string[] valuesToInsert2 = { "2", "Paco", "60" };
-            string message = "The result for the Query '" + querySelect + "' is: id 1 name Alejandra;";
-            string messageAll = "The result for the Query '" + querySelectAll + "' is: id 1 name Alejandra age 37; id 2 name Paco age 60;";
+            string message = "{id,name}{1,Alejandra}";
+            string messageAll = "{id,name,age}{1,Alejandra,37}{2,Paco,60}";
             string messageNotExists = "ERROR: Column does not exist";
             Database db = new Database(dbname, user,pass);
             /*ClassCreateDatabase newDB = new ClassCreateDatabase(dbname);
@@ -330,9 +330,9 @@ namespace ClassesTest
             string querySelectNoMatches = "SELECT id FROM thisTable111 WHERE age>65;";
             string querySelectNoWhere = "SELECT id FROM thisTable111;";
             string querySelectAllNoWhere = "SELECT * FROM thisTable111;";
-            string messageNoMatches = "The result for the Query '" + querySelectNoMatches + "' is: id;";
-            string messageNoWhere = "The result for the Query '" + querySelectNoWhere + "' is: id 1; id 2;";
-            string messageAllNoWhere = "The result for the Query '" + querySelectAllNoWhere + "' is: id 1 name Alejandra age 37; id 2 name Paco age 60;";
+            string messageNoMatches = "{id}{}";
+            string messageNoWhere = "{id}{1}{2}";
+            string messageAllNoWhere = "{id,name,age}{1,Alejandra,37}{2,Paco,60}";
             db.Query(queryDropDB,db);
             db.Query(queryCreateDB,db);
             db.Query(queryCreateTable,db);
