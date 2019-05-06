@@ -18,6 +18,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniSQLDBConsole", "MiniSQL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bundler", "Bundler\Bundler.csproj", "{117A13E0-7E78-4689-9F75-02379B817AC7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCPClient", "TCPClient\TCPClient.csproj", "{092A7B7E-95A3-4FBA-A7FF-895105BB41A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCPServer", "TCPServer\TCPServer.csproj", "{4CF6390B-9F4D-4ADC-9577-4C0E0B01E445}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +48,14 @@ Global
 		{117A13E0-7E78-4689-9F75-02379B817AC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{117A13E0-7E78-4689-9F75-02379B817AC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{117A13E0-7E78-4689-9F75-02379B817AC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{092A7B7E-95A3-4FBA-A7FF-895105BB41A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{092A7B7E-95A3-4FBA-A7FF-895105BB41A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{092A7B7E-95A3-4FBA-A7FF-895105BB41A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{092A7B7E-95A3-4FBA-A7FF-895105BB41A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CF6390B-9F4D-4ADC-9577-4C0E0B01E445}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CF6390B-9F4D-4ADC-9577-4C0E0B01E445}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CF6390B-9F4D-4ADC-9577-4C0E0B01E445}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CF6390B-9F4D-4ADC-9577-4C0E0B01E445}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
