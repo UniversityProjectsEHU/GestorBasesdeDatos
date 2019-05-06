@@ -13,7 +13,7 @@ namespace MiniSQLEngine
         public const string regExDelete = @"DELETE\s+FROM\s+(\w+)\s+WHERE\s+(.+<.+|.+>.+|.+=.+);";
         public const string regExInsert = @"INSERT\s+INTO\s+(\w+)\s+VALUES\s*\(([^\)]+)\);";
         public const string regExInsert2 = @"INSERT\s+INTO\s+([^\(]+)\(([^\)]+)\)\s+VALUES\s*\(([^\)]+)\);";
-        public const string regExpUpdate = @"UPDATE\s+(\w+)\s+SET\s+([^WHERE]+)\s+WHERE\s+(.+>.+|.+<.+|.+=.+);";
+        public const string regExpUpdate = @"UPDATE\s+(\w+)\s+SET\s+([^;]+)\s+WHERE\s+(.+>.+|.+<.+|.+=.+);";
         public const string regExpCreateDatabase = @"CREATE DATABASE\s+(\w+);";
         public const string regExpDropDatabase = @"DROP DATABASE\s+(\w+);";
         public const string regExpDropTable = @"DROP\s+TABLE\s+(\w+);";
