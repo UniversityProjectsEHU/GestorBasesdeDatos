@@ -42,7 +42,7 @@ namespace MiniSQLEngine
                     query.Run(dbname);
                     return query.getResult();
                 }
-                else if (a.Equals("select"))
+                else if (a.Equals("SELECT"))
                 {
                     Match matchtableselect = Regex.Match(psentencia, @"SELECT\s+.+\s+FROM\s+(\w+)");
                     string table = matchtableselect.Groups[1].Value;
@@ -70,7 +70,7 @@ namespace MiniSQLEngine
                    
                 }
 
-                else if (a.Equals("delete"))
+                else if (a.Equals("DELETE"))
                 {
                     Match matchtableselect = Regex.Match(psentencia, @"DELETE\s+FROM\s+(\w+)");
                     string table = matchtableselect.Groups[1].Value;
@@ -97,7 +97,7 @@ namespace MiniSQLEngine
 
                 }
 
-                else if (a.Equals("insert"))
+                else if (a.Equals("INSERT"))
                 {
                     Match matchtableselect = Regex.Match(psentencia, @"INSERT\s+INTO\s+(\w+)");
                     string table = matchtableselect.Groups[1].Value;
@@ -124,7 +124,7 @@ namespace MiniSQLEngine
 
                 }
 
-                else if (a.Equals("update"))
+                else if (a.Equals("UPDATE"))
                 {
                     Match matchtableselect = Regex.Match(psentencia, @"UPDATE\s+(\w+)");
                     string table = matchtableselect.Groups[1].Value;
