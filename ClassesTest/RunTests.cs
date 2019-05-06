@@ -385,7 +385,7 @@ namespace ClassesTest
             Assert.AreEqual(false, File.Exists(path));
             db.Query(queryDropDB,db);
         }
-        [TestMethod]
+        /*[TestMethod]
         public void testPrivileges()
         {
             string dbname = "dataBaseTest";
@@ -425,6 +425,7 @@ namespace ClassesTest
             Assert.AreEqual(db.Query(noQuerySelect, db),Constants.SecurityNotSufficientPrivileges);
             db.Query(queryDrop, db1);
         }
+        */
     }
 }
 
