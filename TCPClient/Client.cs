@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
 using System.Threading;
+using System.Text.RegularExpressions;
+using MiniSQLEngine;
 
 namespace TCPClientExample
 {
@@ -55,11 +57,12 @@ namespace TCPClientExample
                     networkStream.Write(outputBuffer, 0, outputBuffer.Length);
 
                      readBytes = networkStream.Read(inputBuffer, 0, 1024);
-                    Console.WriteLine("Response received: " + Encoding.ASCII.GetString(inputBuffer, 0, readBytes));
+                    //Console.WriteLine("Response received: " + Encoding.ASCII.GetString(inputBuffer, 0, readBytes));
 
                     Thread.Sleep(2000);
                             if(Encoding.ASCII.GetString(inputBuffer, 0, readBytes)== "<Success/>")
                             {
+                                 Console.WriteLine("Database opened");
                                 cont++;
                             }
                  }
@@ -72,6 +75,7 @@ namespace TCPClientExample
                     if (q.ToLower() == "exit")
                     {
                         outputBuffer = Encoding.ASCII.GetBytes("END");
+                        networkStream.Write(endMessage, 0, endMessage.Length);
 
                     }
                     else
@@ -83,7 +87,13 @@ namespace TCPClientExample
                     //Aqui enviamos
 
                     readBytes = networkStream.Read(inputBuffer, 0, 1024);
-                    Console.WriteLine("Response received: " + Encoding.ASCII.GetString(inputBuffer, 0, readBytes));
+                    //Console.WriteLine("Response received: " + Encoding.ASCII.GetString(inputBuffer, 0, readBytes));
+                    string answer = Encoding.ASCII.GetString(inputBuffer, 0, readBytes);
+                    Match matchClientAnswer= Regex.Match(answer, Constants.regExClientAnswer);
+                    if (matchClientAnswer.Success)
+                    {
+                        Console.WriteLine(matchClientAnswer.Groups[1].Value);
+                    }
                 }
                 //Aqui termina
                 networkStream.Write(endMessage, 0, endMessage.Length);

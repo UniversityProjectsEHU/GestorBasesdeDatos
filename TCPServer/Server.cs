@@ -41,6 +41,7 @@ namespace TCPServerExample
                 var childSocketThread = new Thread(() =>
                 {
                     byte[] inputBuffer = new byte[1024];
+                    Database db = null;
 
                     NetworkStream networkStream = client.GetStream();
 
@@ -50,7 +51,7 @@ namespace TCPServerExample
 
                     while (request != "END")
                     {
-                        Database db = null;
+                        
                         string answer = "";
                         Console.WriteLine("Request received: " + request);
                         Match matchopendb = Regex.Match(request, Constants.regExOpenDatabase);
@@ -84,7 +85,46 @@ namespace TCPServerExample
                         {
                             string query = matchexQuery.Groups[1].Value;
                             answer=db.Query(query,db);
-                            
+                            //We look if the Query is Select
+                            //if (answer.Contains("{"))
+                            //{
+                            //    Match matchselect = Regex.Match(request, Constants.regExSelectanswer);
+                            //    if (matchselect.Success)
+                            //    {
+                            //        string[] atribs = matchselect.Groups[1].Value.Split(',');
+                            //        int length = matchselect.Length;
+                            //        List<string> values = new List<string>();
+                            //        for (int i = 2; i < length; i++)
+                            //        {
+                            //            values.Add(matchselect.Groups[i].Value);
+                            //        }
+                            //        answer = "<Answer>\n\t<Columns>";
+                            //        foreach (string atrib in atribs)
+                            //        {
+
+                            //            answer = answer + "\n\t\t<Column>" + atrib + "</Column>";
+                            //        }
+                            //        answer = answer + "\n\t</Columns>\n\t<Rows>";
+
+                            //        foreach (string value in values)
+                            //        {
+                            //            answer = answer + "\n\t\t<Row>";
+                            //            string[] splittedvalues = value.Split(',');
+                            //            foreach (string splittedvalue in splittedvalues)
+                            //            {
+                            //                answer = answer + "\n\t\t\t<Value>" + splittedvalue + "</Value>";
+                            //            }
+                            //            answer = answer + "\n\t\t</Row>";
+                            //        }
+                            //        answer = answer + "\n\t</Rows>\n</Answer>";
+                            //    }
+
+                            //}
+                            //else
+                            //{
+                            //    answer = "<Answer>" + answer + "</Answer>";
+                            //}
+                            answer = "<Answer>" + answer + "</Answer>";
                         }
 
                         byte[] outputBuffer = Encoding.ASCII.GetBytes(answer);
