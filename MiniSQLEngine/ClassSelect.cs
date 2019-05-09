@@ -9,13 +9,13 @@ namespace MiniSQLEngine
 {
     public class ClassSelect : Query
     {
-        private string []columns;
+        private string[] columns;
         private string table;
         private string condition;
         private string result;
         private string Query;
 
-        public ClassSelect(string [] columns,string table,string condition,string pQuery)
+        public ClassSelect(string[] columns, string table, string condition, string pQuery)
         {
             this.columns = columns;
             this.table = table;
@@ -61,8 +61,10 @@ namespace MiniSQLEngine
             }
 
             List<string> rm = new List<string>();
+            string allFile = System.IO.File.ReadAllText("..//..//..//data//" + dbname + "//" + table + ".def");
+            string[] splittedFile = allFile.Split(',');
             string op;
-            string[] elements= { };
+            string[] elements = { };
             int poscond = 0;
             if (condition.Contains("="))
             {
@@ -74,13 +76,13 @@ namespace MiniSQLEngine
                 elements = condition.Split('<');
                 op = "<";
             }
-            else 
+            else
 
             {
                 elements = condition.Split('>');
                 op = ">";
             }
-           
+
             if (!(File.Exists("..//..//..//data//" + dbname + "//" + table + ".def")))
             {
                 result = Constants.TableDoesNotExist;
@@ -91,8 +93,8 @@ namespace MiniSQLEngine
 
 
                 //I read all the file
-                string allFile = System.IO.File.ReadAllText("..//..//..//data//" + dbname + "//" + table + ".def");
-                string[] splittedFile = allFile.Split(',');
+                allFile = System.IO.File.ReadAllText("..//..//..//data//" + dbname + "//" + table + ".def");
+                splittedFile = allFile.Split(',');
                 List<objectDef> list = new List<objectDef>();
                 string comptype;
                 if (condition == "")
@@ -204,11 +206,11 @@ namespace MiniSQLEngine
 
                             if (condition == "")
                             {
-                                foreach(objectDef obj in list)
+                                foreach (objectDef obj in list)
                                 {
-                                    result =result +" "+ obj.GetColumnName() + " " + splittedline[obj.GetPos()];
+                                    result = result + " " + obj.GetColumnName() + " " + splittedline[obj.GetPos()];
                                 }
-                                result = result +";";
+                                result = result + ";";
                             }
                             else
                             {
@@ -221,7 +223,7 @@ namespace MiniSQLEngine
                                     {
                                         foreach (objectDef obj in list)
                                         {
-                                            result =  result + " " + obj.GetColumnName() + " " + splittedline[obj.GetPos()];
+                                            result = result + " " + obj.GetColumnName() + " " + splittedline[obj.GetPos()];
                                         }
                                         result = result + ";";
 
@@ -252,7 +254,7 @@ namespace MiniSQLEngine
                                         {
                                             foreach (objectDef obj in list)
                                             {
-                                                result =  result + " " + obj.GetColumnName() + " " + splittedline[obj.GetPos()];
+                                                result = result + " " + obj.GetColumnName() + " " + splittedline[obj.GetPos()];
 
                                             }
                                             result = result + ";";
@@ -323,7 +325,7 @@ namespace MiniSQLEngine
 
 
                             }
-                        
+
 
                             else
                             {
@@ -472,194 +474,172 @@ namespace MiniSQLEngine
                 {
                     rm.Add(at);
                 }
-            }
 
-            if (result != "The result for the Query '" + Query + "' is:" && result != Constants.ColumnDoesNotExist)
-            {
-                
-                string[] separate = result.Split(':');
-                string values = separate[1];
-                string[] separate2 = values.Split(' ');
-                List<string> atribs = new List<string>();
-                List<string> val = new List<string>();
-
-                for (int v = 1; v < separate2.Length; v = v + 2)
-                {
-                    if (!atribs.Contains(separate2[v]))
-                    {
-                        atribs.Add(separate2[v]);
-                    }
-                    val.Add(separate2[v + 1]);
-                }
-                result = "{";
-                int tam = atribs.Count;
-                int cont = 1;
-                if (atribs.Count != 1)
-                {
-                    for(int i = 0; i < atribs.Count; i++)
-                    {
-                        if (i == atribs.Count - 1)
-                        {
-                            result = result + atribs[i]+"}{";
-
-                        }
-                        else
-                        {
-                            result = result + atribs[i]+",";
-                        }
-                    }
-                    for (int i = 0; i < val.Count; i++)
-                    {
-                        if (cont != tam)
-                        {
-                            result = result + val[i] + ",";
-                            cont++;
-                        }
-                        else
-                        {
-                            string[] a = val[i].Split(';');
-                            result = result + a[0] + "}";
-                            cont = 1;
-                            if (i != val.Count - 1)
-                            {
-                                result = result + "{";
-
-                            }
-                        }
-                        
-                        
-                        
-                    }
-                    
-                }
-                else
-                {
-                    for (int i = 0; i < atribs.Count; i++)
-                    {
-                        if (i == atribs.Count - 1)
-                        {
-                            result = result + atribs[i] + "}{";
-
-                        }
-                        else
-                        {
-                            result = result + atribs[i] + ",";
-                        }
-                    }
-                    for (int i = 0; i < val.Count; i++)
-                    {
-                        if (cont != tam)
-                        {
-                            result = result + val[i] + ",";
-                            cont++;
-                        }
-                        else
-                        {
-                            string[] a = val[i].Split(';');
-                            result = result + a[0] + "}";
-                            cont = 1;
-                            if (i != val.Count - 1)
-                            {
-                                result = result + "{";
-
-                            }
-                        }
-
-
-
-                    }
-                }
-            }
-
-
-
-
-
-
-            
-            if (rm[0] == "*")
-            {
-
-
-                if (result == "The result for the Query '" + Query + "' is:")
+                if (result != Constants.ColumnDoesNotExist)
                 {
 
+                    string[] separate = result.Split(':');
+                    string values = separate[1];
+                    string[] separate2 = values.Split(' ');
+                    List<string> atribs = new List<string>();
+                    List<string> val = new List<string>();
 
-
-
+                    for (int v = 1; v < separate2.Length; v = v + 2)
+                    {
+                        if (!atribs.Contains(separate2[v]))
+                        {
+                            atribs.Add(separate2[v]);
+                        }
+                        val.Add(separate2[v + 1]);
+                    }
                     result = "{";
-                    if (rm.Count != 1)
+                    int tam = atribs.Count;
+                    int cont = 1;
+                    if (atribs.Count != 1)
                     {
-
-
-                        foreach (string at in rm)
+                        for (int i = 0; i < atribs.Count; i++)
                         {
-                            if (at != "*")
+                            if (i == atribs.Count - 1)
                             {
-                                result = result + at + ",";
+                                result = result + atribs[i] + "}{";
+
+                            }
+                            else
+                            {
+                                result = result + atribs[i] + ",";
                             }
                         }
-                        result = result + "}{}";
+                        for (int i = 0; i < val.Count; i++)
+                        {
+                            if (cont != tam)
+                            {
+                                result = result + val[i] + ",";
+                                cont++;
+                            }
+                            else
+                            {
+                                string[] a = val[i].Split(';');
+                                result = result + a[0] + "}";
+                                cont = 1;
+                                if (i != val.Count - 1)
+                                {
+                                    result = result + "{";
+
+                                }
+                            }
+
+
+
+                        }
+
                     }
                     else
                     {
-                        foreach (string at in rm)
+                        for (int i = 0; i < atribs.Count; i++)
                         {
-                            if (at != "*")
+                            if (i == atribs.Count - 1)
                             {
-                                result = result + at;
+                                result = result + atribs[i] + "}{";
+
+                            }
+                            else
+                            {
+                                result = result + atribs[i] + ",";
                             }
                         }
-                        result = result + "}{}";
+                        for (int i = 0; i < val.Count; i++)
+                        {
+                            if (cont != tam)
+                            {
+                                result = result + val[i] + ",";
+                                cont++;
+                            }
+                            else
+                            {
+                                string[] a = val[i].Split(';');
+                                result = result + a[0] + "}";
+                                cont = 1;
+                                if (i != val.Count - 1)
+                                {
+                                    result = result + "{";
+
+                                }
+                            }
+
+
+
+                        }
+                    }
+                    if (separate2.Length == 1 && separate2[0] == "" && showall==true)
+                    {
+                        string[] list1 = new string[splittedFile.Length];
+                        for (int i = 0; i < splittedFile.Length; i++)
+                        {
+                            string[] line = splittedFile[i].Split(' ');
+                            list1[i] = line[0];
+                        }
+                        int cont1 = 0;
+                        int tam1 = list1.Length;
+                        for (int i = 0; i < list1.Length; i++)
+                        {
+                            if (cont1 < tam1 - 1)
+                            {
+                                result = result + list1[i] + ",";
+                                cont1++;
+                            }
+                            else
+                            {
+                                result = result + list1[i] + "}{}";
+                            }
+                        }
+
+                    }
+                    if (separate2.Length == 1 && separate2[0] == "" && showall == false)
+                    {
+                        if (atribs.Count != 1)
+                        {
+                            for (int i = 0; i < list.Count; i++)
+                            {
+                                if (i == list.Count - 1)
+                                {
+                                    string tmp = list[i].GetColumnName();
+                                    result = result + tmp + "}{}";
+
+                                }
+                                else
+                                {
+                                    string tmpElse = list[i].GetColumnName();
+                                    result = result + tmpElse + ",";
+                                }
+                            }
+                            
+
+                        }
+                        else
+                        {
+                            for (int i = 0; i < list.Count; i++)
+                            {
+                                if (i == list.Count - 1)
+                                {
+                                    result = result + list[i] + "}{}";
+
+                                }
+                                else
+                                {
+                                    result = result + list[i] + ",";
+                                }
+                            }
+                        }
                     }
                 }
-
             }
-            else
-            {
-                if (result == "The result for the Query '" + Query + "' is:")
-                {
 
-
-
-                    result = "{";
-                    if (rm.Count != 1)
-                    {
-
-
-                        foreach (string at in rm)
-                        {
-                            if (at != "*")
-                            {
-                                result = result + at + ",";
-                            }
-                        }
-                        result = result + "}{}";
-                    }
-                    else
-                    {
-                        foreach (string at in rm)
-                        {
-                            if (at != "*")
-                            {
-                                result = result + at;
-                            }
-                        }
-                        result = result + "}{}";
-                    }
-                }
-
-                }
-
-            
 
 
         }
 
 
-            
-        }
-       
+
     }
     public class objectDef
     {
@@ -667,7 +647,7 @@ namespace MiniSQLEngine
         private int pos;
         private string type;
 
-        public objectDef(string pname,int ppos,string ptype)
+        public objectDef(string pname, int ppos, string ptype)
         {
             columnname = pname;
             pos = ppos;
@@ -686,4 +666,5 @@ namespace MiniSQLEngine
             return pos;
         }
     }
+}
 

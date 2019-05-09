@@ -327,12 +327,14 @@ namespace ClassesTest
             */
             /*Testing the output of the select query, this query mustn't show the "Empty Query" message when 
             there's no matches to the query typed in console, it should show the name of the columns without any content*/
-            string querySelectNoMatches = "SELECT id FROM thisTable111 WHERE age>65;";
+            string querySelectNoMatches = "SELECT id,age FROM thisTable111 WHERE age>65;";
             string querySelectNoWhere = "SELECT id FROM thisTable111;";
             string querySelectAllNoWhere = "SELECT * FROM thisTable111;";
-            string messageNoMatches = "{id}{}";
+            string querySelectAllNoMatches = "SELECT * FROM thisTable111 WHERE id=10;";
+            string messageNoMatches = "{id,age}{}";
             string messageNoWhere = "{id}{1}{2}";
             string messageAllNoWhere = "{id,name,age}{1,Alejandra,37}{2,Paco,60}";
+            string messageAllNoMatches = "{id,name,age}{}";
             db.Query(queryDropDB,db);
             db.Query(queryCreateDB,db);
             db.Query(queryCreateTable,db);
@@ -341,6 +343,7 @@ namespace ClassesTest
             Assert.AreEqual(db.Query(querySelect,db), message);
             Assert.AreEqual(db.Query(querySelectNotExists,db), messageNotExists);
             Assert.AreEqual(db.Query(querySelectAll,db), messageAll);
+            Assert.AreEqual(db.Query(querySelectAllNoMatches, db), messageAllNoMatches);
             Assert.AreEqual(db.Query(querySelectNoMatches,db), messageNoMatches);
             Assert.AreEqual(db.Query(querySelectNoWhere,db), messageNoWhere);
             Assert.AreEqual(db.Query(querySelectAllNoWhere,db), messageAllNoWhere);
