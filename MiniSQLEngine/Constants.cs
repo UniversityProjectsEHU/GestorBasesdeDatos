@@ -83,6 +83,7 @@ namespace MiniSQLEngine
 
         //Regular Expressions for Server/Client
         public const string regExOpenDatabase = "<Open Database=\"(\\w+)\" User=\"(\\w+)\" Password=\"(\\w+)\"/>";
+        public const string regExQuery = "<Query>(.+)</Query>";
 
     }
 }

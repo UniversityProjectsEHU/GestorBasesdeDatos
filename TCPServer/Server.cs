@@ -50,13 +50,16 @@ namespace TCPServerExample
 
                     while (request != "END")
                     {
+                        Database db = null;
                         string answer = "";
                         Console.WriteLine("Request received: " + request);
                         Match matchopendb = Regex.Match(request, Constants.regExOpenDatabase);
+                        Match matchexQuery = Regex.Match(request, Constants.regExQuery);
+
                         if (matchopendb.Success)
                         {
                             
-                            Database db = new Database(matchopendb.Groups[1].Value, matchopendb.Groups[2].Value, matchopendb.Groups[3].Value);
+                             db = new Database(matchopendb.Groups[1].Value, matchopendb.Groups[2].Value, matchopendb.Groups[3].Value);
                             string res = db.getRes();
                             if (res == Constants.CreateDatabaseSuccess)
                             {
@@ -76,6 +79,12 @@ namespace TCPServerExample
                             {
                                 answer = "<Error>Incorrect login</Error>";
                             }
+                        }
+                        else if (matchexQuery.Success)
+                        {
+                            string query = matchexQuery.Groups[1].Value;
+                            answer=db.Query(query,db);
+                            
                         }
 
                         byte[] outputBuffer = Encoding.ASCII.GetBytes(answer);

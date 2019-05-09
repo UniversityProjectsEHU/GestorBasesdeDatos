@@ -69,7 +69,16 @@ namespace TCPClientExample
                     string q;
                     Console.Write("Enter the query: ");
                     q = Console.ReadLine();
-                    outputBuffer = Encoding.ASCII.GetBytes("<Query>"+q+"</Query>");
+                    if (q.ToLower() == "exit")
+                    {
+                        outputBuffer = Encoding.ASCII.GetBytes("END");
+
+                    }
+                    else
+                    {
+                        outputBuffer = Encoding.ASCII.GetBytes("<Query>" + q + "</Query>");
+
+                    }
                     networkStream.Write(outputBuffer, 0, outputBuffer.Length);
                     //Aqui enviamos
 
