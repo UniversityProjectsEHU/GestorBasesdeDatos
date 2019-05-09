@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Text.RegularExpressions;
+using MiniSQLEngine;
 
 namespace TCPServerExample
 {
@@ -48,9 +50,35 @@ namespace TCPServerExample
 
                     while (request != "END")
                     {
+                        string answer = "";
                         Console.WriteLine("Request received: " + request);
+                        Match matchopendb = Regex.Match(request, Constants.regExOpenDatabase);
+                        if (matchopendb.Success)
+                        {
+                            
+                            Database db = new Database(matchopendb.Groups[1].Value, matchopendb.Groups[2].Value, matchopendb.Groups[3].Value);
+                            string res = db.getRes();
+                            if (res == Constants.CreateDatabaseSuccess)
+                            {
+                                answer = "<Success/>";
+                            }
+                            else if (res == Constants.OpenDatabaseSuccess)
+                            {
+                                answer = "<Success/>";
 
-                        byte[] outputBuffer = Encoding.ASCII.GetBytes("My answer is NO");
+                            }
+                            else if (res == Constants.SecurityNotSufficientPrivileges + "Not Admin")
+                            {
+                                answer = "<Error>The database doesn’t exist</Error>";
+                            }
+                            
+                            else
+                            {
+                                answer = "<Error>Incorrect login</Error>";
+                            }
+                        }
+
+                        byte[] outputBuffer = Encoding.ASCII.GetBytes(answer);
                         networkStream.Write(outputBuffer, 0, outputBuffer.Length);
 
                         size = networkStream.Read(inputBuffer, 0, 1024);
