@@ -312,8 +312,8 @@ namespace ClassesTest
             string[] values = { "id int true", "name String false", "edad int false" };
             string[] valuesToInsert = { "1", "Alejandra", "36" };
             string[] valuesToInsert2 = { "2", "Paco", "60" };
-            string message = "The result for the Query '" + querySelect + "' is: id 1 name Alejandra;";
-            string messageAll = "The result for the Query '" + querySelectAll + "' is: id 1 name Alejandra age 37; id 2 name Paco age 60;";
+            string message = "{id,name}{1,Alejandra}";
+            string messageAll = "{id,name,age}{1,Alejandra,37}{2,Paco,60}";
             string messageNotExists = "ERROR: Column does not exist";
             Database db = new Database(dbname, user,pass);
             /*ClassCreateDatabase newDB = new ClassCreateDatabase(dbname);
@@ -330,9 +330,9 @@ namespace ClassesTest
             string querySelectNoMatches = "SELECT id FROM thisTable111 WHERE age>65;";
             string querySelectNoWhere = "SELECT id FROM thisTable111;";
             string querySelectAllNoWhere = "SELECT * FROM thisTable111;";
-            string messageNoMatches = "The result for the Query '" + querySelectNoMatches + "' is: id;";
-            string messageNoWhere = "The result for the Query '" + querySelectNoWhere + "' is: id 1; id 2;";
-            string messageAllNoWhere = "The result for the Query '" + querySelectAllNoWhere + "' is: id 1 name Alejandra age 37; id 2 name Paco age 60;";
+            string messageNoMatches = "{id}{}";
+            string messageNoWhere = "{id}{1}{2}";
+            string messageAllNoWhere = "{id,name,age}{1,Alejandra,37}{2,Paco,60}";
             db.Query(queryDropDB,db);
             db.Query(queryCreateDB,db);
             db.Query(queryCreateTable,db);
@@ -385,6 +385,47 @@ namespace ClassesTest
             Assert.AreEqual(false, File.Exists(path));
             db.Query(queryDropDB,db);
         }
+        /*[TestMethod]
+        public void testPrivileges()
+        {
+            string dbname = "dataBaseTest";
+            string user = "admin";
+            string pass = "admin";
+            //Create a new DB using admin
+            Database db = new Database(dbname, user, pass);
+            string queryDrop = "DROP DATABASE " + dbname + ";";
+            string querySecProfile = "CREATE SECURITY PROFILE myUser;";
+            db.Query(querySecProfile, db);
+            string addUser = "ADD USER ('Mike', '001', myUser);";
+            db.Query(addUser, db);
+            string queryCreate = "CREATE TABLE pTable (id int true,name string false,age int false);";
+            db.Query(queryCreate, db);
+            string queryInsert = "INSERT INTO pTable VALUES (1,Alejandra,37);";
+            string queryInsert2 = "INSERT INTO pTable VALUES (2,Paco,60);";
+            db.Query(queryInsert, db);
+            db.Query(queryInsert2, db);
+            Database db1 = new Database("dataBaseTest", "Mike", "001");
+            string priv_type1 = "SELECT";
+            string priv_type2 = "UPDATE";
+            string queryGrant = "GRANT " + priv_type1 +" ON pTable TO myUser;";
+            string queryGrantUpdate = "GRANT " + priv_type2 + " ON pTable TO myUser;";
+            db1.Query(queryGrant, db1);
+            db1.Query(queryGrantUpdate, db1);
+            string querySelect = "SELECT id,name FROM pTable WHERE age<50;";
+            string queryMessageSelect = "The result for the Query '" + querySelect + "' is: id 1 name Alejandra;";
+            Assert.AreEqual(db1.Query(querySelect, db1), queryMessageSelect);
+            string queryUpdate = "UPDATE pTable SET id=4 WHERE name=Paco;";
+            db1.Query(queryUpdate, db1);
+            String[] lineas = System.IO.File.ReadAllLines("..//..//..//data//" + dbname + "//pTable.data");
+            string actual = "4,Paco,60";
+            Assert.AreEqual(lineas[1], actual);
+            string queryRevoke = "REVOKE SELECT ON pTable TO myUser;";
+            string noQuerySelect = "SELECT id,name FROM pTable WHERE age>50;";
+            db.Query(queryRevoke, db1);
+            Assert.AreEqual(db.Query(noQuerySelect, db),Constants.SecurityNotSufficientPrivileges);
+            db.Query(queryDrop, db1);
+        }
+        */
     }
 }
 
