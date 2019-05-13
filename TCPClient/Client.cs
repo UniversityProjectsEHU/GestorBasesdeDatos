@@ -80,7 +80,7 @@ namespace TCPClientExample
                     }
                     else
                     {
-                        outputBuffer = Encoding.ASCII.GetBytes("<Query>" + q + "</Query>");
+                        outputBuffer = Encoding.ASCII.GetBytes(encapsule(q));
                         networkStream.Write(outputBuffer, 0, outputBuffer.Length);
                     }
                     
@@ -100,6 +100,10 @@ namespace TCPClientExample
                 
 
             }
+        }
+        public static string encapsule(string message)
+        {
+            return "<Query>" + message + "</Query>";
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Portable_Badger
             List<string> files = new List<string>();
             string version;
 
-            string mainExe = @"MiniSQLDBConsole\bin\Release\MiniSQLDBConsole.exe";
+            string mainExe = @"TCP\bin\Release\TCPServer.exe";
             string mainExeRelPath = inBaseRelPath + mainExe;
 
             version = GetVersion(mainExeRelPath);
@@ -25,7 +25,7 @@ namespace Portable_Badger
             outBaseFolder = @"temp1/temp2/"+ProjectName + "-" + version + @"/"; //name of the folder created inside the zip file
 
             files.Add(mainExeRelPath);
-            files.Add(inBaseRelPath + @"MiniSQLEngine\bin\Release\MiniSQLEngine.dll");
+            files.Add(inBaseRelPath + @"TCPServer\bin\Release\MiniSQLEngine.dll");
             //Add any other files you need to add
             //files.Add(inBaseRelPath + ...);
             //files.Add(inBaseRelPath + ...);
