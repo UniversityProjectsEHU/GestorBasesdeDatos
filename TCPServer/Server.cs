@@ -40,6 +40,7 @@ namespace TCPServerExample
 
                 var childSocketThread = new Thread(() =>
                 {
+                    
                     byte[] inputBuffer = new byte[1024];
                     Database db = null;
 
