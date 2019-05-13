@@ -59,7 +59,7 @@ namespace TCPClientExample
                      readBytes = networkStream.Read(inputBuffer, 0, 1024);
                     //Console.WriteLine("Response received: " + Encoding.ASCII.GetString(inputBuffer, 0, readBytes));
 
-                    Thread.Sleep(2000);
+                    //Thread.Sleep(2000);
                             if(Encoding.ASCII.GetString(inputBuffer, 0, readBytes)== "<Success/>")
                             {
                                  Console.WriteLine("Database opened");
@@ -75,15 +75,15 @@ namespace TCPClientExample
                     if (q.ToLower() == "exit")
                     {
                         outputBuffer = Encoding.ASCII.GetBytes("END");
-                        networkStream.Write(endMessage, 0, endMessage.Length);
-
+                        networkStream.Write(endMessage, 0, endMessage.Length);                                              
+                        Environment.Exit(0);
                     }
                     else
                     {
                         outputBuffer = Encoding.ASCII.GetBytes("<Query>" + q + "</Query>");
-
+                        networkStream.Write(outputBuffer, 0, outputBuffer.Length);
                     }
-                    networkStream.Write(outputBuffer, 0, outputBuffer.Length);
+                    
                     //Aqui enviamos
 
                     readBytes = networkStream.Read(inputBuffer, 0, 1024);

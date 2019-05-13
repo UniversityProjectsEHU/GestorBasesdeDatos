@@ -133,6 +133,8 @@ namespace TCPServerExample
                         size = networkStream.Read(inputBuffer, 0, 1024);
                         request = Encoding.ASCII.GetString(inputBuffer, 0, size);
                     }
+                    string close="Connection with Client Closed\n";
+                    Console.Write(close);
                     client.Close();
                 });
                 childSocketThread.Start();
