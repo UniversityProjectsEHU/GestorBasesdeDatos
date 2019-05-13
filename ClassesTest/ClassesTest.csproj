@@ -53,6 +53,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RunTests.cs" />
     <Compile Include="SecurityTests.cs" />
+    <Compile Include="TCPClientTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -61,6 +62,14 @@
     <ProjectReference Include="..\MiniSQLEngine\MiniSQLEngine.csproj">
       <Project>{831531c4-f4a2-492d-a4b7-50d5ee8a6805}</Project>
       <Name>MiniSQLEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TCPClient\TCPClient.csproj">
+      <Project>{092a7b7e-95a3-4fba-a7ff-895105bb41a8}</Project>
+      <Name>TCPClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TCPServer\TCPServer.csproj">
+      <Project>{4cf6390b-9f4d-4adc-9577-4c0e0b01e445}</Project>
+      <Name>TCPServer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
