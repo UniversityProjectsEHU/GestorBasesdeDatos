@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MiniSQLEngine
@@ -43,6 +44,7 @@ namespace MiniSQLEngine
 
         public override void Run(string dbname)
         {
+           
             int contando = 0;
             foreach (String i in values)
             {
@@ -53,8 +55,19 @@ namespace MiniSQLEngine
                 }
                 contando++;
             }
+         string regex = "(\\w+) ";
+         Match matchspace = Regex.Match(aTable, regex);
+            if (matchspace.Success)
+            {
+                aTable = matchspace.Groups[1].Value;
+
+            }
+
+
+            aTable.TrimEnd(' ');
             string pathfileDATA = @"..//..//..//data//" + dbname + "//" + aTable + ".data";
             bool continuar = true;
+            
 
             if (!File.Exists(pathfileDATA))
             {

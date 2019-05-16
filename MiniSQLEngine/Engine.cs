@@ -159,7 +159,17 @@ namespace MiniSQLEngine
             }
             catch(Exception e)
             {
-                string errorreg = "Your query is not valid";
+                string errorreg;
+                string error= e.ToString();
+                if(error.Contains("No se pudo encontrar el archivo"))
+                {
+                     errorreg = "ERROR: Table does not exist";
+                }
+                else
+                {
+                    errorreg = "Your query is not valid";
+                }
+                
                 return errorreg;
             }
             

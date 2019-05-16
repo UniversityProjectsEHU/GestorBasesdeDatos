@@ -15,6 +15,7 @@ namespace TCPServerExample
     {
         static void Main(string[] args)
         {
+            Boolean openconnection;
             const string argPrefixPort = "port=";
 
             int port = 0;
@@ -35,24 +36,32 @@ namespace TCPServerExample
 
             while (true)
             {
-                TcpClient client = listener.AcceptTcpClient();
+                try
+                {
+                    TcpClient client = listener.AcceptTcpClient();
+                    openconnection = true;
                 Console.WriteLine("Client connection accepted");
 
-                var childSocketThread = new Thread(() =>
-                {
+                //var childSocketThread = new Thread(() =>
+
+
+                byte[] inputBuffer = new byte[1024];
+                Database db = null;
+                //try
+                //{
                     
-                    byte[] inputBuffer = new byte[1024];
-                    Database db = null;
+
 
                     NetworkStream networkStream = client.GetStream();
 
                     //Read message from the client
                     int size = networkStream.Read(inputBuffer, 0, 1024);
                     string request = Encoding.ASCII.GetString(inputBuffer, 0, size);
+                   
 
-                    while (request != "END")
+                    while (openconnection == true&&request!="")
                     {
-                        
+
                         string answer = "";
                         Console.WriteLine("Request received: " + request);
                         Match matchopendb = Regex.Match(request, Constants.regExOpenDatabase);
@@ -60,8 +69,8 @@ namespace TCPServerExample
 
                         if (matchopendb.Success)
                         {
-                            
-                             db = new Database(matchopendb.Groups[1].Value, matchopendb.Groups[2].Value, matchopendb.Groups[3].Value);
+
+                            db = new Database(matchopendb.Groups[1].Value, matchopendb.Groups[2].Value, matchopendb.Groups[3].Value);
                             string res = db.getRes();
                             if (res == Constants.CreateDatabaseSuccess)
                             {
@@ -76,16 +85,16 @@ namespace TCPServerExample
                             {
                                 answer = "<Error>The database doesn’t exist</Error>";
                             }
-                            
+
                             else
                             {
-                                answer = "<Error>Incorrect login</Error>";
+                                answer = "<Error>ERROR: Incorrect login</Error>";
                             }
                         }
                         else if (matchexQuery.Success)
                         {
                             string query = matchexQuery.Groups[1].Value;
-                            answer=db.Query(query,db);
+                            answer = db.Query(query, db);
                             //We look if the Query is Select
                             //if (answer.Contains("{"))
                             //{
@@ -134,12 +143,20 @@ namespace TCPServerExample
                         size = networkStream.Read(inputBuffer, 0, 1024);
                         request = Encoding.ASCII.GetString(inputBuffer, 0, size);
                     }
-                    string close="Connection with Client Closed\n";
+                    string close = "Connection with Client Closed\n";
                     Console.Write(close);
                     client.Close();
-                });
-                childSocketThread.Start();
-            }
+
+                    //childSocketThread.Start();
+                }
+                catch(Exception e)
+                {
+                    string close = "Connection with Client Closed\n";
+                    Console.Write(close);
+                    openconnection = false;
+                }
+                }
+            
         }
     }
 }

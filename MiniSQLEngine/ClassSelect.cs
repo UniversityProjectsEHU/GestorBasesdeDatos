@@ -52,6 +52,7 @@ namespace MiniSQLEngine
         }
 
         public override void Run(string dbname)
+
         {
             if (condition.Contains("'"))
             {
