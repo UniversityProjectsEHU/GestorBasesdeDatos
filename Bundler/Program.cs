@@ -17,7 +17,7 @@ namespace Portable_Badger
             List<string> files = new List<string>();
             string version;
 
-            string mainExe = @"TCP\bin\Release\TCPServer.exe";
+            string mainExe = @"TCPClient\bin\Release\TCPClient.exe";
             string mainExeRelPath = inBaseRelPath + mainExe;
 
             version = GetVersion(mainExeRelPath);
