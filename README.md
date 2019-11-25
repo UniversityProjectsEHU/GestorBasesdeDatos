@@ -9,7 +9,7 @@ Capaz de llevar a cabo una comunicación Cliente-Servidor mediante el protocolo 
 
 -------------------------
 
-Database Manager programmed in C# and developed in the subject Database Management in the 3rd grade of the Computer Engineering degree in the UPV-EHU University in Vitoria-Gasteiz.
+Database Manager programmed in C# and developed in the subject Database Management in the 3rd grade of the Computer Engineering and Information System Management degree in the UPV-EHU University in Vitoria-Gasteiz.
 
 The project is able to manage a Client-Server communication via TCP protocol.
 
