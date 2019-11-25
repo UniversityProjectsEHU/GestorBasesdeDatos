@@ -30,4 +30,4 @@ Asier Osa
 
 Nombre original del proyecto: "Si funciona no lo toques".
 
-Original name of the proyect: "Si funciona no lo toques".
+Original name of the project: "Si funciona no lo toques".
